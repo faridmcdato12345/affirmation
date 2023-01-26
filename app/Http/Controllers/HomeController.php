@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\SendInBlue;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -80,7 +82,15 @@ class HomeController extends Controller
     public function report(Request $request)
     {
         $user = Auth::user();
-        // TODO: SEND EMAIL
-        return redirect()->route('settings', ['active' => 'settings'])->with('alert', 'Report saved. Thank you!');
+        
+        $sib = new SendInBlue();
+        try {
+            $sib->sendReportEmail(Auth::user(), htmlspecialchars($request->contactMessageTextarea));
+            return redirect()->route('settings', ['active' => 'settings'])->with('alert', 'Report saved. Thank you!');
+        } catch (\Throwable $e) {
+            Log::error($e);
+            Log::warning('User Generated error report: ' . $request->contactMessageTextarea);
+            return redirect()->route('settings', ['active' => 'settings'])->with('alert', 'Report saved. Thank you!');
+        }
     }
 }

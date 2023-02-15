@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'active_category' => 1, //TODO: create a config file which can set the default active category.
             'affiliate_id' => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
-            'referred_by'   => User::where('affiliate_id', $referred_by)->first()->id,
+            'referred_by'   => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
         ]);
         if ($u->save()) {
             Cookie::queue(Cookie::forget('referral'));

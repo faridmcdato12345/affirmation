@@ -68,7 +68,6 @@
                             <div class="w-50 font-11 pb-2 text-start"><a href="/register">Create Account</a></div>
                             @if (Route::has('password.request'))
                                     <div class="w-50 font-11 pb-2 text-end"><a href="{{ route('password.request') }}">Forgot Credentials</a></div>
-                                     {{--TODO: page-forgot-2.html  --}}
                                 @endif
                         </div>
 

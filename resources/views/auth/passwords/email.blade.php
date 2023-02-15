@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.mobile')
 
 @section('content')
-<div class="container">
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -43,5 +43,45 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
+
+<div class="page-content pb-0">
+        <div data-card-height="cover" class="card">
+            <div class="card-top notch-clear">
+                <div class="d-flex">
+                    <a href="#" data-back-button class="me-auto icon icon-m"><i class="font-14 fa fa-arrow-left color-theme"></i></a>
+                    <a href="#" data-toggle-theme class="show-on-theme-light multumesc-auto icon icon-m"><i class="font-12 fa fa-moon color-theme"></i></a>
+                    <a href="#" data-toggle-theme class="show-on-theme-dark multumesc-auto icon icon-m"><i class="font-12 fa fa-lightbulb color-yellow-dark"></i></a>
+                </div>
+            </div>
+            <div class="card-center">
+                <div class="p-4">
+                    <h1 class="text-center font-800 font-40 mb-1">Forgot</h1>
+                    <p class="color-highlight text-center font-12">
+                        Recover your Account
+                    </p>
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+                        <div class="input-style no-borders has-icon validate-field">
+                            <i class="fa fa-at"></i>
+                            <input type="email" class="form-control validate-email" id="email" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                            <label for="email" class="color-highlight">Email</label>
+                            <i class="fa fa-times disabled invalid color-red-dark"></i>
+                            <i class="fa fa-check disabled valid color-green-dark"></i>
+                            <em>(required)</em>
+                        </div>
+                    
+
+                        <div class="d-flex mt-4 mb-2">
+                            <div class="w-50 font-11 pb-2 text-start"><a href="/login">Login Account</a></div>
+                            <div class="w-50 font-11 pb-2 text-end"><a href="/register">Create Account</a></div>
+                        </div>
+
+                        <button type="submit" class="back-button btn btn-full btn-m shadow-large rounded-sm text-uppercase font-900 bg-highlight">Reset Password</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection

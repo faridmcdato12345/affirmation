@@ -1,22 +1,22 @@
-//Removing Preloader
-setTimeout(function(){
-    var preloader = document.getElementById('preloader')
-    if(preloader){preloader.classList.add('preloader-hide');}
-},150);
-
 document.addEventListener('DOMContentLoaded', () => {
     'use strict'
+
+    //Removing Preloader
+    setTimeout(function () {
+        var preloader = document.getElementById('preloader')
+        if (preloader) { preloader.classList.add('preloader-hide'); }
+    }, 150);
 
     //Global Variables
     let isPWA = true;  // Enables or disables the service worker and PWA
     let isAJAX = false; // AJAX transitions. Requires local server or server
-    var pwaName = "Affirmations"; //Local Storage Names for PWA
+    var pwaName = "Affirm"; //Local Storage Names for PWA
     var pwaRemind = 1; //Days to re-remind to add to home
     var pwaNoCache = false; //Requires server and HTTPS/SSL. Will clear cache with each visit
 
     //Setting Service Worker Locations scope = folder | location = service worker js location
-    var pwaScope = "/";
-    var pwaLocation = "/_service-worker.js";
+    var pwaScope = ".";
+    var pwaLocation = "/serviceworker.js";
 
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
@@ -361,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadHighlight.rel = "stylesheet";
             loadHighlight.className = "page-highlight";
             loadHighlight.type = "text/css";
-            loadHighlight.href = 'styles/highlights/highlight_' + highlight +'.css';
+            loadHighlight.href = 'css/highlights/highlight_' + highlight +'.css';
             document.getElementsByTagName("head")[0].appendChild(loadHighlight);
             document.body.setAttribute('data-highlight', 'highlight-'+highlight)
             localStorage.setItem(pwaName+'-Highlight', highlight)
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadHighlight.rel = "stylesheet";
             loadHighlight.className = "page-highlight";
             loadHighlight.type = "text/css";
-            loadHighlight.href = 'styles/highlights/highlight_' + rememberHighlight +'.css';
+            loadHighlight.href = 'css/highlights/highlight_' + rememberHighlight +'.css';
             if(!document.querySelectorAll('.page-highlight').length){
                 document.getElementsByTagName("head")[0].appendChild(loadHighlight);
                 document.body.setAttribute('data-highlight', 'highlight-'+rememberHighlight)
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loadHighlight.rel = "stylesheet";
             loadHighlight.className = "page-highlight";
             loadHighlight.type = "text/css";
-            loadHighlight.href = 'styles/highlights/highlight_' + defaultHighlight[1] +'.css';
+            loadHighlight.href = 'css/highlights/highlight_' + defaultHighlight[1] +'.css';
             if(!document.querySelectorAll('.page-highlight').length){
                 document.getElementsByTagName("head")[0].appendChild(loadHighlight);
                 document.body.setAttribute('data-highlight', 'highlight-'+defaultHighlight[1])
@@ -1237,7 +1237,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
-                  });
+                    console.log('Service Worker successfully registered')
+                    });
                 }
 
                 //Setting Timeout Before Prompt Shows Again if Dismissed

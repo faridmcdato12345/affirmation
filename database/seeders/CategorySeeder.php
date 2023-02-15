@@ -18,11 +18,7 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             'id' => 1,
             'text' => 'Intro Month',
-        ]);
-
-        DB::table('categories')->insert([
-            'id' => 2,
-            'text' => 'Fitness & Diet',
+            'blurb' => 'Your Free Month of Affirmations. You can repeat this month as many times as you want.'
         ]);
     }
 }

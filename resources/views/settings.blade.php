@@ -25,15 +25,18 @@
         @endif
 
         <div class="card card-style">
-            {{-- <a data-menu="settings-pane" href="#" class="d-flex m-3"> --}}
-            <a href="#" class="d-flex m-3">
-                <div><i class="me-3 rounded-circle font-40 fa-solid fa-user-circle"></i></div>
-                <div>
-                    <h3 class="mt-2 mb-0 font-700">Account</h3>
-                    <p class="font-12 mt-n1 mb-0 pb-0"></p>
+            <div class="input-style input-style-always-active no-borders has-icon m-4">
+                <div class="input-group">
+                    <i class="fa fa-share-alt color-highlight"></i>
+                    <input type="text" class="form-control" id="form1ac" value="{{ Auth::user()->getReferralLink() }}" disabled>
+                    <label for="form1ac" class="color-highlight text-uppercase font-700 font-10">Your Refferal Link:</label>
+                    <div class="input-group-append">
+                        <button class=" btn btn-s bg-red-dark border-red-dark shadow-s rounded-m" type="button" x-data="{link: '{{ Auth::user()->getReferralLink()}}'}" x-on:click="navigator.clipboard.writeText(link);(new bootstrap.Toast(document.getElementById('toast-3'))).show();">Copy</button>
+                    </div>
                 </div>
-                {{-- <div class="ms-auto mt-1 pt-1"><i class="fa fa-chevron-right color-theme opacity-30"></i></div> --}}
-            </a>
+                
+
+            </div>
         </div>
 
         <div class="card card-style">
@@ -152,4 +155,6 @@
             </div>
         </div>
     </div>
+
+    <div id="toast-3" class="toast toast-tiny toast-top bg-green-dark" data-bs-delay="2000" data-autohide="true"><i class="fa fa-check me-3"></i>Copied!</div>
 @endsection

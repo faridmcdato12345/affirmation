@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Cookie;
+use Str;
 
 class RegisterController extends Controller
 {
@@ -38,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware(['guest', 'check.referral']);
     }
 
     /**
@@ -64,11 +66,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $referred_by = Cookie::get('referral');
+
+        $u = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'active_category' => 1, //TODO: create a config file which can set the default active category.
+            'affiliate_id' => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
+            'referred_by'   => User::where('affiliate_id', $referred_by)->first()->id,
         ]);
+        if ($u->save()) {
+            Cookie::queue(Cookie::forget('referral'));
+        }
+        return $u;
     }
 }

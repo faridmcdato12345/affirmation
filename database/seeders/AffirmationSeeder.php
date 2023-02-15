@@ -171,12 +171,12 @@ class AffirmationSeeder extends Seeder
         ]);
 
         DB::table('affirmations')->insert([
-            'category_id' => 2,
+            'category_id' => 1,
             'text' => 'It is easy to stop eating when no longer hungry.',
         ]);
 
         DB::table('affirmations')->insert([
-            'category_id' => 2,
+            'category_id' => 1,
             'text' => 'I enjoy exercising.',
         ]);
     }

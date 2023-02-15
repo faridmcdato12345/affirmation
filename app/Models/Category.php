@@ -10,6 +10,16 @@ class Category extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'text',
+        'blurb',
+    ];
+
     public function affirmations()
     {
         return $this->hasMany(Affirmation::class);

@@ -3,6 +3,14 @@ import laravel from 'laravel-vite-plugin';
 import path from 'path';
 
 export default defineConfig({
+    build: {
+        rollupOptions: {
+            output: {
+                entryFileNames: '[name].js',
+                assetFileNames: '[name].[ext]',
+            },
+        },
+    },
     plugins: [
         laravel({
             input: [
@@ -23,6 +31,7 @@ export default defineConfig({
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
+            "~vanilla-lazyload": path.resolve(__dirname, 'node_modules/vanilla-lazyload')
         }
     }
 });

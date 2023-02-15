@@ -1,13 +1,16 @@
 // JS
+import LazyLoad from "~vanilla-lazyload";
 import './bootstrap';
-import './bootstrap.min';
+import * as bootstrap from '~bootstrap';
 import './custom';
 import Alpine from 'alpinejs'
 // CSS
 import '../css/app.css';
 import '../css/bootstrap.css';
 import '../css/style.css';
-// import '../fonts/css/fontawesome-all.min.css';
+import '../css/highlights/highlight_red.css'
 
+window.bootstrap = bootstrap
+window.LazyLoad = LazyLoad
 window.Alpine = Alpine
 Alpine.start()

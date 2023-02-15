@@ -25,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'active_category',
+        'affiliate_id',
+        'referred_by',
     ];
 
     /**
@@ -90,5 +92,15 @@ class User extends Authenticatable
             ]);
         }
         return $todaysAffirmation;
+    }
+
+    /**
+     * Get a referral link for the User.
+     *
+     * @return String
+     */
+    public function getReferralLink(): String
+    {
+        return env('APP_URL') . 'register?ref=' . $this->affiliate_id;
     }
 }

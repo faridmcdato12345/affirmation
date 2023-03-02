@@ -138,6 +138,23 @@ return [
 
             'plans' => [
                 [
+                    'name' => 'Premium (Founder\'s Pricing)',
+                    'short_description' => 'Special Founder\'s Pricing. Get access to the premium features to help improve your mental wellness journey.',
+                    'monthly_id' => env('APP_ENV', 'local') === 'production' ? 'price_1Mh4ozA3c8c5pGuZN1vVoYNT' : 'price_1Mh50SA3c8c5pGuZGH59mipt',
+                    'yearly_id' => env('APP_ENV', 'local') ==='production' ? 'price_1Mh4ozA3c8c5pGuZ81YKlRuS' : 'price_1Mh50SA3c8c5pGuZ5YramDdS',
+                    'monthly_incentive' => 'Save 40%',
+                    'yearly_incentive' => 'Save 50%',
+                    'features' => [
+                        'Premium at a discount price forever.',
+                        'Focused Affirmation Categories',
+                        'Schedulable Notifications (Coming Soon)',
+                        'Your Wellness Tracking Metrics (Coming Soon)',
+                        'Custom Backgrounds (Future Updates)',
+                        'Custom Affirmations (Future Updates)',
+                    ],
+                    'archived' => false,
+                ],
+                [
                     'name' => 'Premium',
                     'short_description' => 'Get access to the premium features to help improve your mental wellness journey.',
                     'monthly_id' => env('APP_ENV', 'local') === 'production' ? 'price_1Mf9LfA3c8c5pGuZ6Pl5WcqH' : 'price_1Mf9OiA3c8c5pGuZnoQCsB7V',
@@ -152,6 +169,7 @@ return [
                     ],
                     'archived' => false,
                 ],
+                
             ],
 
         ],

@@ -8,7 +8,7 @@ import Alpine from 'alpinejs'
 import '../css/app.css';
 import '../css/bootstrap.css';
 import '../css/style.css';
-import '../css/highlights/highlight_red.css'
+import '../sass/star_rating.scss';
 
 window.bootstrap = bootstrap
 window.LazyLoad = LazyLoad

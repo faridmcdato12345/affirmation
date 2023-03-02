@@ -1,0 +1,38 @@
+
+.rating-wrapper {
+    align-self: center;
+    display: inline-flex;
+    direction: rtl !important;
+    margin-left: auto;
+
+
+    label {
+        color: #E1E6F6;
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 3rem;
+        padding: 1rem .6rem;
+        transition: color 0.5s;
+    }
+
+    input {
+        height: 100%;
+        width: 100%;
+    }
+
+    input {
+        display: none;
+    }
+
+    label:hover,
+    label:hover~label,
+    input:checked~label {
+        color: #34AC9E;
+    }
+
+    label:hover,
+    label:hover~label,
+    input:checked~label {
+        color: #34AC9E;
+    }
+}

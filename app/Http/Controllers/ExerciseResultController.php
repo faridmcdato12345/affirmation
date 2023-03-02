@@ -21,7 +21,8 @@ class ExerciseResultController extends Controller
                         }
                     },
             ],
-                'believe' => 'boolean',
+                'happiness_score' => 'integer',
+                'belief_score' => 'integer',
                 'input1' => 'string|max:500',
                 'input2' => 'string|max:500',
                 'input3' => 'string|max:500',

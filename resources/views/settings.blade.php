@@ -29,7 +29,7 @@
                 <div class="input-group">
                     <i class="fa fa-share-alt color-highlight"></i>
                     <input type="text" class="form-control" id="form1ac" value="{{ Auth::user()->getReferralLink() }}" disabled>
-                    <label for="form1ac" class="color-highlight text-uppercase font-700 font-10">Your Refferal Link:</label>
+                    <label for="form1ac" class="color-highlight text-uppercase font-700 font-10">Your Sharable Link:</label>
                     <div class="input-group-append">
                         <button class=" btn btn-s bg-red-dark border-red-dark shadow-s rounded-m" type="button" x-data="{link: '{{ Auth::user()->getReferralLink()}}'}" x-on:click="navigator.clipboard.writeText(link);(new bootstrap.Toast(document.getElementById('toast-3'))).show();">Copy</button>
                     </div>
@@ -42,6 +42,11 @@
         <div class="card card-style">
             <div class="content my-0">
                 <div class="list-group list-custom-small">
+                    <a href="/billing">
+                        <i class="fa font-14 fa-dollar-sign rounded-s bg-green-dark"></i>
+                        <span>Manage Subscription</span>
+                        <i class="fa fa-chevron-right opacity-30"></i>
+                    </a>
                     <a data-toggle-theme data-trigger-switch="switch-21" href="#">
                         <i class="fa font-14 fa-lightbulb rounded-s bg-yellow-dark"></i>
                         <span>Dark Mode</span>

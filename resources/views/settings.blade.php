@@ -24,7 +24,7 @@
             </div>
         @endif
 
-        <div class="card card-style">
+        {{-- <div class="card card-style">
             <div class="input-style input-style-always-active no-borders has-icon m-4">
                 <div class="input-group">
                     <i class="fa fa-share-alt color-highlight"></i>
@@ -37,7 +37,7 @@
                 
 
             </div>
-        </div>
+        </div> --}}
 
         <div class="card card-style">
             <div class="content my-0">

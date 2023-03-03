@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*'],
+    'paths' => ['api/*', 'spark/webhook'],
 
     'allowed_methods' => ['*'],
 

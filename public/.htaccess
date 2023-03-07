@@ -18,9 +18,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-</IfModule>
-server {
-    location /spark/webhook {
+    </IfModule>
+    <Directory "/spark/webhook">
         Order allow,deny
         Allow from 3.18.12.63
         Allow from 3.130.192.231
@@ -35,5 +34,4 @@ server {
         Allow from 54.187.205.235
         Allow from 54.187.216.72
         satisfy any
-    }
-}
+    </Directory>

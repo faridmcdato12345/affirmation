@@ -52,7 +52,7 @@ class HomeController extends Controller
     public function categories()
     {
         $user = Auth::user();
-        return view('categories', ['categories' => Category::all(), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+        return view('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
     }
 
     /**
@@ -70,7 +70,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $user->active_category = $validated['category_id'];
         $user->save();
-        return redirect()->route('categories', ['categories' => Category::all(), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+        return redirect()->route('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
     }
 
     /**

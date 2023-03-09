@@ -59,13 +59,13 @@
 
 @section('popups')
 <!-- menu-delete -->
-	<div id="menu-change-category" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-effect="menu-over" data-menu-height="300" x-data="{'category': {'text': '', 'blurb':'','price': '0', 'premium': true}}" @setcategory.window="category = $event.detail.category" >
+	<div id="menu-change-category" class="menu menu-box-bottom menu-box-detached rounded-m" data-menu-effect="menu-over" data-menu-height="300" x-data="category_box" @setcategory.window="category = $event.detail.category" >
         <div class="menu-title mt-n1 mb-2">
             <h1 x-text="category.text">x-data title</h1>
 			<a href="#" class="close-menu"><i class="fa fa-times"></i></a>
 		</div>
 		<div class="content mb-0 mt-2">
-            <form action="{{route('setCategory')}}" method="POST">
+            <form action="{{route('setCategory')}}" id="setCategoryForm" method="POST">
                 @csrf
                 <div class="divider mb-3"></div>
                 <p class="color-theme" x-text="category.blurb">x-data blurb</p>
@@ -73,15 +73,33 @@
                     Do you want to swap to <b x-text="category.text"></b>?
                 </p>
                 <input type="hidden" id="category_id" name="category_id" x-model="category.id">
-                <div x-data="{'show': {{Auth::user()->subscribed() ? 'true' : 'false'}} || !category.premium}">
-                    <template x-if="show">
-                    <button type="submit" class="btn btn-l mx-auto rounded-sm btn-full bg-green-dark text-uppercase font-800">Change Category</button>
-                    </template>
-                    <template x-if="!show">
-                        <a href="/billing" class="btn btn-l mx-auto rounded-sm btn-full bg-green-dark text-uppercase font-800">Subscribe for Access</a>
-                    </template>
-                </div>
+                <div>
+                    <a x-on:click="document.getElementById('setCategoryForm').submit();" x-show="isShowable()" class="btn btn-l mx-auto rounded-sm btn-full bg-green-dark text-uppercase font-800">Change Category</a>
+                    <a href="/billing" x-show="!isShowable()" class="btn btn-l mx-auto rounded-sm btn-full bg-green-dark text-uppercase font-800">Subscribe for Access</a>
             </form>
 		</div>
 	</div>
+@endsection
+@section('scripts')
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('category_box', () => ({
+            category: {
+                text: '',
+                blurb:'',
+                price: '0',
+                premium: true
+            },
+            show: {{Auth::user()->subscribed() ? 'true' : 'false'}},
+ 
+            isShowable() {
+                if (!this.category.premium) {
+                    return true;
+                } else {
+                    return this.show;
+                }
+            },
+        }))
+    })
+</script>
 @endsection

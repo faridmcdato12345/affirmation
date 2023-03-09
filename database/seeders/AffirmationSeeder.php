@@ -15,169 +15,428 @@ class AffirmationSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'My efforts help me succeed.',
-        ]);
+        $affirmation_category = [
+            // Intro Month
+            1 => [
+                'My efforts help me succeed.',
+                'I can make a real difference.',
+                'My hard work will pay off.',
+                'I am strong.',
+                'I have the power to make the right choices for myself.',
+                'I have faith in my abilities.',
+                'I am grateful for what I can do.',
+                'I am happy to be me.',
+                'My goals are achievable.',
+                'I am confident.',
+                'I am on the right path for me.',
+                'I am thankful for the love in my life.',
+                'I will take action and accomplish my goals.',
+                'I will find the good in all things.',
+                'I am always learning.',
+                'I trust myself.',
+                'I am safe.',
+                'I love myself.',
+                'Life is beautiful.',
+                'I am powerful.',
+                'I believe in myself.',
+                'It\'s OK for me to have fun.',
+                'My possibilities are endless.',
+                'I am relaxed and at peace.',
+                'I am strong in my mind, body, and spirit.',
+                'My life is a gift.',
+                'I deserve love and happiness.',
+                'I care for myself.',
+                'Healthy food fuels my body.',
+                'I give myself room to grow.',
+                'Each day is filled with joy.',
+                'It is easy to stop eating when no longer hungry.',
+                'I enjoy exercising.',
+            ],
+            // Hope & Grounding
+            2 => [
+                'I can hold two opposing feelings at once, that is part of processing.',
+                'I have all that I need',
+                'I am in control of my life',
+                'My life has meaning and purpose',
+                'Everything is getting better every day',
+                ' I am calm and relaxed',
+                'All is well, right here, right now',
+                'All I need is within me right now.',
+                'I\'m rising above the thoughts that are trying to make me angry or afraid. ',
+                'I am turning DOWN the volume of negativity in my life, while simultaneously turning UP the volume of positivity. ',
+                'I can create the life I want to live',
+                'I am where I need to be right now',
+                'I am loved in so many ways',
+                'I will not be weighed down',
+                'The best is yet to come',
+                'I learn to control my mind before it controls me',
+                'My body is relaxed and my mind is calm. My soul is at peace.',
+            ],
+            // Happiness & Positive
+            3 => [
+                'Happiness is letting go',
+                'I welcome happiness into my heart',
+                'I give myself permission to embrace joy',
+                'I don\'t judge myself for the things that make me happy',
+                'I am joy',
+                'Good things belong to me',
+                'It\'s never too late to change your life',
+                'Today, I will be happy ',
+                'I have an infinite well of happiness within',
+                'Today is the first day of the rest of my life and I will take notice of the many positive things this day has to offer',
+                'One small positive thought in the morning can change my whole day. So, today I rise with a powerful thought to set the tone and allow success to reverberate through every moment of my day.',
+                'Life is beautiful ',
+                'Everything is easy when you are in flow',
+                'My joy is a shield from negative energy ',
+                'I uplift my joy and the joy of others.',
+                'I strive for joy, not for perfection.',
+            ],
+            // Body Positive & Health
+            4 => [
+                'I am so thankful for this body',
+                'I make decisions based on self-care',
+                'I don\'t always have to like my body, but I do have to love it',
+                'Health is wealth',
+                'I look and feel radiant',
+                'I am at home in my body',
+                'Looking after myself feels good',
+                'I trust my body to communicate its needs',
+                'I surrender to rest when I need it',
+                'My body does not exist for others',
+                'I nourish my body and my mind',
+                'The love that matters most is my own',
+                'I am healing every day, even if I don\'t realize it',
+                'I am attuned to the whispers of my heart',
+                'I am strong and healthy',
+                'I welcome the wisdom that comes with growing older.',
+                'I welcome what is, I welcome what comes.',
+                'I will allow myself to evolve.',
+                'My body is beautiful in this moment and at its current size.',
+                'My body is worthy of being cared for and adorned in beautiful garments.',
+                'I am healthy and have all that I need',
+                'I choose a healthy and positive lifestyle',
+                'I am healthy, energetic, and optimistic.',
+                'I love everything about my body.',
+                'I appreciate my body\'s unique traits.',
+                'I am thankful for the shape of my body.',
+                'My body is beautiful and appealing.',
+                'Every day I get healthier and more fit.',
+                'I care for my body by eating a healthy, well-balanced diet.',
+                'I exercise regularly to strengthen my body.',
+                'My body vibrates with energy and health.',
+                'I am completely pain-free and my body is energized.',
+                'I nourish my body with healthy foods.',
+                'My body systems function perfectly.',
+                'My body is healing, and I feel better every day.',
+                'I enjoy exercising and strengthening my muscles.',
+                'I release stress in my body with every exhaled breath.',
+                'I send love and healing to every organ of my body.',
+                'I breathe deeply, exercise regularly and feed my body nutritious food.',
+                'I pay attention to what my body needs for health and vitality.',
+                'I sleep soundly and peacefully.',
+                'I am surrounded by people who encourage and support healthy choices.',
+                'My immune system is strong and deals with any bacteria, germs or viruses.',
+                'My body, mind and soul work together efficiently to keep me healthy.',
+                'I stay up to date about my health issues.',
+                'I take care of my body and exercise every day.',
+                'My body is healthy and full of energy.',
+                'I am very grateful I am at this weight.',
+                'I crave healthy, nutritious foods.',
+                'I love the taste of fruits and vegetables.',
+                'I appreciate every cell in my body.',
+                'People find me sexy and desirable.',
+                'I am filled with excitement when I look in the mirror.',
+                'I am grateful for my life force and energy.',
+                'Everything I think, say and do makes me healthier.',
+                'I crave new, healthy experiences.',
+            ],
+            // Confidence & Self-esteem
+            5 => [
+                'I am determined and successful',
+                'I am a good and worthwhile person',
+                'I am a unique and special person',
+                'I am confident and competent',
+                'I hold my head up high',
+                'I look good because I am good',
+                'People like me – I am a likeable person and I like myself',
+                'I care about others, I am needed and worthwhile',
+                'I am a loving person',
+                'I have a lot to be proud of',
+                'I am calm and confident',
+                'I know I can master anything if I practice it continually',
+                'Today I choose confidence',
+                'I hold all the validation I need',
+                'I only care about impressing myself',
+                'I am successful.',
+                'Today I choose success',
+                'I am confident.',
+                'I am powerful.',
+                'I am getting better and better every day.',
+                'All I need is within me right now.',
+                'Note to self: I am going to make you so proud.',
+                'I find something to be proud of every day',
+                'I did what I could and that\'s what counts',
+                'I am walking my own path',
+                'I can achieve anything I want to achieve',
+                'I am a fun, smart, and sensual being',
+                'I am worthy of all the goodness in life',
+                'I have set my goals and am moving towards them',
+                'I accept myself as a unique and worthwhile person',
+                'My life purpose can be whatever I choose it to be',
+                'I will make some time for me today',
+                'To thrive in life, I only need myself',
+                'I bring so much to the table',
+                'I grow more confident and stronger each day.',
+                'I am the architect of my life. I design its structure.',
+                'I build my life\'s foundation and choose its contents.',
+                'I love myself and feel great about myself.',
+                'I accept myself unconditionally.',
+                'I see problems as interesting challenges.',
+                'I radiate confidence.',
+                'I thrive on challenges that bring out the best in me.',
+                'I have confidence in my abilities and skills.',
+                'I make sound decisions.',
+                'I am bold and courageous.',
+                'I face difficulty with courage.',
+                'I am worthy of happiness and love.',
+                'I am optimistic about the future.',
+                'The future holds all kinds of pleasant surprises.',
+                'I trust in my ability to create a fabulous future.',
+                'I let go of worries and replace them with excitement and optimism.',
+                'I have all it takes to make my dreams a reality.',
+                'I am a kind and unique person with a lot to offer.',
+                'I enjoy my own company as I get in touch with my true self.',
+                'I rejuvenate every part of my being with the help of solitude.',
+                'I am at peace and happy when I\'m alone.',
+                'I brighten another person\'s day by doing something with them.',
+                'My intuition and wisdom guide me in the right direction.',
+                'I have faith in myself to make the best decision possible.',
+                'I have confidence in my decisions.',
+                'I make decisions that always lead to something positive, in time.',
+                'I consider how my decisions affect others to make responsible choices.',
+                'I practice my skills each day to attain greatness.',
+                'I believe in my ability to overcome setbacks.',
+                'I replace negative criticism with encouraging statements.',
+                'Even my “flaws” have good and helpful aspects.',
+                'I always do my best because it helps me grow.',
+                'I feel the love of those who are not physically with me.',
+                'I take pleasure in my own solitude.',
+                'I love and approve of myself.',
+                'I focus on breathing to ground myself.',
+                'Following my intuition and my heart keeps me safe and sound.',
+                'I make the right choices every time.',
+                'I draw from my inner strength and light.',
+                'I trust myself to be honest with myself and others.',
+                'I am an inspiration to others.',
+                'I matter and what I have to offer also matters.',
+                'I trust my inner wisdom and intuition.',
+                'I breathe in calmness and breathe out nervousness.',
+                'This situation works out for my highest good.',
+                'Wonderful things unfold before me.',
+            ],
+            // Parenting
+            6 => [
+            'I don\'t need to be perfect, I am doing my best',
+            'I remember my own needs matter too',
+            'There\'s no shame in asking for help',
+            'I am the right parent for my child',
+            'I don\'t need to love every moment of motherhood to love my child',
+            'The hard moments will pass',
+            'This time is precious',
+            'I will build a house of love',
+            'No one is judging me',
+            'I forgive myself for the things I have done in the past.',
+            'I let go of my anger so I can see clearly.',
+            'I accept responsibility for the consequences of my anger.',
+            'I replace my anger with understanding and compassion.',
+            'I offer a heartfelt apology to those affected by my anger.',
+            'I know my wisdom guides me to the right decision.',
+            'I trust myself to make the best decision for me.',
+            'I receive all feedback with appreciation.',
+            'I listen lovingly to this inner conflict and reflect on it until I find peace about it.',
+            'I love my family even if they do not understand me completely.',
+            'I show my family I love them in verbal and non-verbal ways.',
+            'I am paired with this family because we are well matched.',
+            'I choose to see my family as a gift.',
+            ],
+            // Prosperity & Abundance
+            7 => [
+            'My dreams matter',
+            'I am a magnet for abundance',
+            'I am living with abundance.',
+            'My life is full of prosperity.',
+            'I am surrounded by abundance.',
+            'I am more and more prosperous every day.',
+            'I deserve abundance and prosperity.',
+            'I see abundance everywhere.',
+            'I always have whatever I need.',
+            'I instantly manifest my desires.',
+            'I manage my money wisely.',
+            'I am open to all the wealth life has to offer.',
+            'I am a money magnet, attracting wealth and abundance.',
+            'I attract money effortlessly and easily.',
+            'I continuously discover new avenues of income.',
+            'I use money to better other people\'s lives',
+            'I attract lucrative opportunities to create money.',
+            'I\'m eager and willing to share abundant gifts and blessings.',
+            'I am sometimes meant to deliver a gift or blessing rather than keep it.',
+            'I pay bills before they are due to share the wealth with the company\'s employees.',
+            'I am destined to find prosperity in everything I do.',
+            'My gratitude and appreciation attract abundance of every kind.',
+            'I maintain my wealth so I can help others.',
+            'I enjoy my prosperity and share it freely with the world.',
+            'I am responsible for being a good steward of the abundance and wealth provided.',
+            'I rejoice for others who are prosperous and share the abundance.',
+            'I am thankful for the abundance I have in my life.',
+            'Today is the future I created yesterday. Tomorrow will be even better!',
+            ],
+            // Strength & Wisdom
+            8 => [
+                'I am strong',
+                'I see my strength',
+                'I am growing stronger everyday',
+                'I believe I\'m am growing into this role',
+                'I am enough',
+                'I have inner strength and resources',
+                'I have everything I need within me to get through this',
+                'I have everything I need within me to get this done',
+                'I have my wise mind – I can seek inner guidance whenever I need to',
+                'I have options and can make wise decisions',
+                'My intuition is strong and serves me well',
+                'I have the answer and trust it to present itself at the right time',
+                'I am my own best advocate',
+                'I will not let my past keep me from my future',
+                'Changing my mind is a strength, not a weakness.',
+                'There is strength in quiet, there is vulnerability in being loud.',
+                'I make wise decisions based on what I know',
+                'I am in control of my choices',
+                'I have my own best interests at heart',
+                'I am full of powerful vibrations',
+            ],
+            // Love & Relationships
+            9 => [
+                'My heart is always open.',
+                'I am surrounded by love.',
+                'I love unconditionally and without hesitation.',
+                'I am loved and appreciated by those around me.',
+                'Love and appreciation follow me everywhere I go.',
+                'Love, forgiveness and understanding are the foundation of my relationships.',
+                'My partner is coming into my life sooner than I expect.',
+                'I give and receive love in equal measures.',
+                'I accept my partner unconditionally.',
+                'I am treasured for who I really am.',
+                'My relationship is becoming stronger, deeper and more loving.',
+                'My friendships are meaningful, supportive and rewarding.',
+                'My friends love me for who I am.',
+                'I have long-lasting friendships because I accept others unconditionally.',
+                'I attract positive people, who become life-long friends.',
+                'I surround myself with friends who care about me and treat me well.',
+                'I can tell the difference between fair-weather friends and true friends.',
+                'I surround myself with people who treat me well.',
+                'I take the time to show my friends that I care about them.',
+                'My friends do not judge me.',
+                'I take great pleasure in my friends and our differences.',
+                'I feel relaxed and comfortable around other people.',
+                'I enjoy meeting new people and initiate conversations.',
+                'I am outgoing and enrich other people\'s lives.',
+                'I\'m excited about the amazing people I\'m going to meet today.',
+                'I\'m easy to talk to and make others feel at ease.',
+                'I take comfort in the fact that I can always leave a situation.',
+                'I am amazed by the creativity of the people I meet.',
+                'The company of strangers teaches me more about myself.',
+                'I radiate love and others reflect love back to me.',
+                'I am loving and lovable.',
+                'My romantic relationship is healthy, long-lasting and full of love.',
+                'My partner is kind, compassionate and understanding.',
+                'My marriage grows stronger, deeper and more stable each day.',
+                'I am with my soulmate and we share a life full of love.',
+                'Life is full of love and I find it everywhere I go.',
+                'My relationship is divine and we are perfectly matched.',
+                'My partner and I have a deep understanding.',
+                'Forgiveness and compassion are the foundation of my romantic relationship.',
+                'It is easy for me to look in the mirror and say, “I love you.”',
+                'My words are always kind and loving.',
+                'I receive kindness and love multiple times a day.',
+                'Every day of my life is filled with love.',
+                'My communication with my partner is loving and kind.',
+                'Everything about me is lovable and worthy of love.',
+                'I am a loving, kind person who deserves true love.',
+                'I wake up every morning filled with joy.',
+                'I face each day with the support and love of my partner.',
+                'All of my relationships are based on mutual love and compassion.',
+                'My partner and I share a deep and powerful love.',
+                'I respect and admire my partner and see the best in him/her.',
+                'I love my partner exactly how he/she is and enjoy his/her unique qualities.',
+                'My partner and I share emotional intimacy via talk and touch.',
+                'I have healthy boundaries with my partner.',
+                'My partner and I have fun together.',
+                'My partner and I find new ways to enjoy time together.',
+                'My partner and I resolve conflict peacefully and respectfully.',
+                'I am able to be completely authentic in my love relationship.',
+                'I communicate my desires and needs clearly and confidently with my partner.',
+                'I want the best for my partner and support him/her.',
+            ],
+            // Quotes (TODO: Quotes aren't all aligned need to fix before displaying quotes)
+            // 10 => [
+            //     '"Conscious breathing is my anchor." Thích Nhất Hạnh',
+            //     'Louise Hay',
+            //     '"I am in the right place at the right time, doing the right thing,"',
+            //     '"You are loved just for being who you are, just for existing"  Ram Dass',
+            //     '"The chance to love and be loved exists no matter where you are," Oprah',
+            //     '"Courage starts with showing up and letting ourselves be seen." Brené Brown',
+            //     'Yrsa Daley-Ward',
+            //     '"Make way for the unprecedented and watch your reality rearrange yourself,"',
+            //     'Jon Kabat-Zinn',
+            //     '"The perfect moment is this one,"',
+            //     'Audre Lord',
+            //     '“I am deliberate and afraid of nothing,"',
+            //     'Fred Rogers',
+            //     '"Who you are inside is what helps you make and do everything in life,"',
+            //     'Glenn Close',
+            //     '"Your perspective is unique. It\'s important and it counts,”',
+            //     'Ernest Hemingway',
+            //     '"Every day above earth is a good day,"',
+            //     'Maya Angelou',
+            //     '"Nothing can dim the light that shines from within,"',
+            //     'Eleanor Roosevelt',
+            //     '"You must do the things you think you cannot do,"',
+            //     'Deepak Chopra',
+            //     '"The secret of attraction is to love yourself,"',
+            //     '“Good riddance to decisions that don\'t support self-care, self-value, and self-worth." Oprah',
+            //     'Jenny Han',
+            //     '“I say looking on the bright side of life never killed anybody,"',
+            //     'Marianne Williamson',
+            //     '"I\'m better than I used to be. Better than I was yesterday. But hopefully not as good as I\'ll be tomorrow,"',
+            //     'Elizabeth Gilbert',
+            //     '"Embrace the glorious mess that you are,"',
+            //     'Eckhart Tolle',
+            //     '"The ultimate truth of who you are is not I am this or I am that, but I Am,"',
+            //     'Cleo Wade',
+            //     '"Gratitude is a celebration we are all invited to,"',
+            //     'Joseph Campbell',
+            //     '"We must be willing to let go of the life we planned so as to have the life that is waiting for us,"',
+            //     'Maya Angelou',
+            //     '"Your crown has been bought and paid for. Put it on your head and wear it,"',
+            //     'Roald Dahl',
+            //     '“If you have good thoughts they will shine out of your face like sunbeams and you will always look lovely,"',
+            //     'William Shakespeare',
+            //     '"There is nothing either good or bad, but thinking makes it so,"',
+            //     '"Start each day by affirming peaceful, contented, and happy attitudes and your days will tend',
+            //     'to be pleasant and successful." - Norman Vincent Peale',
+            // ]
+        ];
 
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I can make a real difference.',
-        ]);
 
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'My hard work will pay off.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am strong.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I have the power to make the right choices for myself.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I have faith in my abilities.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am grateful for what I can do.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am happy to be me.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'My goals are achievable.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am confident.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am on the right path for me.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am thankful for the love in my life.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I will take action and accomplish my goals.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I will find the good in all things.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am always learning.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I trust myself.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am safe.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I love myself.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'Life is beautiful.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am powerful.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I believe in myself.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'It\'s OK for me to have fun.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'My possibilities are endless.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am relaxed and at peace.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I am strong in my mind, body, and spirit.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'My life is a gift.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I deserve love and happiness.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I care for myself.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'Healthy food fuels my body.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I give myself room to grow.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'Each day is filled with joy.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'It is easy to stop eating when no longer hungry.',
-        ]);
-
-        DB::table('affirmations')->insert([
-            'category_id' => 1,
-            'text' => 'I enjoy exercising.',
-        ]);
+        foreach($affirmation_category as $category => $affirmations) {
+            foreach($affirmations as $index => $affirmation)
+            try {
+                DB::table('affirmations')->insert([
+                'category_id' => $category,
+                'text' => $affirmation
+            ]);
+            } catch(\Exception $e) {
+                echo $e . "\n";
+            }
+        }
     }
 }

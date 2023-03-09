@@ -7,8 +7,8 @@
 			<div class="row d-flex justify-content-center">
 				<h1 class="color-white font-40 text-center" style="letter-spacing: 0.1rem; line-height: 1em">{{ $affirmation->text }}</h1>
 			</div>
-			<div class="row d-flex justify-content-center">
-				<a href="#" data-menu="sheet-wizard-step-1" class="mt-5 btn btn-xxl bg-blue-dark border-blue-dark shadow-s rounded-m font-900">Begin Exercise</a>
+			<div class="row d-flex justify-content-center mt-5 mx-5">
+				<a href="#" data-menu="sheet-wizard-step-1" class="btn btn-xxl bg-green-dark border-green-dark shadow-s rounded-m font-900">Begin Exercise</a>
 			</div>
 		</div>
 		<div class="card-overlay bg-gradient"></div>

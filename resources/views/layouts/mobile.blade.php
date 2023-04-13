@@ -33,6 +33,9 @@
 		<a href="/categories" @class(["active-nav" => ($active === 'categories')])><i class="fa fa-star"></i><span>Categories</span></a>
 		{{-- <a href="index-pages.html"><i class="fa fa-heart"></i><span>Pages</span></a>
 		<a href="index-search.html"><i class="fa fa-search"></i><span>Search</span></a> --}}
+		@if(!Auth::user()->subscribedToPremium())
+		<a href="/billing"><i class="fa fa-dollar-sign color-yellow-dark"></i><span class="color-yellow-dark">Premium</span></a>
+		@endif
 		<a href="/settings" @class(["active-nav" => ($active === 'settings')])><i class="fa fa-cog"></i><span>Settings</span></a>
 	</div>
 	@endif

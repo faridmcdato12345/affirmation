@@ -105,4 +105,21 @@ class User extends Authenticatable
     {
         return env('APP_URL') . 'register?ref=' . $this->affiliate_id;
     }
+
+    /**
+     * Determine if user is subscribed to one of the premium subscriptions
+     * as ->subscribed() does not seem to work as intended.
+     * 
+     * @return Bool
+     */
+    public function subscribedToPremium(): Bool
+    {
+        $plans = config('spark.billables.user.plans');
+        foreach($plans as $plan) {
+            if ($this->subscribedToPrice($planId = $plan['monthly_id']) || $this->subscribedToPrice($planId = $plan['yearly_id'])) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

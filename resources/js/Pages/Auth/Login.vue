@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p>Hello World - Login</p>
+    <p class="text-blue-500 font-medium">
+      Hello World - Login A
+    </p>
   </div>
 </template>
 <script setup>

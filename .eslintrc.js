@@ -26,7 +26,7 @@ module.exports = {
     ],
     "quotes": [
       "error",
-      "double"
+      "single"
     ],
     "semi": [
       "error",
@@ -35,5 +35,11 @@ module.exports = {
     "vue/multi-word-component-names": 0,
     "vue/max-attributes-per-line": "off",
     "vue/require-default-prop": "off",
+    "vue/html-closing-bracket-newline": [
+      "error", {
+        "singleline": "never",
+        "multiline": "never"
+      }
+    ]
   }
 }

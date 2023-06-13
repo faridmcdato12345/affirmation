@@ -14,19 +14,19 @@ use Inertia\Inertia;
 |
 */
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/categories', [App\Http\Controllers\HomeController::class, 'categories'])->name('categories');
+// Route::get('/categories', [App\Http\Controllers\HomeController::class, 'categories'])->name('categories');
 
-Route::post('/categories/active', [App\Http\Controllers\HomeController::class, 'setActiveCategory'])->name('setCategory');
+// Route::post('/categories/active', [App\Http\Controllers\HomeController::class, 'setActiveCategory'])->name('setCategory');
 
-Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('settings');
+// Route::get('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('settings');
 
-Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
+// Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
 
-Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
+// Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 
 Route::get('/inertia-welcome', function () {
   return Inertia::render('Welcome');

@@ -35,5 +35,9 @@ module.exports = {
     "vue/multi-word-component-names": 0,
     "vue/max-attributes-per-line": "off",
     "vue/require-default-prop": "off",
+    "vue/no-reserved-component-names": ["error", {
+      "disallowVueBuiltInComponents": false,
+      "disallowVue3BuiltInComponents": false
+    }]
   }
 }

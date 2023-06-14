@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -27,12 +28,16 @@ use Inertia\Inertia;
 // Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
 
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
-
-Route::get('/inertia-welcome', function () {
-  return Inertia::render('Welcome');
-})->name('inertia-welcome');
-
-Route::get('/inertia-login', function () {
-  sleep(2);
+Route::middleware('auth')->group(function(){
+  Route::get('/', function () {
+    return Inertia::render('Welcome');
+  })->name('welcome');
+});
+Route::get('/login', function () {
   return Inertia::render('Auth/Login');
-})->name('inertia-login');
+})->name('login');
+Route::post('/login',[LoginController::class,'login'])->name('post.login');
+
+Route::get('/register',function () {
+  return Inertia::render('Auth/Register');
+})->name('register');

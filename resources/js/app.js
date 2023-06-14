@@ -11,6 +11,9 @@ import { createInertiaApp } from "@inertiajs/vue3"
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"
 import { ZiggyVue } from "ziggy"
 
+import rate from 'vue-rate'
+import 'vue-rate/dist/vue-rate.css'
+
 // CSS
 import "../css/app.css"
 import "../css/bootstrap.css"
@@ -32,6 +35,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
+      .use(rate)
       .use(ZiggyVue, Ziggy)
       .mount(el)
   },

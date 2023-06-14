@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('affirmation', [
+        return Inertia::render('Index', [
             'affirmation' => Auth::user()->getAffirmation(), 
             'progress_id' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
             'active' => 'home'

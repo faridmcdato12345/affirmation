@@ -10,6 +10,10 @@ import { createApp, h } from "vue"
 import { createInertiaApp } from "@inertiajs/vue3"
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"
 import { ZiggyVue } from "ziggy"
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faDashboard, faGamepad, faGears, faRightFromBracket, faAngleDoubleRight,faAngleDoubleLeft,faTentArrowLeftRight, faCameraRetro, faEyeSlash, faEye, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faFacebookF, faFacebookSquare, faSquareFacebook} from '@fortawesome/free-brands-svg-icons';
 
 // CSS
 import "../css/app.css"
@@ -21,6 +25,22 @@ window.bootstrap = bootstrap
 window.LazyLoad = LazyLoad
 window.Alpine = Alpine
 Alpine.start()
+library.add([
+  faDashboard,
+  faGamepad, 
+  faGears, 
+  faRightFromBracket, 
+  faAngleDoubleRight,
+  faAngleDoubleLeft, 
+  faTentArrowLeftRight, 
+  faCameraRetro,
+  faFacebookF,
+  faFacebookSquare,
+  faSquareFacebook,
+  faEyeSlash, 
+  faEye,
+  faSpinner
+])
 
 createInertiaApp({
   title: (title) => `${title} Affirm`,
@@ -33,6 +53,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue, Ziggy)
+      .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)
   },
 })

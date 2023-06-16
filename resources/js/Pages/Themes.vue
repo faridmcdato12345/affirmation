@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <AuthenticatedLayout>
     <p>Theme Section</p>
-  </div>
+  </AuthenticatedLayout>
 </template>
 <script setup>
+import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 </script>

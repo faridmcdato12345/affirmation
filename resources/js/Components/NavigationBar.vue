@@ -1,6 +1,6 @@
 <template>
   <Teleport to="body">
-    <nav class="bottom-0 left-0 px-4 fixed bg-white pt-2 pb-1 shadow w-full md:rounded-2xl md:mb-12 md:w-[640px] md:left-1/2 md:-translate-x-1/2 md:opacity-90 hover:opacity-100 duration-200 ease-in-out z-20">
+    <nav class="bottom-0 left-0 px-4 fixed bg-white pt-2 pb-1 shadow w-full md:rounded-2xl md:mb-12 md:w-[640px] md:left-1/2 md:-translate-x-1/2 duration-200 ease-in-out z-20">
       <ul class="flex justify-around items-center mb-0 pl-0">
         <Link
           v-for="link in navLinks" :key="`${link.label}-route`" :href="route(link.link)" 

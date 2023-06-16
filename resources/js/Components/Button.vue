@@ -61,7 +61,7 @@ const btnColorClass = {
 const text = computed(() => props.uppercase ? props.label.toUpperCase() : props.label)
 const btnSize = computed(() => btnSizeClass[props.size])
 const btnColor = computed(() => {
-  if(props.outline) return `border-2 border-${btnColorClass[props.color]}-500 border-solid`
-  return `bg-${btnColorClass[props.color]}-500 hover:bg-${btnColorClass[props.color]}-600 active:bg-${btnColorClass[props.color]}-700 focus:ring focus:ring-${btnColorClass[props.color]}-600`
+  if(props.outline) return `border-2 border-${btnColorClass[props.color]}-600 border-solid`
+  return `bg-${btnColorClass[props.color]}-600 hover:bg-${btnColorClass[props.color]}-700 active:bg-${btnColorClass[props.color]}-800 focus:ring focus:ring-${btnColorClass[props.color]}-600`
 })
 </script>

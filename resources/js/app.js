@@ -26,7 +26,7 @@ window.Alpine = Alpine
 Alpine.start()
 
 createInertiaApp({
-  title: (title) => `${title} Affirm`,
+  title: (title) => `${title} - Affirm`,
   resolve: (name) =>
     resolvePageComponent(
       `./Pages/${name}.vue`,

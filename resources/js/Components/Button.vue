@@ -1,11 +1,12 @@
 <template>
   <button
     :class="[
-      'duration-150 ease-out rounded-lg text-white',
+      'duration-150 ease-out text-white',
       btnSize, btnColor,
       {
         'w-full block': btnBlock
-      }
+      },
+      rounded ? 'rounded-full' : 'rounded-lg'
     ]">
     {{ text }}
   </button>
@@ -36,6 +37,10 @@ const props = defineProps({
   size: {
     type: String,
     default: 'base'
+  },
+  rounded: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -43,7 +48,7 @@ const btnSizeClass = {
   'sm': 'px-4 py-2 text-xs',
   'base': 'px-4 py-2.5 text-sm',
   'lg': 'px-14 py-3 text-lg',
-  'xl': 'px-7 py-3 text-xl'
+  'xl': 'px-14 py-3 text-xl'
 }
 
 const btnColorClass = {

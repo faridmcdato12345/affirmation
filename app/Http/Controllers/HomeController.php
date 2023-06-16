@@ -30,7 +30,7 @@ class HomeController extends Controller
     {
         return Inertia::render('Index', [
             'affirmation' => Auth::user()->getAffirmation(), 
-            'progress_id' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
+            'progressId' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
             'active' => 'home'
         ]);
     }
@@ -52,8 +52,15 @@ class HomeController extends Controller
      */
     public function categories()
     {
-        $user = Auth::user();
-        return view('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+        return Inertia::render('Categories', [
+            'categories' => Category::all()->groupBy('premium'), 
+            'activeCategory' => Auth::user()->active_category
+        ]);
+    }
+
+    public function themes()
+    {
+        return Inertia::render('Themes');
     }
 
     /**

@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: 'Inter', sans-serif !important;
+}
+
 p {
   margin-bottom: 0 !important;
 }

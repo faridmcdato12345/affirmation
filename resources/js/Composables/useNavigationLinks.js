@@ -2,7 +2,8 @@ import {
   HomeIcon, 
   StarIcon, 
   SparklesIcon, 
-  Cog6ToothIcon 
+  Cog6ToothIcon,
+  PaintBrushIcon 
 } from '@heroicons/vue/24/solid'
 
 export function useNavigationLinks() {
@@ -16,6 +17,11 @@ export function useNavigationLinks() {
       icon: StarIcon,
       link: 'categories',
       label: 'Categories'
+    },
+    {
+      icon: PaintBrushIcon,
+      link: 'themes',
+      label: 'Themes'
     },
     {
       icon: SparklesIcon,

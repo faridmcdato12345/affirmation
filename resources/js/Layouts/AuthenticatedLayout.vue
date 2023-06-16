@@ -10,7 +10,7 @@
       background-size: cover;
     "></div>
     <NavigationBar />
-    <div class="w-full h-screen flex justify-center items-center">
+    <div class="w-full h-screen">
       <slot></slot>
     </div>
   </div>

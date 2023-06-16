@@ -9,7 +9,8 @@ module.exports = {
   "globals":
   {
     "Thenable": true,
-    "NodeJS": true
+    "NodeJS": true,
+    "route": false
   },
   "extends": [
     "eslint:recommended",

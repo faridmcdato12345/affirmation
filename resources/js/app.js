@@ -9,7 +9,16 @@ import Alpine from "alpinejs"
 import { createApp, h } from "vue"
 import { createInertiaApp } from "@inertiajs/vue3"
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"
-import { ZiggyVue } from "ziggy"
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { 
+  faEyeSlash, 
+  faEye,
+  faAngleLeft,
+  faLightbulb
+} from '@fortawesome/free-solid-svg-icons'
+
 
 // CSS
 import "../css/app.css"
@@ -21,6 +30,12 @@ window.bootstrap = bootstrap
 window.LazyLoad = LazyLoad
 window.Alpine = Alpine
 Alpine.start()
+library.add([ 
+  faEyeSlash, 
+  faEye,
+  faAngleLeft,
+  faLightbulb
+])
 
 createInertiaApp({
   title: (title) => `${title} Affirm`,
@@ -32,7 +47,8 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
-      .use(ZiggyVue, Ziggy)
+      .use(ZiggyVue,Ziggy)
+      .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)
   },
 })

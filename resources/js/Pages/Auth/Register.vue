@@ -1,12 +1,12 @@
-<!-- eslint-disable vue/no-export-in-script-setup -->
 <template>
   <AuthLayout>
-    <LoginForm />
+    <Register />
   </AuthLayout>
 </template>
 <script setup>
 import AuthLayout from '../../Layouts/Auth.vue'
-import LoginForm from '../../Components/Auth/Form/Login.vue'
+import Register from '../../Components/Auth/Form/Register.vue'
 </script>
 <style scoped>
+
 </style>

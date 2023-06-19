@@ -44,6 +44,6 @@ export default defineConfig({
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
             "~vanilla-lazyload": path.resolve(__dirname, 'node_modules/vanilla-lazyload'),
             ziggy: path.resolve('vendor/tightenco/ziggy/dist/vue.es')
-        }
+        },
     }
 });

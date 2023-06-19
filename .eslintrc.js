@@ -1,8 +1,10 @@
+/* eslint-env node */
 module.exports = {
   "root": true,
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true,
   },
   "extends": [
     "eslint:recommended",
@@ -35,6 +37,10 @@ module.exports = {
     "vue/multi-word-component-names": 0,
     "vue/max-attributes-per-line": "off",
     "vue/require-default-prop": "off",
+    "vue/no-reserved-component-names": ["error", {
+      "disallowVueBuiltInComponents": false,
+      "disallowVue3BuiltInComponents": false
+    }],
     "vue/html-closing-bracket-newline": [
       "error", {
         "singleline": "never",

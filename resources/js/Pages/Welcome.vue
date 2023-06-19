@@ -3,7 +3,7 @@
     <p class="text-blue-500 font-semibold">
       Hello World!
     </p>
-    <Link :href="route('inertia-login')">
+    <Link :href="route('login')">
       Navigate to Login with progress
     </Link>
     <p>Hello</p>

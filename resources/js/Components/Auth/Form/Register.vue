@@ -8,8 +8,7 @@
           v-model="registrationForm.name" 
           type="text" 
           label="Full Name"
-          autofocus
-        />
+          autofocus />
         <div>
           <InputError class="mt-2" :message="registrationForm.errors.name" />
         </div>
@@ -19,8 +18,7 @@
         <BaseInput 
           v-model="registrationForm.email" 
           type="email"
-          label="example@sample.com"
-        />
+          label="example@sample.com" />
         <div>
           <InputError class="mt-2" :message="registrationForm.errors.email" />
         </div>
@@ -32,14 +30,12 @@
             v-if="showPass"
             v-model="registrationForm.password" 
             type="password"
-            label="••••••••"
-          />
+            label="••••••••" />
           <BaseInput 
             v-else 
             v-model="registrationForm.password" 
             type="text" 
-            label="••••••••"
-          />
+            label="••••••••" />
           <ShowPassword v-model="showPass" />
         </div>
         <div>
@@ -53,14 +49,12 @@
             v-if="showPass" 
             v-model="registrationForm.password_confirmation" 
             type="password"
-            label="••••••••"
-          />
+            label="••••••••" />
           <BaseInput 
             v-else 
             v-model="registrationForm.password_confirmation" 
             type="text"
-            label="••••••••"
-          />
+            label="••••••••" />
           <ShowPassword v-model="showPass" />
         </div>
       </div>
@@ -75,29 +69,29 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue"
-import route from "ziggy-js"
-import {Link, useForm} from "@inertiajs/vue3"
-import InputError from "../../InputError.vue"
-import InputLabel from "../../InputLabel.vue"
-import ShowPassword from "./Icons/ShowPassword.vue"
-import CallSign from "../../CallSign.vue"
-import BaseInput from "./Input/BaseInput.vue"
-import AuthButton from "../Button.vue"
+import { ref } from 'vue'
+import route from 'ziggy-js'
+import {Link, useForm} from '@inertiajs/vue3'
+import InputError from '../../InputError.vue'
+import InputLabel from '../../InputLabel.vue'
+import ShowPassword from './Icons/ShowPassword.vue'
+import CallSign from '../../CallSign.vue'
+import BaseInput from './Input/BaseInput.vue'
+import AuthButton from '../Button.vue'
 
 defineProps({
   errors: Object
 })
 const registrationForm = useForm({
-  name: "",
-  email: "",
-  password: "",
-  password_confirmation: ""
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: ''
 })
 const showPass = ref(true)
 const register = () => {
-  registrationForm.post(route("register"),{
-    onFinish: () => [registrationForm.reset("password"),registrationForm.reset("password_confirmation")]
+  registrationForm.post(route('register'),{
+    onFinish: () => [registrationForm.reset('password'),registrationForm.reset('password_confirmation')]
   })
 }
 </script>

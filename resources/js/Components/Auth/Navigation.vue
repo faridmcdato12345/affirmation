@@ -11,13 +11,13 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue"
-import { Link } from "@inertiajs/vue3"
-import { useDark, useToggle } from "@vueuse/core"
+import { ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
+import { useDark, useToggle } from '@vueuse/core'
 defineProps({
   routename: {
     type: String,
-    default: ""
+    default: ''
   }
 })
 const isDark = useDark()

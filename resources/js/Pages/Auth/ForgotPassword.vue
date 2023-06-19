@@ -17,8 +17,7 @@
           label="example@sample.com"
           required
           autofocus
-          autocomplete="username"
-        />
+          autocomplete="username" />
 
         <InputError class="mt-2" :message="form.errors.email" />
       </div>
@@ -36,15 +35,15 @@
   </AuthLayout>
 </template>
 <script setup>
-import AuthLayout from "../../Layouts/Auth.vue"
-import InputError from "../../Components/InputError.vue"
-import InputLabel from "../../Components/InputLabel.vue"
-import CancelButton from "../../Components/CancelButton.vue"
-import {useForm } from "@inertiajs/vue3"
-import CallSign from "../../Components/CallSign.vue"
-import AuthButton from "../../Components/Auth/Button.vue"
-import BaseInput from "../../Components/Auth/Form/Input/BaseInput.vue"
-import route from "ziggy-js"
+import AuthLayout from '../../Layouts/Auth.vue'
+import InputError from '../../Components/InputError.vue'
+import InputLabel from '../../Components/InputLabel.vue'
+import CancelButton from '../../Components/CancelButton.vue'
+import {useForm } from '@inertiajs/vue3'
+import CallSign from '../../Components/CallSign.vue'
+import AuthButton from '../../Components/Auth/Button.vue'
+import BaseInput from '../../Components/Auth/Form/Input/BaseInput.vue'
+import route from 'ziggy-js'
 defineProps({
   status: {
     type: String,
@@ -52,10 +51,10 @@ defineProps({
 })
 
 const form = useForm({
-  email: "",
+  email: '',
 })
 const submit = () => {
-  form.post(route("password.email"))
+  form.post(route('password.email'))
 }
 </script>
 <style scoped>

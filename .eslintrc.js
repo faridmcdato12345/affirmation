@@ -28,7 +28,7 @@ module.exports = {
     ],
     "quotes": [
       "error",
-      "double"
+      "single"
     ],
     "semi": [
       "error",
@@ -40,6 +40,12 @@ module.exports = {
     "vue/no-reserved-component-names": ["error", {
       "disallowVueBuiltInComponents": false,
       "disallowVue3BuiltInComponents": false
-    }]
+    }],
+    "vue/html-closing-bracket-newline": [
+      "error", {
+        "singleline": "never",
+        "multiline": "never"
+      }
+    ]
   }
 }

@@ -7,5 +7,5 @@ defineProps({
   modelValue: Boolean
 })
 
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits(['update:modelValue'])
 </script>

@@ -28,7 +28,7 @@
 </template>
 <script>
 import {Link as links
-} from "@inertiajs/vue3"
+} from '@inertiajs/vue3'
 export default {
   components:{
     links

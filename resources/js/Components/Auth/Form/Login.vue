@@ -8,8 +8,7 @@
           v-model="loginForm.email"
           label="example@sample.com"
           type="email"
-          autofocus
-        />
+          autofocus />
         <div>
           <InputError class="mt-2" :message="loginForm.errors.email" />
         </div>
@@ -21,14 +20,12 @@
             v-if="showPass" 
             v-model="loginForm.password" 
             type="password"
-            label="••••••••"
-          />
+            label="••••••••" />
           <BaseInput
             v-else 
             v-model="loginForm.password" 
             type="text" 
-            label="••••••••" 
-          />
+            label="••••••••" />
           <ShowPassword v-model="showPass" />
         </div>
         <div>
@@ -54,27 +51,27 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue"
-import {Link, useForm} from "@inertiajs/vue3"
-import InputError from "../../InputError.vue"
-import InputLabel from "../../InputLabel.vue"
-import ShowPassword from "./Icons/ShowPassword.vue"
-import CallSign from "../../CallSign.vue"
-import BaseInput from "./Input/BaseInput.vue"
-import AuthButton from "../Button.vue"
-import route from "ziggy-js"
+import { ref } from 'vue'
+import {Link, useForm} from '@inertiajs/vue3'
+import InputError from '../../InputError.vue'
+import InputLabel from '../../InputLabel.vue'
+import ShowPassword from './Icons/ShowPassword.vue'
+import CallSign from '../../CallSign.vue'
+import BaseInput from './Input/BaseInput.vue'
+import AuthButton from '../Button.vue'
+import route from 'ziggy-js'
 defineProps({
   errors: Object
 })
 const loginForm = useForm({
-  email: "",
-  password: "",
+  email: '',
+  password: '',
   remember: false
 })
 const showPass = ref(true)
 const submit = () => {
-  loginForm.post(route("login"),{
-    onFinish: () => loginForm.reset("password"),
+  loginForm.post(route('login'),{
+    onFinish: () => loginForm.reset('password'),
   })
 }
 </script>

@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup>
-import Navigation from "../Components/Auth/Navigation.vue"
+import Navigation from '../Components/Auth/Navigation.vue'
 
 
 </script>

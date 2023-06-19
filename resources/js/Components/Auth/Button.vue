@@ -9,7 +9,7 @@
 defineProps({
   label: {
     type: String,
-    default: ""
+    default: ''
   }
 })
 </script>

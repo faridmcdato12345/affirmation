@@ -8,7 +8,7 @@ body {
   font-family: "Roboto", sans-serif !important;
   line-height: 26px !important;
   color: #6c6c6c !important;
-  background-color: #f0f0f0;
+  background-color: #FFFFFF;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -3084,9 +3084,6 @@ code {
   outline: 0px !important;
 }
 
-input:hover,
-input:focus,
-input:active,
 select:hover,
 select:focus,
 select:active,
@@ -6921,3 +6918,7 @@ input[type=number] {
 .slider-cover-dots .splide__pagination {
   transform: translate(-50%, -40px) !important;
 }
+html.dark body {
+  background-color: #C4DFA9;
+}
+

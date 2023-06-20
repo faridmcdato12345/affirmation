@@ -1464,6 +1464,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    init_template();
+    // init_template();
 });
 

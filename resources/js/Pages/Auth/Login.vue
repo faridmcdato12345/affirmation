@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-export-in-script-setup -->
 <template>
   <AuthLayout>
     <LoginForm />

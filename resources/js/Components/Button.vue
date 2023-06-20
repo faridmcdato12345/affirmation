@@ -1,7 +1,10 @@
 <template>
-  <button
+  <component
+    :is="componentType == 'link' ? Link : 'button'"
+    :href="href"
+    :type="type"
     :class="[
-      'duration-150 ease-out text-white',
+      'duration-150 ease-out text-white text-center',
       btnSize, btnColor,
       {
         'w-full block': btnBlock
@@ -9,10 +12,13 @@
       rounded ? 'rounded-full' : 'rounded-lg'
     ]">
     {{ text }}
-  </button>
+  </component>
 </template>
 <script setup>
 import { computed } from 'vue'
+// eslint-disable-next-line no-unused-vars
+import { Link } from '@inertiajs/vue3'
+
 const props = defineProps({
   label: {
     type: String,
@@ -41,6 +47,18 @@ const props = defineProps({
   rounded: {
     type: Boolean,
     default: false
+  },
+  componentType: {
+    type: String,
+    default: 'button'
+  },
+  href: {
+    type: String,
+    default: ''
+  },
+  type: {
+    type: String,
+    default: 'button'
   }
 })
 

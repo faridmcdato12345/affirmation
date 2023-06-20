@@ -50,6 +50,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
+      .use(rate)
       .use(ZiggyVue,Ziggy)
       .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)

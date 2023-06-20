@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -27,9 +28,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('affirmation', [
+        return Inertia::render('Index', [
             'affirmation' => Auth::user()->getAffirmation(), 
-            'progress_id' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
+            'progressId' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
             'active' => 'home'
         ]);
     }
@@ -51,8 +52,15 @@ class HomeController extends Controller
      */
     public function categories()
     {
-        $user = Auth::user();
-        return view('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+        return Inertia::render('Categories', [
+            'categories' => Category::all()->groupBy('premium'), 
+            'activeCategory' => Auth::user()->active_category
+        ]);
+    }
+
+    public function themes()
+    {
+        return Inertia::render('Themes');
     }
 
     /**

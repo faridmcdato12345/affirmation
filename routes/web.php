@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,9 +21,11 @@ use Inertia\Inertia;
 
 // Auth::routes();
 
-// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::get('/categories', [App\Http\Controllers\HomeController::class, 'categories'])->name('categories');
+Route::controller(HomeController::class)->group(function () {
+  Route::get('/', 'index')->name('home');
+  Route::get('/categories','categories')->name('categories');
+  Route::get('/themes', 'themes')->name('themes');
+});
 
 // Route::post('/categories/active', [App\Http\Controllers\HomeController::class, 'setActiveCategory'])->name('setCategory');
 

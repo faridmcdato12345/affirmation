@@ -24,7 +24,8 @@ class ExerciseResult extends Model
      */
     protected $fillable = [
         'progress_id',
-        'believe',
+        'happiness_score',
+        'belief_score',
         'input1',
         'input2',
         'input3',

@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Cookie;
 use Str;
+use Cookie;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -64,21 +68,28 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function store(Request $request)
     {
         $referred_by = Cookie::get('referral');
 
-        $u = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'active_category' => 1, //TODO: create a config file which can set the default active category.
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'string', "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", 'confirmed'],
+        ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'active_category' => 1,
             'affiliate_id' => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
             'referred_by'   => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
         ]);
-        if ($u->save()) {
+        if ($user->save()) {
             Cookie::queue(Cookie::forget('referral'));
         }
-        return $u;
+        event(new Registered($user));
+        Auth::login($user);
+        return redirect(RouteServiceProvider::HOME);
     }
 }

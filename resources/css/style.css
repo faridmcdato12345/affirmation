@@ -8,13 +8,13 @@ body {
   font-family: "Roboto", sans-serif !important;
   line-height: 26px !important;
   color: #6c6c6c !important;
-  background-color: #f0f0f0;
+  background-color: #FFFFFF;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: #1f1f1f;
-  font-family: "Source Sans Pro", sans-serif !important;
+  /* font-family: "Source Sans Pro", sans-serif !important; */
   margin-bottom: 5px;
   letter-spacing: -0.3px;
 }
@@ -3084,9 +3084,6 @@ code {
   outline: 0px !important;
 }
 
-input:hover,
-input:focus,
-input:active,
 select:hover,
 select:focus,
 select:active,
@@ -4982,10 +4979,6 @@ input[type=number] {
   color: #000 !important;
 }
 
-.bg-white {
-  background-color: #FFF !important;
-}
-
 .bg-black {
   background-color: #000 !important;
 }
@@ -6393,10 +6386,6 @@ input[type=number] {
   color: #000 !important;
 }
 
-.bg-white {
-  background-color: #FFF !important;
-}
-
 .bg-black {
   background-color: #000 !important;
 }
@@ -6921,3 +6910,7 @@ input[type=number] {
 .slider-cover-dots .splide__pagination {
   transform: translate(-50%, -40px) !important;
 }
+html.dark body {
+  background-color: #C4DFA9;
+}
+

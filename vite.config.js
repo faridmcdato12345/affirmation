@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import path from 'path';
+import vue from '@vitejs/plugin-vue';
+import eslintPlugin from 'vite-plugin-eslint'
 
 export default defineConfig({
     build: {
@@ -18,6 +20,15 @@ export default defineConfig({
             ],
             refresh: true,
         }),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
+        eslintPlugin()
     ],
     server: {
         host: '0.0.0.0',
@@ -31,7 +42,8 @@ export default defineConfig({
     resolve: {
         alias: {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-            "~vanilla-lazyload": path.resolve(__dirname, 'node_modules/vanilla-lazyload')
-        }
+            "~vanilla-lazyload": path.resolve(__dirname, 'node_modules/vanilla-lazyload'),
+            ziggy: path.resolve('vendor/tightenco/ziggy/dist/vue.es')
+        },
     }
 });

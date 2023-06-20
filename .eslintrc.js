@@ -5,6 +5,13 @@ module.exports = {
     "browser": true,
     "es2021": true,
     "node": true,
+    "amd": true
+  },
+  "globals":
+  {
+    "Thenable": true,
+    "NodeJS": true,
+    "route": false
   },
   "extends": [
     "eslint:recommended",
@@ -46,6 +53,14 @@ module.exports = {
         "singleline": "never",
         "multiline": "never"
       }
-    ]
+    ],
+    "vue/html-self-closing": ["error", {
+      "html": {
+        "void": "always",
+        "normal": "never",
+      },
+      "svg": "always",
+      "math": "always"
+    }]
   }
 }

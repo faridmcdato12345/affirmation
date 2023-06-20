@@ -14,7 +14,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: #1f1f1f;
-  font-family: "Source Sans Pro", sans-serif !important;
+  /* font-family: "Source Sans Pro", sans-serif !important; */
   margin-bottom: 5px;
   letter-spacing: -0.3px;
 }
@@ -4979,10 +4979,6 @@ input[type=number] {
   color: #000 !important;
 }
 
-.bg-white {
-  background-color: #FFF !important;
-}
-
 .bg-black {
   background-color: #000 !important;
 }
@@ -6388,10 +6384,6 @@ input[type=number] {
 
 .color-black {
   color: #000 !important;
-}
-
-.bg-white {
-  background-color: #FFF !important;
 }
 
 .bg-black {

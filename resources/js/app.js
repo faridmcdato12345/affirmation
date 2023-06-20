@@ -20,6 +20,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 
+import rate from 'vue-rate'
+import 'vue-rate/dist/vue-rate.css'
+
 // CSS
 import "../css/app.css"
 import "../css/bootstrap.css"
@@ -38,7 +41,7 @@ library.add([
 ])
 
 createInertiaApp({
-  title: (title) => `${title} Affirm`,
+  title: (title) => `${title} - Affirm`,
   resolve: (name) =>
     resolvePageComponent(
       `./Pages/${name}.vue`,
@@ -47,6 +50,7 @@ createInertiaApp({
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })
       .use(plugin)
+      .use(rate)
       .use(ZiggyVue,Ziggy)
       .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)

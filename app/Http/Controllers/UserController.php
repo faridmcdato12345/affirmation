@@ -44,9 +44,9 @@ class UserController extends Controller
         return Auth::user()->getAffirmation();
     }
 
-    public function show(User $user)
+    public function show()
     {
-        return Inertia::render('User/Index', ['user' => $user]);
+        return Inertia::render('Setting/Account', ['user' => Auth::user()]);
     }
 
     public function update(User $user, UpdateUserRequest $request)

@@ -16,10 +16,7 @@ class SecurityController extends Controller
 
     public function update(User $user, Request $request)
     {
-        $user->update($request->validate([
-            'password' => 'required',
-            'new_password' => 'required|string|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/|confirmed',
-            'confirm_new_password' => 'required|string|'
-        ]))
+        $user->update($request->validated());
+        return to_route('users.index');
     }
 }

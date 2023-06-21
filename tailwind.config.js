@@ -24,8 +24,8 @@ module.exports = {
     },
     extend: {
       colors: {
-        "theme-green": "#8ABE53",
-        "hover-theme-green": "#9cd75e"
+        "theme-green": "#096A2E",
+        "hover-theme-green": "#8ABE53"
       }
     },
   },

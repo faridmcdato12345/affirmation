@@ -42,7 +42,7 @@ class HomeController extends Controller
      */
     public function settings()
     {
-        return view('settings', ['active' => 'settings']);
+        return Inertia::render('Settings');
     }
 
     /**

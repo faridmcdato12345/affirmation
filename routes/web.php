@@ -28,7 +28,11 @@ Route::middleware('auth')->group(function () {
   });
 
   Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
+
+  
 });
 
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
+
 require __DIR__.'/auth.php';
+require __DIR__.'/setting.php';

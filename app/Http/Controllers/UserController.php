@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -39,5 +42,15 @@ class UserController extends Controller
     public function getAffirmation(Request $request)
     {
         return Auth::user()->getAffirmation();
+    }
+
+    public function show(User $user)
+    {
+        return Inertia::render('User/Index', ['user' => $user]);
+    }
+
+    public function update(User $user, UpdateUserRequest $request)
+    {
+        $user->update($request->validated());
     }
 }

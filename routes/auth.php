@@ -8,9 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/login', function () {
-    return Inertia::render('Auth/Login');
-})->name('login');
+Route::get('/login', [LoginController::class,'index'])->name('login');
 
 Route::post('/login',[LoginController::class,'login'])->name('post.login');
 

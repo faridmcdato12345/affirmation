@@ -3102,7 +3102,7 @@ button:active {
   -webkit-appearance: none !important;
 }
 
-.theme-light input, select, textarea {
+.theme-light input, select {
   border-color: rgba(0, 0, 0, 0.08) !important;
 }
 

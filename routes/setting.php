@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/account/{user}',[UserController::class,'update'])->name('user.update');
 
         Route::get('/security',[SecurityController::class,'index'])->name('security.index');
-        Route::patch('/security/{user}',[SecurityController::class,'update'])->name('security.update');
+        Route::patch('/security',[SecurityController::class,'update'])->name('security.update');
 
         Route::get('/report_bug',[ReportBugController::class,'index'])->name('reportbug.index');
         Route::post('/report_bug',[ReportBugController::class,'store'])->name('reportbug.store');

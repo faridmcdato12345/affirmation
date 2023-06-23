@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class FeedbackController extends Controller
 {
@@ -20,8 +21,12 @@ class FeedbackController extends Controller
         ],[
             'description' => 'You forgot to write something.'
         ]);
-        $user = Auth::user();
-        $user->feedback()->create($validated);
-        return redirect()->route('setting.feedback.index');
+        try {
+            $user = Auth::user();
+            $user->feedback()->create($validated);
+            return redirect()->route('setting.feedback.index');
+        } catch (Throwable $th) {
+            throw $th;
+        }
     }
 }

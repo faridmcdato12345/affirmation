@@ -16,11 +16,6 @@
     <Modal v-model="modalShown">
       <AffirmationExercise :progress-id="progressId" @close-modal="modalShown = false" />
     </Modal>
-    <div class="absolute top-4 left-4">
-      <Link href="/logout" method="post" as="button" type="button">
-        Logout
-      </Link>
-    </div>
   </AuthenticatedLayout>
 </template>
 <script setup>
@@ -29,7 +24,6 @@ import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Button from '../Components/Button.vue'
 import Modal from '../Components/Modal.vue'
 import AffirmationExercise from '../Components/AffirmationExercise.vue'
-import { Link } from '@inertiajs/vue3'
 
 defineProps({
   affirmation: Object,

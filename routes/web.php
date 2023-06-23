@@ -1,12 +1,8 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +15,7 @@ use Inertia\Inertia;
 |
 */
 
-Auth::routes();
+// Auth::routes();
 
 Route::middleware('auth')->group(function () {
 
@@ -32,24 +28,11 @@ Route::middleware('auth')->group(function () {
   });
 
   Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
+
+  
 });
 
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 
-Route::get('/login', function () {
-  return Inertia::render('Auth/Login');
-})->name('login');
-
-Route::post('/login',[LoginController::class,'login'])->name('post.login');
-
-Route::get('/register',function () {
-  return Inertia::render('Auth/Register');
-})->name('register');
-
-Route::post('/register',[RegisterController::class,'store'])->name('post.register');
-Route::inertia('/forgot-password','Auth/ForgotPassword')->name('forgot.password');
-Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-  ->middleware('guest')
-  ->name('password.email');
-Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-->name('password.reset');
+require __DIR__.'/auth.php';
+require __DIR__.'/setting.php';

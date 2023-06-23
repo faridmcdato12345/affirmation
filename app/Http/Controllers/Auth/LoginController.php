@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Inertia\Inertia;
 
 class LoginController extends Controller
 {
@@ -58,5 +59,13 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return response()->noContent();
+    }
+
+    public function index()
+    {
+        if(Auth::check()){
+            return redirect()->route('home');
+        }
+        return Inertia::render('Auth/Login');
     }
 }

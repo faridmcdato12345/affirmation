@@ -4,7 +4,14 @@
       <h1 class="px-4 text-4xl md:px-0 md:text-6xl font-medium tracking-tight text-center text-white max-w-5xl">
         {{ affirmation.text }}
       </h1>
-      <Button label="Begin Exercise" size="lg" rounded color="success" class="mt-4" @click.prevent="modalShown = true" />
+      <Button
+        v-if="!exerciseFinished"
+        label="Begin Exercise"
+        size="lg"
+        rounded
+        color="success"
+        class="mt-4"
+        @click.prevent="modalShown = true" />
     </div>
     <Modal v-model="modalShown">
       <AffirmationExercise :progress-id="progressId" @close-modal="modalShown = false" />
@@ -21,6 +28,7 @@ import AffirmationExercise from '../Components/AffirmationExercise.vue'
 defineProps({
   affirmation: Object,
   progressId: [Number, String],
+  exerciseFinished: Boolean
 })
 
 const modalShown = ref(false)

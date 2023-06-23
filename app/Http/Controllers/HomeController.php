@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\ExerciseResult;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
 use Illuminate\Support\Facades\Log;
@@ -28,10 +29,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
+
         return Inertia::render('Index', [
-            'affirmation' => Auth::user()->getAffirmation(), 
-            'progressId' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
-            'active' => 'home'
+            'affirmation'      => Auth::user()->getAffirmation(),
+            'progressId'       => $progressId,
+            'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
+            'active'           => 'home'
         ]);
     }
 
@@ -53,7 +57,7 @@ class HomeController extends Controller
     public function categories()
     {
         return Inertia::render('Categories', [
-            'categories' => Category::all()->groupBy('premium'), 
+            'categories' => Category::all()->groupBy('premium'),
             'isPremium' => Auth::user()->subscribed(),
             'activeCategory' => Auth::user()->active_category
         ]);
@@ -91,7 +95,7 @@ class HomeController extends Controller
     public function report(Request $request)
     {
         $user = Auth::user();
-        
+
         $sib = new SendInBlue();
         try {
             $sib->sendReportEmail(Auth::user(), htmlspecialchars($request->contactMessageTextarea));

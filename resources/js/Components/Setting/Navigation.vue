@@ -3,7 +3,7 @@
     <Link 
       v-for="link in settingNavLinks"
       :key="`${link.label}-route`"
-      :href="route(link.link)"
+      :href="link.link != 'subscription' ? route(link.link) : '/billing'"
       class="border-b-2 text-xl text-theme-green  border-hover-theme-green flex items-center">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">

@@ -34,7 +34,7 @@
         </h1>
         <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
           {{ modalTextBody }}
-        </p>
+        </p> 
       </div>
       <div class="flex items-center justify-center gap-x-2 mt-4">
         <Button label="Cancel" color="error" @click.prevent="modal = false" />

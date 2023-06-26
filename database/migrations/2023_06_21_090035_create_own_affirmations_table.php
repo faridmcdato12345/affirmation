@@ -14,10 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('own_affirmations', function (Blueprint $table) {
+        Schema::create('user_affirmations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->string('affrimation');
+            $table->string('affirmation');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('own_affirmations');
+        Schema::dropIfExists('user_affirmations');
     }
 };

@@ -4,16 +4,19 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Spark\Billable;
 use App\Models\Setting\Feedback;
 use App\Models\Setting\ReportBug;
+use App\Models\Setting\UserAffirmation;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spark\Billable;
 
 class User extends Authenticatable
 {
@@ -83,6 +86,11 @@ class User extends Authenticatable
         return $this->hasMany(Feedback::class);
     }
 
+    public function user_affirmation(): HasMany
+    {
+        return $this->hasMany(UserAffirmation::class);
+    }
+
     /**
      * Get an Affirmation that was stored in progress on the same day or get a new Affirmation.
      *
@@ -135,9 +143,21 @@ class User extends Authenticatable
         }
         return false;
     }
-
-    // public function getUserPassword($id)
-    // {
-    //     $this->
-    // }
+    /**
+     * get the exercise result of the user
+     */
+    public function getExerciseResult(): Collection
+    {
+        $exercise = ExerciseResult::with('progress.affirmation')->whereHas('progress',function($query){
+            $query->where('user_id',Auth::user()->id);
+        })->get();
+        $data = $exercise->map(function($exercise){
+            return [
+                'id' => $exercise->id,
+                'title' => $exercise->progress->affirmation->text,
+                'start' => $exercise->created_at->format('Y-m-d')
+            ];
+        });
+        return $data;
+    }
 }

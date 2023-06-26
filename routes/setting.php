@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Setting\CalendarController;
 use App\Http\Controllers\Setting\ChartController;
 use App\Http\Controllers\Setting\FeedbackController;
-use App\Http\Controllers\Setting\OwnAffirmationController;
+use App\Http\Controllers\Setting\UserAffirmationController;
 use App\Http\Controllers\Setting\ReportBugController;
 use App\Http\Controllers\Setting\SecurityController;
 use Illuminate\Support\Facades\Route;
@@ -26,8 +26,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/feedback',[FeedbackController::class,'index'])->name('feedback.index');
         Route::post('/feedback',[FeedbackController::class,'store'])->name('feedback.store');
 
-        Route::get('/own_affirmation',[OwnAffirmationController::class,'index'])->name('ownaffirmation.index');
-        Route::post('/own_affirmation',[OwnAffirmationController::class,'store'])->name('ownaffirmation.store');
+        Route::get('/user_affirmation',[UserAffirmationController::class,'index'])->name('useraffirmation.index');
+        Route::post('/user_affirmation',[UserAffirmationController::class,'store'])->name('useraffirmation.store');
 
         Route::get('/calendar',[CalendarController::class,'index'])->name('calendar.index');
 

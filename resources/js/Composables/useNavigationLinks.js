@@ -34,7 +34,7 @@ export function useNavigationLinks() {
     },
     {
       icon: SparklesIcon,
-      link: 'home',
+      link: 'premium',
       label: 'Premium'
     },    
     {
@@ -75,13 +75,13 @@ export function useNavigationLinks() {
     },
     {
       icon: CurrencyDollarIcon,
-      link: 'settings',
+      link: 'subscription',
       label: 'Subscription',
       description: ''
     },
     {
       icon: ListBulletIcon,
-      link: 'setting.ownaffirmation.index',
+      link: 'setting.useraffirmation.index',
       label: 'Add Own',
       description: '',
       leftIcon: ChevronRightIcon

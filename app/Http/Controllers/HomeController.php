@@ -29,10 +29,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $affirmation = Auth::user()->getAffirmation();
         $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
 
         return Inertia::render('Index', [
-            'affirmation'      => Auth::user()->getAffirmation(),
+            'affirmation'      => $affirmation,
             'progressId'       => $progressId,
             'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
             'active'           => 'home'

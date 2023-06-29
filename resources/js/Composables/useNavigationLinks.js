@@ -1,9 +1,9 @@
-import { 
-  HomeIcon, 
-  StarIcon, 
-  SparklesIcon, 
+import {
+  HomeIcon,
+  StarIcon,
+  SparklesIcon,
   Cog6ToothIcon,
-  PaintBrushIcon,
+  //   PaintBrushIcon,
   UserIcon,
   LockClosedIcon,
   BugAntIcon,
@@ -27,21 +27,21 @@ export function useNavigationLinks() {
       link: 'categories',
       label: 'Categories'
     },
-    {
-      icon: PaintBrushIcon,
-      link: 'themes',
-      label: 'Themes'
-    },
+    // {
+    //   icon: PaintBrushIcon,
+    //   link: 'themes',
+    //   label: 'Themes'
+    // },
     {
       icon: SparklesIcon,
-      link: 'home',
+      link: 'billing',
       label: 'Premium'
-    },    
+    },
     {
       icon: Cog6ToothIcon,
       link: 'setting.user.index',
       label: 'Settings'
-    },    
+    },
   ]
 
   const settingNavLinks = [

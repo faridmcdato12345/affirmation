@@ -3,7 +3,8 @@
     <nav class="bottom-0 left-0 px-4 fixed bg-white pt-2 pb-1 shadow w-full md:rounded-2xl md:mb-12 md:w-[640px] md:left-1/2 md:-translate-x-1/2 duration-200 ease-in-out z-20">
       <ul class="flex justify-around items-center mb-0 pl-0">
         <Link
-          v-for="link in navLinks" :key="`${link.label}-route`" :href="route(link.link)" 
+          v-for="link in navLinks" :key="`${link.label}-route`"
+          :href="route().has(link.link) ? route(link.link) : link.link"
           class=" hover:bg-blue-100 rounded-full px-4 py-2 duration-200 ease-out"
           :class="isRouteActive(link.link)">
           <div class="flex flex-col items-center cursor-pointer">
@@ -18,7 +19,10 @@
 <script setup>
 import { useNavigationLinks } from '../Composables/useNavigationLinks'
 import { Link } from '@inertiajs/vue3'
+
+// const page = usePage()
 const { navLinks } = useNavigationLinks()
+
 
 const isRouteActive = (data) => {
   /* eslint-disable */
@@ -26,4 +30,5 @@ const isRouteActive = (data) => {
     ? 'text-blue-500'
     : 'text-gray-500'
 }
+
 </script>

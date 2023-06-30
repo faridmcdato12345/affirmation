@@ -29,10 +29,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/user_affirmation',[UserAffirmationController::class,'index'])->name('useraffirmation.index');
         Route::post('/user_affirmation',[UserAffirmationController::class,'store'])->name('useraffirmation.store');
 
-        Route::get('/calendar',[CalendarController::class,'index'])->name('calendar.index');
-
-        Route::get('/chart',[ChartController::class,'index'])->name('chart.index');
-
+        
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
 

@@ -1,9 +1,9 @@
 <template>
-  <Settings>
-    <div class="w-full pl-16 pr-8 py-16 h-full">
+  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings">
+    <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
       <form @submit.prevent="save">
         <div class="mb-12 border-b-2 border-hover-theme-green pb-8">
-          <h1 class="text-theme-green">
+          <h1 class="text-theme-green md:text-left text-center">
             Feedback
           </h1>
         </div>
@@ -40,9 +40,11 @@
         <Button label="Cancel" color="error" @click.prevent="modal = false" />
       </div>
     </Modal>
-  </Settings>
+  </component>
 </template>
 <script setup>
+import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
+import { isMobile } from 'mobile-device-detect'
 import { useForm } from '@inertiajs/vue3'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
 import Settings from '../Settings.vue'

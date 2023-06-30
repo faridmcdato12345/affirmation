@@ -4,13 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Carbon\Carbon;
 use Spark\Billable;
+use Nette\Utils\Arrays;
 use App\Models\Setting\Feedback;
 use App\Models\Setting\ReportBug;
-use App\Models\Setting\UserAffirmation;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Setting\UserAffirmation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -146,18 +148,86 @@ class User extends Authenticatable
     /**
      * get the exercise result of the user
      */
-    public function getExerciseResult(): Collection
+    public function getUserExercise()
     {
-        $exercise = ExerciseResult::with('progress.affirmation')->whereHas('progress',function($query){
+        $user = ExerciseResult::with('progress.affirmation')->whereHas('progress',function($query){
             $query->where('user_id',Auth::user()->id);
-        })->get();
-        $data = $exercise->map(function($exercise){
-            return [
-                'id' => $exercise->id,
-                'title' => $exercise->progress->affirmation->text,
-                'start' => $exercise->created_at->format('Y-m-d')
-            ];
         });
-        return $data;
+        return $user;
+    }
+    public function getUserCalendar()
+    {
+        $exercises = $this->getUserExercise()->orderBy('created_at','asc')->get();
+        $d = $this->generateArrayNumbers(count($exercises) - 1);
+        $dataArray = [];
+        foreach ($exercises as $key => $exercise) {
+            if(!Auth::user()->subscribedToPremium()){
+                if(in_array($key,$d)){
+                    array_push($dataArray,[
+                        'id'=> $exercise->id,
+                        'title' => $exercise->progress->affirmation->text,
+                        'start' => $exercise->created_at->format('Y-m-d'),
+                        'backgroundColor' => '#8ABE53',
+                        'borderColor' => '#8ABE53'
+                    ]);
+                }else{
+                    array_push($dataArray,[
+                        'id'=> $exercise->id,
+                        'title' => 'Subcribe to premium to see',
+                        'start' => $exercise->created_at->format('Y-m-d'),
+                        'backgroundColor' => 'red',
+                        'borderColor' => 'red'
+                    ]);
+                }
+            }else{
+                array_push($dataArray,[
+                    'id'=> $exercise->id,
+                    'title' => $exercise->progress->affirmation->text,
+                    'start' => $exercise->created_at->format('Y-m-d'),
+                    'backgroundColor' => '#8ABE53',
+                    'borderColor' => '#8ABE53'
+                ]);
+            }
+            
+        }
+        return $dataArray;
+    }
+    public function getUserChart()
+    {
+        if(Auth::user()->subscribedToPremium()){
+            $exercises = $this->getUserExercise()->orderBy('created_at','asc')->get();
+        }else{
+            $exercises = $this->getUserExercise()->orderBy('created_at','asc')->latest()->take(6)->get();
+            unset($exercises[0]);
+        }
+        $labelData = [];
+        $happinessDataPoints = [];
+        $beliefDataPoints = [];
+        foreach ($exercises as $key => $exercise) {
+           $labelData[] = $exercise->created_at->format('Y-m-d');
+           $happinessDataPoints[] = $exercise->happiness_score;
+           $beliefDataPoints[] = $exercise->belief_score;
+        }
+        return [
+            'data' => [
+                'label' => $labelData,
+                'happiness' => $happinessDataPoints,
+                'belief' => $beliefDataPoints,
+            ],
+            'user_is_paid' => Auth::user()->subscribedToPremium() ? true : false
+        ];
+    }
+    private function generateArrayNumbers($value)
+    {
+        $numbers = [];
+        for($i = 0; $i <= $value; $i++)
+        {
+            if($i > 4)
+            {
+                break;
+            }
+            $numbers[] = intval($value - $i);
+        }
+        return $numbers;
     }
 }

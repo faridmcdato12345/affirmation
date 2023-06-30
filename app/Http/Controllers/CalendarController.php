@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Setting;
+namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
@@ -19,10 +19,9 @@ class CalendarController extends Controller
     }
     public function index()
     {
-        $exerciseResult = $this->user->getExerciseResult();
-        // dd($exerciseResult->toArray());
-        return Inertia::render('Setting/Calendar',[
-            'results' => $exerciseResult->toArray()
+        $exerciseResult = $this->user->getUserCalendar();
+        return Inertia::render('Calendar',[
+            'results' => $exerciseResult
         ]);
     }
 }

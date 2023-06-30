@@ -1,65 +1,47 @@
 <template>
-  <Settings v-if="!isMobile">
-    <div class="w-full pl-16 pr-8 py-16 h-full">
-      <form @submit.prevent="save">
-        <div class="mb-12 border-b-2 border-hover-theme-green pb-8">
-          <h1 class="text-theme-green">
-            Account Settings
-          </h1>
-        </div>
-        <div class="mb-12">
-          <h4 class="text-theme-green">
-            Personal Information
-          </h4>
-        </div>
-        <FormInput id="fullname" v-model="form.name" label="Full Name" type="text" />
-        <br />
-        <FormInput id="email" v-model="form.email" type="email" label="Email Address" />
-        <br />
-        <Button label="Save Changes" />
-      </form>
-    </div>
-  </Settings>
-  <div v-else>
-    <div class="w-full h-full p-4">
-      <form @submit.prevent="save">
-        <div class="mb-12 border-b-2 border-hover-theme-green pb-8">
-          <h1 class="text-theme-green text-center">
-            Account Settings
-          </h1>
-        </div>
-        <div class="mb-12">
-          <h4 class="text-theme-green">
-            Personal Information
-          </h4>
-        </div>
-        <FormInput id="fullname" v-model="form.name" label="Full Name" type="text" />
-        <br />
-        <FormInput id="email" v-model="form.email" type="email" label="Email Address" />
-        <br />
-        <Button label="Save Changes" />
-      </form>
-      <Modal v-model="modal">
-        <div class="text-center">
-          <component 
-            :is="modalIcon ? CheckCircleIcon : XCircleIcon" 
-            class="w-14 mx-auto text-green-600 duration-200 ease-out" />
-          <!-- <CheckCircleIcon class="w-14 mx-auto text-green-600" /> -->
-          <h1 class="mt-2">
-            {{ modalTextHeader }}
-          </h1>
-          <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
-            {{ modalTextBody }}
-          </p> 
-        </div>
-        <div class="flex items-center justify-center gap-x-2 mt-4">
-          <Button label="Cancel" color="error" @click.prevent="modal = false" />
-        </div>
-      </Modal>
-    </div>
+  <div>
+    <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings">
+      <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
+        <form @submit.prevent="save">
+          <div class="mb-12 border-b-2 border-hover-theme-green pb-8">
+            <h1 class="text-theme-green text-center md:text-left">
+              Account Settings
+            </h1>
+          </div>
+          <div class="mb-12">
+            <h4 class="text-theme-green">
+              Personal Information
+            </h4>
+          </div>
+          <FormInput id="fullname" v-model="form.name" label="Full Name" type="text" />
+          <br />
+          <FormInput id="email" v-model="form.email" type="email" label="Email Address" />
+          <br />
+          <Button label="Save Changes" />
+        </form>
+      </div>
+    </component>
+    <Modal v-model="modal">
+      <div class="text-center">
+        <component 
+          :is="modalIcon ? CheckCircleIcon : XCircleIcon" 
+          class="w-14 mx-auto text-green-600 duration-200 ease-out" />
+        <!-- <CheckCircleIcon class="w-14 mx-auto text-green-600" /> -->
+        <h1 class="mt-2">
+          {{ modalTextHeader }}
+        </h1>
+        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
+          {{ modalTextBody }}
+        </p> 
+      </div>
+      <div class="flex items-center justify-center gap-x-2 mt-4">
+        <Button label="Cancel" color="error" @click.prevent="modal = false" />
+      </div>
+    </Modal>
   </div>
 </template>
 <script setup>
+import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import { ref } from 'vue'
 import { isMobile } from 'mobile-device-detect'
 import { useForm } from '@inertiajs/vue3'

@@ -1,9 +1,14 @@
 <template>
   <div class="flex flex-col w-4/12 h-full border-r-2 border-hover-theme-green pt-3">
+    <Link :href="route('home')">
+      <component 
+        :is="XCircleIcon" 
+        class="text-hover-theme-green duration-200 ease-out flex items-start justify-start w-10" />
+    </Link>
     <Link 
       v-for="link in settingNavLinks"
       :key="`${link.label}-route`"
-      :href="route(link.link)"
+      :href="link.link != 'subscription' ? route(link.link) : '/billing'"
       class="border-b-2 text-xl text-theme-green  border-hover-theme-green flex items-center">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
@@ -40,7 +45,7 @@ import route from 'ziggy-js'
 import { Link } from '@inertiajs/vue3'
 import { PowerIcon } from '@heroicons/vue/24/solid'
 import { useNavigationLinks } from '../../Composables/useNavigationLinks'
-
+import { XCircleIcon } from '@heroicons/vue/24/solid'
 
 const { settingNavLinks } = useNavigationLinks()
 

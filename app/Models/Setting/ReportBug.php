@@ -11,7 +11,10 @@ class ReportBug extends Model
 {
     use HasFactory;
 
-    protected $guarded;
+    protected $fillable = [
+        'description',
+        'user_id'
+    ];
 
     public function users(): BelongsTo
     {

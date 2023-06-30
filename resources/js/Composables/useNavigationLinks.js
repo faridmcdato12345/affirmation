@@ -14,7 +14,7 @@ import {
   ChartBarIcon,
   ChevronRightIcon
 } from '@heroicons/vue/24/solid'
-
+import { isMobile } from 'mobile-device-detect'
 export function useNavigationLinks() {
   const navLinks = [
     {
@@ -33,15 +33,26 @@ export function useNavigationLinks() {
       label: 'Themes'
     },
     {
+      icon: CalendarIcon,
+      link: 'calendar.index',
+      label: 'Calendar',
+    },
+    {
+      icon: ChartBarIcon,
+      link: 'chart.index',
+      label: 'My Progress',
+    },
+    {
       icon: SparklesIcon,
       link: 'home',
       label: 'Premium'
     },    
     {
       icon: Cog6ToothIcon,
-      link: 'setting.user.index',
+      link: isMobile ? 'settings' : 'setting.user.index',
       label: 'Settings'
     },    
+    
   ]
 
   const settingNavLinks = [
@@ -75,31 +86,18 @@ export function useNavigationLinks() {
     },
     {
       icon: CurrencyDollarIcon,
-      link: 'settings',
+      link: 'subscription',
       label: 'Subscription',
       description: ''
     },
     {
       icon: ListBulletIcon,
-      link: 'setting.ownaffirmation.index',
+      link: 'setting.useraffirmation.index',
       label: 'Add Own',
       description: '',
       leftIcon: ChevronRightIcon
     },
-    {
-      icon: CalendarIcon,
-      link: 'setting.calendar.index',
-      label: 'Calendar',
-      description: '',
-      leftIcon: ChevronRightIcon
-    },
-    {
-      icon: ChartBarIcon,
-      link: 'setting.chart.index',
-      label: 'Chart',
-      description: '',
-      leftIcon: ChevronRightIcon
-    },
+    
   ]
 
   return { navLinks,settingNavLinks }

@@ -3,13 +3,11 @@ import {
   StarIcon,
   SparklesIcon,
   Cog6ToothIcon,
-  //   PaintBrushIcon,
   UserIcon,
   LockClosedIcon,
   BugAntIcon,
   PencilIcon,
   CurrencyDollarIcon,
-  ListBulletIcon,
   CalendarIcon,
   ChartBarIcon,
   ChevronRightIcon
@@ -27,11 +25,6 @@ export function useNavigationLinks() {
       link: 'categories',
       label: 'Categories'
     },
-    // {
-    //   icon: PaintBrushIcon,
-    //   link: 'themes',
-    //   label: 'Themes'
-    // },
     {
       icon: CalendarIcon,
       link: 'calendar.index',
@@ -89,14 +82,7 @@ export function useNavigationLinks() {
       link: 'subscription',
       label: 'Subscription',
       description: ''
-    },
-    {
-      icon: ListBulletIcon,
-      link: 'setting.useraffirmation.index',
-      label: 'Add Own',
-      description: '',
-      leftIcon: ChevronRightIcon
-    },
+    }
 
   ]
 

@@ -9,9 +9,11 @@
       background-repeat: no-repeat;
       background-size: cover;
     "></div>
-    <div class="cursor-pointer rounded-full flex items-center justify-center absolute right-10 top-6 bg-white/30 hover:bg-white/60 duration-150 ease-out p-3 z-20">
-      <LightBulbIcon class="w-6 h-6 text-white" />
-    </div>
+    <Link href="/themes">
+      <div class="cursor-pointer rounded-full flex items-center justify-center absolute right-10 top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-20">
+        <LightBulbIcon class="w-6 h-6 text-white" />
+      </div>
+    </Link>
     <NavigationBar v-if="checkRoute" />
     <div class="w-full h-screen flex justify-center items-center">
       <slot></slot>
@@ -22,6 +24,7 @@
 import { isMobile } from 'mobile-device-detect'
 import NavigationBar from '../Components/NavigationBar.vue'
 import { LightBulbIcon } from '@heroicons/vue/24/solid'
+import { Link } from '@inertiajs/vue3'
 import {ref} from 'vue'
 defineProps({
   backgroundImage: {

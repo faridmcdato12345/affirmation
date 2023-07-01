@@ -36,7 +36,6 @@ class HomeController extends Controller
             'affirmation'      => $affirmation,
             'progressId'       => $progressId,
             'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
-            'active'           => 'home'
         ]);
     }
 
@@ -78,13 +77,18 @@ class HomeController extends Controller
     public function setActiveCategory(Request $request)
     {
         $validated = $request->validate([
-        'category_id' => 'required|integer',
+            'category_id' => 'required|integer',
         ]);
 
         $user = Auth::user();
         $user->active_category = $validated['category_id'];
         $user->save();
-        return redirect()->route('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+
+        return redirect()->route('categories', [
+            'categories' => Category::all()->groupBy('premium'),
+            'active' => 'categories',
+            'activeCategory' => $user->active_category
+        ]);
     }
 
     /**

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\CalendarController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 // Auth::routes();
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
 
   Route::controller(HomeController::class)->group(function() {
     Route::get('/', 'index')->name('home');
@@ -25,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/themes', 'themes')->name('themes');
     Route::get('/settings', 'settings')->name('settings');
     Route::post('/categories/active', 'setActiveCategory')->name('setCategory');
+    Route::get('/calendar',[CalendarController::class,'index'])->name('calendar.index');
+    Route::get('/chart',[ChartController::class,'index'])->name('chart.index');
   });
 
   Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');

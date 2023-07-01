@@ -17,7 +17,7 @@ class ReportBugController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->description);
+
         $validated = $request->validate([
             'description' => 'required'
         ],[

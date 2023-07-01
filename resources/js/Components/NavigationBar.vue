@@ -1,15 +1,15 @@
 <template>
   <Teleport to="body">
-    <nav class="bottom-0 left-0 px-4 fixed bg-white pt-2 pb-1 shadow w-full md:rounded-2xl md:mb-12 md:w-[640px] md:left-1/2 md:-translate-x-1/2 duration-200 ease-in-out z-20">
+    <nav class="bottom-0 left-0 px-4 fixed bg-white pt-2 pb-1 shadow w-full md:rounded-2xl md:mb-12 md:w-[750px] md:left-1/2 md:-translate-x-1/2 duration-200 ease-in-out z-20">
       <ul class="flex justify-around items-center mb-0 pl-0">
         <Link
           v-for="link in navLinks" :key="`${link.label}-route`"
           :href="route().has(link.link) ? route(link.link) : link.link"
-          class=" hover:bg-blue-100 rounded-full px-4 py-2 duration-200 ease-out"
+          class=" hover:bg-green-100 hover:text-theme-green focus:text-theme-green rounded-full px-4 py-2 duration-200 ease-out"
           :class="isRouteActive(link.link)">
           <div class="flex flex-col items-center cursor-pointer">
             <component :is="link.icon" class="w-6 h-6" />
-            <span class="text-xs md:text-sm">{{ link.label }}</span>
+            <span v-if="!isMobile" class="text-xs md:text-sm ">{{ link.label }}</span>
           </div>
         </Link>
       </ul>
@@ -17,6 +17,7 @@
   </Teleport>
 </template>
 <script setup>
+import { isMobile } from 'mobile-device-detect'
 import { useNavigationLinks } from '../Composables/useNavigationLinks'
 import { Link } from '@inertiajs/vue3'
 
@@ -27,8 +28,7 @@ const { navLinks } = useNavigationLinks()
 const isRouteActive = (data) => {
   /* eslint-disable */
   return route().current(data)
-    ? 'text-blue-500'
+    ? 'text-theme-green'
     : 'text-gray-500'
 }
-
 </script>

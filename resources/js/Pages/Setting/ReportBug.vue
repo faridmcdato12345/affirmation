@@ -2,25 +2,26 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings">
     <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
       <form @submit.prevent="save">
-        <div class="mb-12 border-b-2 border-hover-theme-green pb-8">
+        <div class="mb-9 border-b-2 border-hover-theme-green pb-8">
           <h1 class="text-theme-green md:text-left text-center">
             Report Bug
           </h1>
         </div>
-        <div class="mb-12">
-          <h4 class="text-theme-green">
-            Write a report to help
-          </h4>
+        <div class="mb-4">
+          <h1 class="text-theme-green font-medium">
+            Tell Us What Happened
+          </h1>
+          <p>Briefly discuss the problem that you encountered so we can help more.</p>
         </div>
-        <textarea 
-          id="description" 
-          v-model="form.description" 
-          name="" 
-          cols="200" 
+        <textarea
+          id="description"
+          v-model="form.description"
+          name=""
+          cols="200"
           rows="10"
-          class="border-2 border-hover-theme-green w-full"></textarea>
+          class="border-2 border-hover-theme-green w-full rounded-md"></textarea>
         <InputError class="mt-2 mb-2" :message="form.errors.description" />
-        <Button label="Submit" />
+        <Button label="Submit" class="mt-3" />
       </form>
     </div>
     <Modal v-model="successMessage">

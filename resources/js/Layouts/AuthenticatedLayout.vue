@@ -10,8 +10,8 @@
       background-size: cover;
     "></div>
     <Link href="/themes">
-      <div class="cursor-pointer rounded-full flex items-center justify-center absolute right-10 top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-20">
-        <LightBulbIcon class="w-6 h-6 text-white" />
+      <div class="cursor-pointer rounded-full flex items-center justify-center absolute right-5 top-5 md:right-10 md:top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-20">
+        <LightBulbIcon class="w-5 h-5 md:w-6 md:h-6 text-white" />
       </div>
     </Link>
     <NavigationBar v-if="checkRoute" />
@@ -26,12 +26,7 @@ import NavigationBar from '../Components/NavigationBar.vue'
 import { LightBulbIcon } from '@heroicons/vue/24/solid'
 import { Link } from '@inertiajs/vue3'
 import {ref} from 'vue'
-defineProps({
-  backgroundImage: {
-    type: String,
-    required: true
-  }
-})
+
 const checkRoute = ref(true)
 const route = window.location.pathname
 if(route.includes('settings') && isMobile){

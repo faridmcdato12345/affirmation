@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\ExerciseResult;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
+use App\Models\UserCategories;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -58,6 +59,7 @@ class HomeController extends Controller
     {
         return Inertia::render('Categories', [
             'categories' => Category::all()->groupBy('premium'),
+            'myCategory' => UserCategories::where('user_id', auth()->id()),
             'isPremium' => Auth::user()->subscribed(),
             'activeCategory' => Auth::user()->active_category
         ]);

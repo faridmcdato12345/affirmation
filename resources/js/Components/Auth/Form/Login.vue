@@ -22,7 +22,7 @@
           Forgot Password?
         </Link>
       </div>
-      <Button label="Sign in" class="mt-4" btn-block color="success" type="submit" />
+      <Button label="Sign in" class="mt-4" btn-block color="success" :loading="loading" type="submit" />
       <p class="text-sm text-gray-700 dark:text-gray-900 flex justify-center items-center mt-4">
         Don’t have an account yet?&nbsp;<span><Link :href="route('register')" class="font-medium text-green-600 hover:underline dark:text-theme-green hover:text-green-700">
           Sign up
@@ -50,10 +50,16 @@ const loginForm = useForm({
 })
 
 const showPassword = ref(false)
+const loading = ref(false)
 
 const submit = () => {
-  loginForm.post(route('login'),{
-    onFinish: () => loginForm.reset('password'),
-  })
+  loading.value = true
+  loginForm.post(route('login'),
+    {
+      onFinish: () => {
+        loading.value = false
+        loginForm.reset('password')
+      },
+    })
 }
 </script>

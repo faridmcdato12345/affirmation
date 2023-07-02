@@ -17,9 +17,9 @@
           <component :is="showPass.confirm ? EyeSlashIcon : EyeIcon" class="text-gray-400 w-5 h-5 cursor-pointer hover:text-gray-500 duration-200 ease-out" @click.prevent="showPass.confirm = !showPass.confirm" />
         </template>
       </FormInput>
-      <Button label="Sign Up" class="mt-4" btn-block color="success" type="submit" />
+      <Button label="Sign Up" class="mt-4" btn-block color="success" type="submit" :loading="loading" />
       <p class="text-sm text-gray-700 dark:text-gray-900 flex justify-center items-center mt-4">
-        Already have an account? 
+        Already have an account?
         <Link :href="route('login')" class="font-medium text-green-600 hover:underline dark:text-theme-green hover:text-green-700">
           &nbsp;Sign in
         </Link>
@@ -29,12 +29,11 @@
 </template>
 <script setup>
 import route from 'ziggy-js'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/vue/24/solid'
 import { Link, useForm } from '@inertiajs/vue3'
 import FormInput from '../../FormInput.vue'
 import Button from '../../Button.vue'
-
 
 defineProps({
   errors: Object
@@ -52,9 +51,15 @@ const showPass = reactive({
   confirm: false
 })
 
+const loading = ref(false)
+
 const register = () => {
+  loading.value = true
   registrationForm.post(route('register'),{
-    onFinish: () => [registrationForm.reset('password'),registrationForm.reset('password_confirmation')]
+    onFinish: () => {
+      [registrationForm.reset('password'),registrationForm.reset('password_confirmation')]
+      loading.value = false
+    }
   })
 }
 </script>

@@ -10,7 +10,7 @@
       background-size: cover;
     "></div>
     <Link href="/themes">
-      <div class="cursor-pointer rounded-full flex items-center justify-center absolute right-5 top-5 md:right-10 md:top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-20">
+      <div class="cursor-pointer rounded-full flex items-center justify-center fixed right-5 top-5 md:right-10 md:top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-20">
         <LightBulbIcon class="w-5 h-5 md:w-6 md:h-6 text-white" />
       </div>
     </Link>

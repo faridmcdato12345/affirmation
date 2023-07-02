@@ -1,7 +1,7 @@
+import { isMobile } from 'mobile-device-detect'
 import {
   HomeIcon,
   StarIcon,
-  SparklesIcon,
   Cog6ToothIcon,
   UserIcon,
   LockClosedIcon,
@@ -12,7 +12,7 @@ import {
   ChartBarIcon,
   ChevronRightIcon
 } from '@heroicons/vue/24/solid'
-import { isMobile } from 'mobile-device-detect'
+
 export function useNavigationLinks() {
   const navLinks = [
     {
@@ -34,11 +34,6 @@ export function useNavigationLinks() {
       icon: ChartBarIcon,
       link: 'chart.index',
       label: 'My Progress',
-    },
-    {
-      icon: SparklesIcon,
-      link: 'billing',
-      label: 'Premium'
     },
     {
       icon: Cog6ToothIcon,
@@ -81,7 +76,7 @@ export function useNavigationLinks() {
       icon: CurrencyDollarIcon,
       link: 'subscription',
       label: 'Subscription',
-      description: ''
+      description: 'Manage your subscription'
     }
 
   ]

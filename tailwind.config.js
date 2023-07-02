@@ -31,11 +31,11 @@ module.exports = {
   },
   safelist: [
     'border-2',
-    'border-solid', 
+    'border-solid',
     'focus:ring',
     {
       pattern: /bg-(red|green|blue|orange)-(100|200|300|400|500|600|700)/,
-      variants: ['hover', 'focus', 'lg:hover', 'active'],
+      variants: ['hover', 'focus', 'lg:hover', 'active', 'disabled:hover'],
     },
     {
       pattern: /ring-(red|green|blue|orange)-(100|200|300|400|500|600|700)/,
@@ -48,4 +48,3 @@ module.exports = {
   ],
   plugins: [],
 }
-

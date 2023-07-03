@@ -85,6 +85,7 @@ const btnColorClass = {
   'error': 'red',
   'warning': 'orange',
   'primary': 'blue',
+  'gray': 'gray'
 }
 
 const text = computed(() => props.uppercase ? props.label.toUpperCase() : props.label)

@@ -11,8 +11,8 @@ var filesToCache = [
     'images/icons/android-launchericon-192-192.png',
     'images/icons/256.png',
     'images/icons/android-launchericon-512-512.png',
+    'images/bg1.jpg',
 ];
-
 // Cache on install
 self.addEventListener("install", event => {
     this.skipWaiting();
@@ -23,7 +23,6 @@ self.addEventListener("install", event => {
             })
     )
 });
-
 // Clear cache on activate
 self.addEventListener('activate', event => {
     event.waitUntil(
@@ -37,7 +36,6 @@ self.addEventListener('activate', event => {
         })
     );
 });
-
 // Serve from Cache
 self.addEventListener("fetch", event => {
     event.respondWith(

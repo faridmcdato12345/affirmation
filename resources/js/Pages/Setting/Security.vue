@@ -14,18 +14,18 @@
         </div>
         <FormInput id="old_password" v-model="form.old_password" class="md:mb-10" label="Old Password" :type="showPass.password ? 'text' : 'password'">
           <template #icon-right>
-            <component :is="showPass.password ? EyeSlashIcon : EyeIcon" class="text-gray-400 w-5 h-5 cursor-pointer hover:text-gray-500 duration-200 ease-out" @click.prevent="showPass.password = !showPass.password" />
+            <component :is="showPass.password ? EyeSlashIcon : EyeIcon" class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" @click.prevent="showPass.password = !showPass.password" />
           </template>
         </FormInput>
         <div class="md:flex md:justify-between">
           <FormInput id="new_password" v-model="form.new_password" :type="showPass.new_password ? 'text' : 'password'" label="New Password" class="md:w-[48%]">
             <template #icon-right>
-              <component :is="showPass.new_password ? EyeSlashIcon : EyeIcon" class="text-gray-400 w-5 h-5 cursor-pointer hover:text-gray-500 duration-200 ease-out" @click.prevent="showPass.new_password = !showPass.new_password" />
+              <component :is="showPass.new_password ? EyeSlashIcon : EyeIcon" class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" @click.prevent="showPass.new_password = !showPass.new_password" />
             </template>
           </FormInput>
           <FormInput id="confirm_new_password" v-model="form.confirm_new_password" :type="showPass.confirm_new_password ? 'text' : 'password'" label="Confirm New Password" class="md:w-[48%]">
             <template #icon-right>
-              <component :is="showPass.confirm_new_password ? EyeSlashIcon : EyeIcon" class="text-gray-400 w-5 h-5 cursor-pointer hover:text-gray-500 duration-200 ease-out" @click.prevent="showPass.confirm_new_password = !showPass.confirm_new_password" />
+              <component :is="showPass.confirm_new_password ? EyeSlashIcon : EyeIcon" class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" @click.prevent="showPass.confirm_new_password = !showPass.confirm_new_password" />
             </template>
           </FormInput>
         </div>

@@ -34,7 +34,7 @@ module.exports = {
     'border-solid',
     'focus:ring',
     {
-      pattern: /bg-(red|green|blue|orange)-(100|200|300|400|500|600|700)/,
+      pattern: /bg-(red|green|blue|orange|gray)-(100|200|300|400|500|600|700)/,
       variants: ['hover', 'focus', 'lg:hover', 'active', 'disabled:hover'],
     },
     {

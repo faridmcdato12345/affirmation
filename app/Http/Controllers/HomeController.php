@@ -59,9 +59,10 @@ class HomeController extends Controller
     {
         return Inertia::render('Categories', [
             'categories' => Category::all()->groupBy('premium'),
-            'myCategory' => UserCategories::where('user_id', auth()->id()),
+            'myCategories' => UserCategories::where('user_id', auth()->id())->get(),
             'isPremium' => Auth::user()->subscribed(),
-            'activeCategory' => Auth::user()->active_category
+            'activeCategory' => Auth::user()->active_category_id,
+            'activeCategoryType' => Auth::user()->active_category_type
         ]);
     }
 
@@ -83,8 +84,10 @@ class HomeController extends Controller
         ]);
 
         $user = Auth::user();
-        $user->active_category = $validated['category_id'];
-        $user->save();
+        $user->update([
+            'active_category_id' => $validated['category_id'],
+            'active_category_type' => $request->type == 'personal' ? UserCategories::class : Category::class,
+        ]);
 
         return redirect()->route('categories', [
             'categories' => Category::all()->groupBy('premium'),

@@ -7,6 +7,7 @@
       class="block px-2.5 py-3 w-full text-sm text-gray-900 bg-transparent rounded-lg border-2 border-hover-theme-green appearance-none focus:outline-none focus:ring-0 focus:border focus:border-green-600 peer"
       placeholder=" "
       :required="required"
+      :maxlength="maxLength"
       @input="(e) => emit('update:modelValue', e.target.value)" />
     <label :for="id" class="absolute text-sm cursor-text text-gray-500 duration-300 transform -translate-y-4 scale-75 top-1.5 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-8 peer-focus:top-1.5 peer-focus:scale-75 left-1">
       {{ label }}
@@ -14,9 +15,14 @@
     <div class="absolute right-4 top-[18px]">
       <slot name="icon-right"></slot>
     </div>
-    <p v-if="error" class="text-xs text-red-500 ml-2">
-      {{ error }}
-    </p>
+    <div class="flex justify-between">
+      <p class="text-xs text-red-500 ml-2">
+        {{ error }}
+      </p>
+      <p v-if="maxLength" :class="{'text-red-500' : modelValue.length >= maxLength}">
+        {{ modelValue.length }} / {{ maxLength }}
+      </p>
+    </div>
   </div>
 </template>
 <script setup>
@@ -44,6 +50,10 @@ defineProps({
   required: {
     type: Boolean,
     default: false
+  },
+  maxLength: {
+    type: [String, Number],
+    default: null
   }
 })
 

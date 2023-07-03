@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('user_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('text', 100);
-            $table->string('blurb', 100);
+            $table->string('text', 120);
+            $table->string('blurb', 160);
             $table->foreignIdFor(User::class); //User has its own defined categories
             $table->timestamps();
         });

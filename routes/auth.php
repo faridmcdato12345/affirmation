@@ -8,13 +8,13 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/login', [LoginController::class,'index'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Route::post('/login',[LoginController::class,'login'])->name('post.login');
+Route::post('/login', [LoginController::class, 'login'])->name('post.login');
 
 Route::get('/register',function () {
-return Inertia::render('Auth/Register');
-})->name('register');
+ return Inertia::render('Auth/Register');
+})->middleware('guest')->name('register');
 
 Route::post('/register',[RegisterController::class,'store'])->name('post.register');
 Route::inertia('/forgot-password','Auth/ForgotPassword')->name('forgot.password');

@@ -9,10 +9,10 @@
           Add your own category so that you can add your own affirmation.
         </p>
         <form class="mt-3" @submit.prevent="saveCategory">
-          <FormInput id="category" v-model="form.text" class="mb-3" label="Category" :error="form.errors.text" />
-          <FormInput id="blurb" v-model="form.blurb" label="Short Description" :error="form.errors.blurb" />
+          <FormInput id="category" v-model="form.text" :max-length="35" class="mb-1" label="Category" :error="form.errors.text" />
+          <FormInput id="blurb" v-model="form.blurb" :max-length="150" label="Description" :error="form.errors.blurb" />
           <div class="flex justify-end gap-x-2 mt-3">
-            <Button label="Cancel" color="error" @click.prevent="modalShown = false" />
+            <Button label="Cancel" color="gray" @click.prevent="modalShown = false" />
             <Button label="Save Category" color="success" type="submit" :loading="loading" />
           </div>
         </form>
@@ -23,6 +23,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useForm } from '@inertiajs/vue3'
+
+import { toast } from '../../Composables/useToast'
 
 import Modal from '../Modal.vue'
 import FormInput from '../FormInput.vue'
@@ -58,7 +60,7 @@ const saveCategory = () => {
       emit('update:modelValue', false)
     },
     onError: () => {
-      console.log('Form Error: ', form)
+      toast.error(form.errors.error)
     },
     onFinish: () => {
       setTimeout(() => {

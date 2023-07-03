@@ -16,10 +16,13 @@ class UserCategoryController extends Controller
          * of category.
          */
         if(!auth()->user()->subscribed()) {
-            return auth()->user()->personalCategories();
+            $userCategories = UserCategories::where('user_id', auth()->id())->count();
+            if($userCategories > 0) {
+                return back()->withErrors(['error' => 'You need to subscribe to premium to add more categories']);
+            }
         }
 
-        UserCategories::create($request->validated());
+        UserCategories::create($request->validated() + ['user_id' => auth()->id()]);
         return back()->with('success', 'User category has been added successfully!');
     }
 
@@ -29,7 +32,7 @@ class UserCategoryController extends Controller
         return back()->with('success', 'User category has been deleted successfully!');
     }
 
-    public function destory(UserCategories $userCateg)
+    public function destroy(UserCategories $userCateg)
     {
         $userCateg->delete();
         return back()->with('success', 'User category has been deleted successfully!');

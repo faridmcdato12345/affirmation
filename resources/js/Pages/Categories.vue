@@ -11,16 +11,38 @@
           My Categories
         </h2>
         <hr />
-        <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer" @click.prevent="addCategoryModal = true">
-          <div class="absolute top-3 right-3">
-            <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
+        <div class="flex flex-wrap gap-4">
+          <div
+            v-for="myCategory in myCategories"
+            :key="myCategory.id"
+            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer"
+            @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
+            <div class="absolute bottom-3 right-3 gap-x-1 flex">
+              <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="showAffirmationModal = true" />
+              <PencilSquareIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleModal('update', myCategory)" />
+              <TrashIcon class="w-5 text-gray-500 hover:text-red-600" @click.stop="toggleModal('delete', myCategory)" />
+            </div>
+            <div class="absolute top-3 right-3">
+              <CheckCircleIcon v-if="myCategory.id === activeCategory && activeCategoryType === 'App\\Models\\UserCategories'" class="w-7 text-green-600 " />
+            </div>
+            <h3 class="font-medium">
+              {{ myCategory.text }}
+            </h3>
+            <p class="text-gray-600 text-sm">
+              {{ myCategory.blurb }}
+            </p>
           </div>
-          <h3 class="font-medium">
-            Add Category
-          </h3>
-          <p class="text-gray-600 text-sm">
-            Create your own category to be able to add your custom affirmations
-          </p>
+          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer" @click.prevent="addCategoryModal = true">
+            <div class="absolute top-3 right-3">
+              <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
+            </div>
+            <h3 class="font-medium">
+              Add Category
+            </h3>
+            <p class="text-gray-600 text-sm">
+              Create your own category to be able to add your custom affirmations
+            </p>
+          </div>
         </div>
       </div>
       <div class="flex flex-col w-full pb-40">
@@ -38,7 +60,7 @@
                 i == 0 || isPremium ? 'bg-white' : 'bg-gray-200'
               ]"
               @click.prevent="toggleSwitchCategory(category)">
-              <div v-if="category.id === activeCategory" class="absolute right-3 top-3">
+              <div v-if="category.id === activeCategory && activeCategoryType === 'App\\Models\\Category'" class="absolute right-3 top-3">
                 <CheckCircleIcon class="w-6 text-green-600" />
               </div>
               <div v-if="!isPremium && i != 0" class="absolute right-3 top-3">
@@ -67,7 +89,7 @@
         </p>
       </div>
       <div class="flex items-center justify-center gap-x-2 mt-4">
-        <Button label="Cancel" color="error" @click.prevent="setCategoryModal = false" />
+        <Button label="Cancel" color="gray" @click.prevent="setCategoryModal = false" />
         <Button label="Switch Category" color="success" @click.prevent="switchCategory" />
       </div>
     </Modal>
@@ -91,16 +113,23 @@
       </div>
     </Modal>
 
+    <Affirmation v-model="showAffirmationModal" />
+
     <AddCategory v-model="addCategoryModal" />
+    <UpdateCategory v-model="updateCategoryModal" :category="selectedCateg" />
+    <DeleteCategory v-model="deleteCategoryModal" :category="selectedCateg.text" :category-id="selectedCateg.id" />
   </AuthenticatedLayout>
 </template>
 <script setup>
 import { ref } from 'vue'
-import { CheckCircleIcon, LockClosedIcon, PlusCircleIcon } from '@heroicons/vue/24/solid'
+import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/vue/24/solid'
 import { Head, router } from '@inertiajs/vue3'
 
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
+import Affirmation from '../Components/Category/Affirmation/Affirmations.vue'
 import AddCategory from '../Components/Category/AddCategory.vue'
+import UpdateCategory from '../Components/Category/UpdateCategory.vue'
+import DeleteCategory from '../Components/Category/DeleteCategory.vue'
 import Modal from '../Components/Modal.vue'
 import Button from '../Components/Button.vue'
 
@@ -108,31 +137,55 @@ const props = defineProps({
   categories: Object,
   activeCategory: [Object, Number],
   isPremium: Boolean,
-  myCategory: Object
+  myCategories: Object,
+  activeCategoryType: String,
+  errors: Object
 })
 
 const selectedCategory = ref('')
 const setCategoryModal = ref(false)
 const upgradeModal = ref(false)
-const addCategoryModal = ref(true)
+const showAffirmationModal = ref(false)
+const addCategoryModal = ref(false)
+const updateCategoryModal = ref(false)
+const deleteCategoryModal = ref(false)
 
-const toggleSwitchCategory = (category) => {
-  if(props.isPremium) {
+//Passed on the update and delete modal
+const selectedCateg = ref({})
+
+//Added as argument when updating active category
+const selectedCategoryType = ref('')
+
+const toggleModal = (type, category) => {
+  selectedCateg.value = category
+  type === 'delete' ? deleteCategoryModal.value = true : updateCategoryModal.value = true
+}
+
+const toggleSwitchCategory = (category, categoryType = '') => {
+  if(props.isPremium || categoryType === 'personal' || !category.premium) {
     setCategoryModal.value = true
     selectedCategory.value = category
+
+    //Set the selectedCategoryType to true
+    if(categoryType == 'personal') {
+      selectedCategoryType.value = 'personal'
+    }
   } else {
     upgradeModal.value = true
   }
 }
 
 const switchCategory = async () => {
+  console.log('Type: ', selectedCategoryType)
   router.post(route('setCategory'), { // eslint-disable-line no-undef
-    category_id: selectedCategory.value.id
+    category_id: selectedCategory.value.id,
+    type: selectedCategoryType.value
   }, {
     onSuccess: () => {
       selectedCategory.value = ''
       setCategoryModal.value = false
-    }
+      selectedCategoryType.value = ''
+    },
   }
   )
 }

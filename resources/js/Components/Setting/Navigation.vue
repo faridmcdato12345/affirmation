@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col w-4/12 h-full border-r-2 border-hover-theme-green pt-3">
-    <Link :href="route('home')">
+    <Link :href="route('home')" class="px-4 mb-10">
       <component
         :is="XCircleIcon"
         v-if="isMobile" 
@@ -44,6 +44,7 @@
 <script setup>
 import route from 'ziggy-js'
 import { Link } from '@inertiajs/vue3'
+import { isMobile } from 'mobile-device-detect'
 import { PowerIcon } from '@heroicons/vue/24/solid'
 import { useNavigationLinks } from '../../Composables/useNavigationLinks'
 import { XCircleIcon } from '@heroicons/vue/24/solid'

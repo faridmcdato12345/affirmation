@@ -19,6 +19,14 @@
   </div>
 </template>
 <script setup>
+import { useHomeInstallation } from '../Composables/useHomeInstallation'
+
+const { mobileOs, getInitTemplate, pwaNoCache } = useHomeInstallation()
+console.log(pwaNoCache)
+console.log(mobileOs.value)
+console.log(getInitTemplate)
+const isConnected = navigator.onLine
+console.log(isConnected)
 </script>
 <style scoped>
 .left-container{

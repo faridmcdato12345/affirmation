@@ -13,7 +13,6 @@
         href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i&display=swap"
         rel="stylesheet">
     @include('components.apple-meta')
-    <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
     @laravelPWA
     @routes
     @vite(['resources/js/app.js'])
@@ -28,6 +27,6 @@
 
     {{-- <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="scripts/custom.js"></script> --}}
-    @include('components.popups')
+    {{-- @include('components.popups') --}}
 
 </body>

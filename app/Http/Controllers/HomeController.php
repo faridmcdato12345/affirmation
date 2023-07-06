@@ -58,10 +58,10 @@ class HomeController extends Controller
     public function categories()
     {
         return Inertia::render('Categories', [
-            'categories' => Category::all()->groupBy('premium'),
-            'myCategories' => UserCategories::where('user_id', auth()->id())->get(),
-            'isPremium' => Auth::user()->subscribed(),
-            'activeCategory' => Auth::user()->active_category_id,
+            'categories'         => Category::all()->groupBy('premium'),
+            'myCategories'       => UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get(),
+            'isPremium'          => Auth::user()->subscribed(),
+            'activeCategory'     => Auth::user()->active_category_id,
             'activeCategoryType' => Auth::user()->active_category_type
         ]);
     }

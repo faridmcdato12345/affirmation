@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserAffirmationRequest extends FormRequest
+class UserAffirmationUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class UserAffirmationRequest extends FormRequest
     public function rules()
     {
         return [
-            'text' => 'required|max:200',
-            'user_categories_id' => 'required|exists:user_categories,id'
+            'text' => 'required'
         ];
     }
 }

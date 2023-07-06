@@ -10,4 +10,15 @@ class UserCategories extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getRandomAffirmation()
+    {
+        return $this->affirmations->random(1)->first();
+    }
+
+
+    public function affirmations()
+    {
+        return $this->hasMany(UserAffirmation::class);
+    }
 }

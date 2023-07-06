@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Progress extends Model
 {
@@ -26,6 +27,7 @@ class Progress extends Model
     protected $fillable = [
         'user_id',
         'affirmation_id',
+        'affirmation_type'
     ];
 
     /**
@@ -43,9 +45,9 @@ class Progress extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function affirmation(): BelongsTo
+    public function affirmation(): MorphTo
     {
-        return $this->belongsTo(Affirmation::class);
+        return $this->morphTo();
     }
 
     /**

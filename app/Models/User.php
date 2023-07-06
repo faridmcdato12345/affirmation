@@ -12,7 +12,6 @@ use App\Models\Setting\ReportBug;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Setting\UserAffirmation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -92,34 +91,26 @@ class User extends Authenticatable
         return $this->hasMany(Feedback::class);
     }
 
-    public function user_affirmation(): HasMany
-    {
-        return $this->hasMany(UserAffirmation::class);
-    }
-
-    /**
-     * Get an Affirmation that was stored in progress on the same day or get a new Affirmation.
-     *
-     * @return Affirmation
-     */
-    public function getAffirmation(): Affirmation
+    public function getAffirmation()
     {
         $todaysAffirmation = null;
 
-        $progress = $this->progress->where('created_at', '>', today());
+        $progress = $this->progress->where('created_at', '>', today())->first();
 
-        if ($progress->count() > 0) {
+        if ($progress) {
             // return today's previously generated affirmation
-            $todaysAffirmation = $progress->first()->affirmation;
+            $todaysAffirmation = $progress->affirmation;
         } else {
             // generate and store a new daily affirmation
             $todaysAffirmation = $this->activeCategory->getRandomAffirmation();
 
-            $p = Progress::create([
-                'user_id' => $this->id,
-                'affirmation_id' => $todaysAffirmation->id,
+            Progress::create([
+                'user_id'            => $this->id,
+                'affirmation_id'     => $todaysAffirmation->id,
+                'affirmation_type'   => $this->active_category_type == 'App\Models\Category' ? Affirmation::class : UserAffirmation::class
             ]);
         }
+
         return $todaysAffirmation;
     }
 

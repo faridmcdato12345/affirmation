@@ -4,7 +4,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Setting\CalendarController;
 use App\Http\Controllers\Setting\ChartController;
 use App\Http\Controllers\Setting\FeedbackController;
-use App\Http\Controllers\Setting\UserAffirmationController;
 use App\Http\Controllers\Setting\ReportBugController;
 use App\Http\Controllers\Setting\SecurityController;
 use Illuminate\Support\Facades\Route;
@@ -26,10 +25,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/feedback',[FeedbackController::class,'index'])->name('feedback.index');
         Route::post('/feedback',[FeedbackController::class,'store'])->name('feedback.store');
 
-        Route::get('/user_affirmation',[UserAffirmationController::class,'index'])->name('useraffirmation.index');
-        Route::post('/user_affirmation',[UserAffirmationController::class,'store'])->name('useraffirmation.store');
-
-        
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
 

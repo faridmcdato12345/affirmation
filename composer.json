@@ -15,6 +15,7 @@
         "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.9",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/spark-stripe": "^4.0",

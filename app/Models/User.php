@@ -12,12 +12,12 @@ use App\Models\Setting\ReportBug;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Setting\UserAffirmation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -34,6 +34,8 @@ class User extends Authenticatable
         'email',
         'password',
         'active_category',
+        'active_category_id',
+        'active_category_type',
         'affiliate_id',
         'referred_by',
     ];
@@ -55,7 +57,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-         'trial_ends_at' => 'datetime',
+        'trial_ends_at'     => 'datetime',
     ];
 
     /**
@@ -63,9 +65,10 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-
-    public function activeCategory(): BelongsTo {
-        return $this->belongsTo(Category::class, 'active_category');
+    public function activeCategory(): MorphTo
+    {
+        return $this->morphTo();
+        // return $this->belongsTo(Category::class, 'active_category');
     }
 
     /**
@@ -88,34 +91,26 @@ class User extends Authenticatable
         return $this->hasMany(Feedback::class);
     }
 
-    public function user_affirmation(): HasMany
-    {
-        return $this->hasMany(UserAffirmation::class);
-    }
-
-    /**
-     * Get an Affirmation that was stored in progress on the same day or get a new Affirmation.
-     *
-     * @return Affirmation
-     */
-    public function getAffirmation(): Affirmation
+    public function getAffirmation()
     {
         $todaysAffirmation = null;
 
-        $progress = $this->progress->where('created_at', '>', today());
-        
-        if ($progress->count() > 0) {
+        $progress = $this->progress->where('created_at', '>', today())->first();
+
+        if ($progress) {
             // return today's previously generated affirmation
-            $todaysAffirmation = $progress->first()->affirmation;
+            $todaysAffirmation = $progress->affirmation;
         } else {
             // generate and store a new daily affirmation
             $todaysAffirmation = $this->activeCategory->getRandomAffirmation();
 
-            $p = Progress::create([
-                'user_id' => $this->id,
-                'affirmation_id' => $todaysAffirmation->id,
+            Progress::create([
+                'user_id'            => $this->id,
+                'affirmation_id'     => $todaysAffirmation->id,
+                'affirmation_type'   => $this->active_category_type == 'App\Models\Category' ? Affirmation::class : UserAffirmation::class
             ]);
         }
+
         return $todaysAffirmation;
     }
 
@@ -132,7 +127,7 @@ class User extends Authenticatable
     /**
      * Determine if user is subscribed to one of the premium subscriptions
      * as ->subscribed() does not seem to work as intended.
-     * 
+     *
      * @return Bool
      */
     public function subscribedToPremium(): Bool
@@ -155,11 +150,13 @@ class User extends Authenticatable
         });
         return $user;
     }
+
     public function getUserCalendar()
     {
         $exercises = $this->getUserExercise()->orderBy('created_at','asc')->get();
         $d = $this->generateArrayNumbers(count($exercises) - 1);
         $dataArray = [];
+
         foreach ($exercises as $key => $exercise) {
             if(!Auth::user()->subscribedToPremium()){
                 if(in_array($key,$d)){
@@ -170,7 +167,7 @@ class User extends Authenticatable
                         'backgroundColor' => '#8ABE53',
                         'borderColor' => '#8ABE53'
                     ]);
-                }else{
+                } else {
                     array_push($dataArray,[
                         'id'=> $exercise->id,
                         'title' => 'Subcribe to premium to see',
@@ -179,7 +176,7 @@ class User extends Authenticatable
                         'borderColor' => 'red'
                     ]);
                 }
-            }else{
+            } else {
                 array_push($dataArray,[
                     'id'=> $exercise->id,
                     'title' => $exercise->progress->affirmation->text,
@@ -188,10 +185,11 @@ class User extends Authenticatable
                     'borderColor' => '#8ABE53'
                 ]);
             }
-            
+
         }
         return $dataArray;
     }
+
     public function getUserChart()
     {
         if(Auth::user()->subscribedToPremium()){
@@ -217,6 +215,7 @@ class User extends Authenticatable
             'user_is_paid' => Auth::user()->subscribedToPremium() ? true : false
         ];
     }
+
     private function generateArrayNumbers($value)
     {
         $numbers = [];

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -77,19 +78,25 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", 'confirmed'],
         ]);
+
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'active_category' => 1,
-            'affiliate_id' => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
-            'referred_by'   => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
+            'name'                 => $request->name,
+            'email'                => $request->email,
+            'password'             => Hash::make($request->password),
+            'active_category'      => 1,
+            'active_category_type' => Category::class,
+            'active_category_id'   => 1,
+            'affiliate_id'         => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
+            'referred_by'          => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
         ]);
+
         if ($user->save()) {
             Cookie::queue(Cookie::forget('referral'));
         }
+
         event(new Registered($user));
         Auth::login($user);
+
         return redirect(RouteServiceProvider::HOME);
     }
 }

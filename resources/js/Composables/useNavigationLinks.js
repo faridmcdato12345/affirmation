@@ -1,20 +1,18 @@
-import { 
-  HomeIcon, 
-  StarIcon, 
-  SparklesIcon, 
+import { isMobile } from 'mobile-device-detect'
+import {
+  HomeIcon,
+  StarIcon,
   Cog6ToothIcon,
-  PaintBrushIcon,
   UserIcon,
   LockClosedIcon,
   BugAntIcon,
   PencilIcon,
   CurrencyDollarIcon,
-  ListBulletIcon,
   CalendarIcon,
   ChartBarIcon,
   ChevronRightIcon
 } from '@heroicons/vue/24/solid'
-import { isMobile } from 'mobile-device-detect'
+
 export function useNavigationLinks() {
   const navLinks = [
     {
@@ -28,11 +26,6 @@ export function useNavigationLinks() {
       label: 'Categories'
     },
     {
-      icon: PaintBrushIcon,
-      link: 'themes',
-      label: 'Themes'
-    },
-    {
       icon: CalendarIcon,
       link: 'calendar.index',
       label: 'Calendar',
@@ -43,16 +36,11 @@ export function useNavigationLinks() {
       label: 'My Progress',
     },
     {
-      icon: SparklesIcon,
-      link: 'home',
-      label: 'Premium'
-    },    
-    {
       icon: Cog6ToothIcon,
       link: isMobile ? 'settings' : 'setting.user.index',
       label: 'Settings'
-    },    
-    
+    },
+
   ]
 
   const settingNavLinks = [
@@ -88,16 +76,9 @@ export function useNavigationLinks() {
       icon: CurrencyDollarIcon,
       link: 'subscription',
       label: 'Subscription',
-      description: ''
-    },
-    {
-      icon: ListBulletIcon,
-      link: 'setting.useraffirmation.index',
-      label: 'Add Own',
-      description: '',
-      leftIcon: ChevronRightIcon
-    },
-    
+      description: 'Manage your subscription'
+    }
+
   ]
 
   return { navLinks,settingNavLinks }

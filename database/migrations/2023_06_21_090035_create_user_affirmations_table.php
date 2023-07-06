@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\UserCategories;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('user_affirmations', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->string('affirmation');
+            $table->string('text');
+            $table->foreignIdFor(UserCategories::class);
             $table->timestamps();
         });
     }

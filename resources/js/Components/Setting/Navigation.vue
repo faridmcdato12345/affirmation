@@ -1,23 +1,18 @@
 <template>
-  <div class="flex flex-col w-4/12 h-full border-r-2 border-hover-theme-green pt-3">
-    <Link :href="route('home')" class="px-4 mb-10">
-      <component
-        :is="XCircleIcon"
-        v-if="isMobile" 
-        class="text-hover-theme-green duration-200 ease-out flex items-start justify-start w-10" />
-    </Link>
-    <Link 
+  <div class="">
+    <slot name="header"></slot>
+    <Link
       v-for="link in settingNavLinks"
       :key="`${link.label}-route`"
       :href="link.link != 'subscription' ? route(link.link) : '/billing'"
-      class="border-b-2 text-xl text-theme-green  border-hover-theme-green flex items-center hover:text-hover-theme-green">
+      class="border-b-2 text-xl text-theme-green hover:text-hover-theme-green hover:border-hover-theme-green flex items-center py-2.5">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
           <component :is="link.icon" class="w-6 h-6" />
         </div>
         <div class="flex flex-col ml-4 justify-center">
           <span>{{ link.label }}</span>
-          <p v-if="link.description" class="md:text-lg text-hover-theme-green">
+          <p v-if="link.description" class="text-base">
             {{ link.description }}
           </p>
         </div>
@@ -27,9 +22,10 @@
       </div>
     </Link>
     <Link
-      :href="route('setting.logout')" 
-      method="post" 
-      class="text-xl text-theme-green  border-hover-theme-green flex items-center hover:text-hover-theme-green">
+      :href="route('setting.logout')"
+      method="post"
+      as="button"
+      class="text-xl text-theme-green hover:border-hover-theme-green flex items-center">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
           <PowerIcon class="w-6 h-6" />
@@ -44,10 +40,8 @@
 <script setup>
 import route from 'ziggy-js'
 import { Link } from '@inertiajs/vue3'
-import { isMobile } from 'mobile-device-detect'
 import { PowerIcon } from '@heroicons/vue/24/solid'
 import { useNavigationLinks } from '../../Composables/useNavigationLinks'
-import { XCircleIcon } from '@heroicons/vue/24/solid'
 
 const { settingNavLinks } = useNavigationLinks()
 

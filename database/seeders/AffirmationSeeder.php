@@ -18,6 +18,7 @@ class AffirmationSeeder extends Seeder
         $affirmation_category = [
             // Intro Month
             1 => [
+                'Thank yourself {user} for making the best version of yourself',
                 'My efforts help me succeed.',
                 'I can make a real difference.',
                 'My hard work will pay off.',

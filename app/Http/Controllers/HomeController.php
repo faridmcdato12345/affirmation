@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\ExerciseResult;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
+use App\Models\UserCategories;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -36,7 +37,6 @@ class HomeController extends Controller
             'affirmation'      => $affirmation,
             'progressId'       => $progressId,
             'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
-            'active'           => 'home'
         ]);
     }
 
@@ -58,9 +58,11 @@ class HomeController extends Controller
     public function categories()
     {
         return Inertia::render('Categories', [
-            'categories' => Category::all()->groupBy('premium'),
-            'isPremium' => Auth::user()->subscribed(),
-            'activeCategory' => Auth::user()->active_category
+            'categories'         => Category::all()->groupBy('premium'),
+            'myCategories'       => UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get(),
+            'isPremium'          => Auth::user()->subscribed(),
+            'activeCategory'     => Auth::user()->active_category_id,
+            'activeCategoryType' => Auth::user()->active_category_type
         ]);
     }
 
@@ -78,13 +80,20 @@ class HomeController extends Controller
     public function setActiveCategory(Request $request)
     {
         $validated = $request->validate([
-        'category_id' => 'required|integer',
+            'category_id' => 'required|integer',
         ]);
 
         $user = Auth::user();
-        $user->active_category = $validated['category_id'];
-        $user->save();
-        return redirect()->route('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+        $user->update([
+            'active_category_id' => $validated['category_id'],
+            'active_category_type' => $request->type == 'personal' ? UserCategories::class : Category::class,
+        ]);
+
+        return redirect()->route('categories', [
+            'categories' => Category::all()->groupBy('premium'),
+            'active' => 'categories',
+            'activeCategory' => $user->active_category
+        ]);
     }
 
     /**

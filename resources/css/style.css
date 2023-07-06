@@ -1329,9 +1329,9 @@ body {
 }
 
 /*Control Classes*/
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 img.mx-auto {
   display: block;
@@ -3002,16 +3002,6 @@ input[type=range]::-webkit-slider-thumb:after {
 
 .file-data input[type=file] {
   font-size: 0px !important;
-}
-
-input {
-  font-size: 12px !important;
-}
-input::placeholder {
-  font-size: 12px !important;
-}
-input:focus {
-  outline: none;
 }
 
 select:focus {
@@ -6913,4 +6903,3 @@ input[type=number] {
 html.dark body {
   background-color: #C4DFA9;
 }
-

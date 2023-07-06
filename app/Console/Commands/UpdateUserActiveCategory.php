@@ -14,7 +14,7 @@ class UpdateUserActiveCategory extends Command
      *
      * @var string
      */
-    protected $signature = 'update:users-category';
+    protected $signature = 'update:users-table';
 
     /**
      * The console command description.

@@ -18,7 +18,7 @@
             class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
-              <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="showAffirmationModal = true" />
+              <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
               <PencilSquareIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleModal('update', myCategory)" />
               <TrashIcon class="w-5 text-gray-500 hover:text-red-600" @click.stop="toggleModal('delete', myCategory)" />
             </div>
@@ -77,6 +77,23 @@
         </div>
       </div>
     </div>
+
+    <!-- SWITCH CATEGORY MODAL -->
+    <Modal v-model="infoSwitchModal">
+      <div class="text-center">
+        <XCircleIcon class="w-14 mx-auto text-red-600" />
+        <h1 class="mt-2">
+          No Affirmations Found
+        </h1>
+        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
+          Please add atleast one affirmation to your category before switching it as active.
+        </p>
+      </div>
+      <div class="flex items-center justify-center gap-x-2 mt-4">
+        <Button label="Close" btn-block color="gray" @click.prevent="infoSwitchModal = false" />
+      </div>
+    </Modal>
+
     <!-- SWITCH CATEGORY MODAL -->
     <Modal v-model="setCategoryModal">
       <div class="text-center">
@@ -108,12 +125,13 @@
         </div>
       </div>
       <div class="flex items-center justify-end gap-x-2 mt-4">
-        <Button label="Cancel" color="error" @click.prevent="upgradeModal = false" />
+        <Button label="Cancel" color="error" component-type="link" @click.prevent="upgradeModal = false" />
         <Button component-type="link" href="/billing" label="Subscribe for Access" color="success" />
       </div>
     </Modal>
 
-    <Affirmation v-model="showAffirmationModal" />
+    <Affirmation v-model="showAffirmationModal" :affirmations="selectedCateg?.affirmations" @add-affirmation="addAffirmation" />
+    <AddAffirmation v-model="addAffirmationModal" :category="selectedCateg" />
 
     <AddCategory v-model="addCategoryModal" />
     <UpdateCategory v-model="updateCategoryModal" :category="selectedCateg" />
@@ -121,15 +139,18 @@
   </AuthenticatedLayout>
 </template>
 <script setup>
-import { ref } from 'vue'
-import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon } from '@heroicons/vue/24/solid'
+import { ref, watch } from 'vue'
+import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon } from '@heroicons/vue/24/solid'
 import { Head, router } from '@inertiajs/vue3'
+
+import AddAffirmation from '../Components/Category/Affirmation/AddAffirmation.vue'
 
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Affirmation from '../Components/Category/Affirmation/Affirmations.vue'
 import AddCategory from '../Components/Category/AddCategory.vue'
 import UpdateCategory from '../Components/Category/UpdateCategory.vue'
 import DeleteCategory from '../Components/Category/DeleteCategory.vue'
+
 import Modal from '../Components/Modal.vue'
 import Button from '../Components/Button.vue'
 
@@ -145,9 +166,9 @@ const props = defineProps({
 const selectedCategory = ref('')
 const setCategoryModal = ref(false)
 const upgradeModal = ref(false)
-const showAffirmationModal = ref(false)
 const addCategoryModal = ref(false)
 const updateCategoryModal = ref(false)
+const infoSwitchModal = ref(false)
 const deleteCategoryModal = ref(false)
 
 //Passed on the update and delete modal
@@ -163,20 +184,25 @@ const toggleModal = (type, category) => {
 
 const toggleSwitchCategory = (category, categoryType = '') => {
   if(props.isPremium || categoryType === 'personal' || !category.premium) {
-    setCategoryModal.value = true
-    selectedCategory.value = category
 
     //Set the selectedCategoryType to true
     if(categoryType == 'personal') {
       selectedCategoryType.value = 'personal'
+
+      if(category.affirmations.length == 0) {
+        return infoSwitchModal.value = true
+      }
     }
+
+    setCategoryModal.value = true
+    selectedCategory.value = category
+
   } else {
     upgradeModal.value = true
   }
 }
 
 const switchCategory = async () => {
-  console.log('Type: ', selectedCategoryType)
   router.post(route('setCategory'), { // eslint-disable-line no-undef
     category_id: selectedCategory.value.id,
     type: selectedCategoryType.value
@@ -189,4 +215,34 @@ const switchCategory = async () => {
   }
   )
 }
+
+/**
+ *  Affirmation
+ */
+const showAffirmationModal = ref(false)
+const addAffirmationModal = ref(false)
+// const deleteAffirmationModal = ref(false)
+
+const toggleAffirmation = (category) => {
+  console.log('Category: ', category)
+  showAffirmationModal.value = true
+  selectedCateg.value = category
+}
+
+const addAffirmation = () => {
+  showAffirmationModal.value = false
+  addAffirmationModal.value = true
+}
+
+watch([() => addAffirmationModal.value], ([addVal]) => {
+  if(!addVal) {
+    showAffirmationModal.value = true
+  }
+})
+
+watch(() => props.myCategories, () => {
+  selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value.id)[0]
+  console.log('Selected Category: ', selectedCateg)
+})
+
 </script>

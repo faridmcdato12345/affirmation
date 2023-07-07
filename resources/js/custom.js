@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     'use strict'
-
+    
     //Removing Preloader
     setTimeout(function () {
         var preloader = document.getElementById('preloader')
@@ -27,14 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		var menuHider = document.getElementsByClassName('menu-hider');
 		if(!menuHider.length){var hider = document.createElement('div'); hider.setAttribute("class", "menu-hider");document.body.insertAdjacentElement('beforebegin', hider);}
 		setTimeout(function(){if(menuHider[0].classList.contains('menu-active')){menuHider[0].classList.remove('menu-active')}},0);
-
-
         //Demo function for programtic creation of Menu
         //menu('menu-settings', 'show', 250);
 
         //Activating Menus
         document.querySelectorAll('.menu').forEach(el=>{el.style.display='block'})
-
+        
         //Validator
         var inputField = document.querySelectorAll('input');
         if(inputField.length){
@@ -122,9 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }));
             }
         }
-
-
-
         //Image Sliders
         var splide = document.getElementsByClassName('splide');
         if(splide.length){
@@ -199,10 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
                document.getElementsByClassName('hide-map')[0].classList.add('disabled');
             })
         }
-
-
-
-
         //To Do List
         var toDoList = document.querySelectorAll('.todo-list a');
         toDoList.forEach(el => el.addEventListener('click', e => {
@@ -352,47 +343,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         //Page Highlights
-        var highlightData = document.querySelectorAll('[data-change-highlight]');
-        highlightData.forEach(el => el.addEventListener('click', e =>{
-            var highlight = el.getAttribute('data-change-highlight');
-            var pageHighlight = document.querySelectorAll('.page-highlight');
-            if(pageHighlight.length){pageHighlight.forEach(function(e){e.remove();});}
-            var loadHighlight = document.createElement("link");
-            loadHighlight.rel = "stylesheet";
-            loadHighlight.className = "page-highlight";
-            loadHighlight.type = "text/css";
-            loadHighlight.href = 'css/highlights/highlight_' + highlight +'.css';
-            document.getElementsByTagName("head")[0].appendChild(loadHighlight);
-            document.body.setAttribute('data-highlight', 'highlight-'+highlight)
-            localStorage.setItem(pwaName+'-Highlight', highlight)
-        }))
-        var rememberHighlight = localStorage.getItem(pwaName+'-Highlight');
-        if(rememberHighlight){
-            document.body.setAttribute('data-highlight', rememberHighlight);
-            var loadHighlight = document.createElement("link");
-            loadHighlight.rel = "stylesheet";
-            loadHighlight.className = "page-highlight";
-            loadHighlight.type = "text/css";
-            loadHighlight.href = 'css/highlights/highlight_' + rememberHighlight +'.css';
-            if(!document.querySelectorAll('.page-highlight').length){
-                document.getElementsByTagName("head")[0].appendChild(loadHighlight);
-                document.body.setAttribute('data-highlight', 'highlight-'+rememberHighlight)
-            }
-        } else {
-            var bodyHighlight = document.body.getAttribute('data-highlight');
-            var defaultHighlight = bodyHighlight.split("highlight-")
-            document.body.setAttribute('data-highlight', defaultHighlight[1]);
-            var loadHighlight = document.createElement("link");
-            loadHighlight.rel = "stylesheet";
-            loadHighlight.className = "page-highlight";
-            loadHighlight.type = "text/css";
-            loadHighlight.href = 'css/highlights/highlight_' + defaultHighlight[1] +'.css';
-            if(!document.querySelectorAll('.page-highlight').length){
-                document.getElementsByTagName("head")[0].appendChild(loadHighlight);
-                document.body.setAttribute('data-highlight', 'highlight-'+defaultHighlight[1])
-                localStorage.setItem(pwaName+'-Highlight', defaultHighlight[1])
-            }
-        }
+        // var highlightData = document.querySelectorAll('[data-change-highlight]');
+        // highlightData.forEach(el => el.addEventListener('click', e =>{
+        //     var highlight = el.getAttribute('data-change-highlight');
+        //     var pageHighlight = document.querySelectorAll('.page-highlight');
+        //     if(pageHighlight.length){pageHighlight.forEach(function(e){e.remove();});}
+        //     var loadHighlight = document.createElement("link");
+        //     loadHighlight.rel = "stylesheet";
+        //     loadHighlight.className = "page-highlight";
+        //     loadHighlight.type = "text/css";
+        //     loadHighlight.href = 'css/highlights/highlight_' + highlight +'.css';
+        //     document.getElementsByTagName("head")[0].appendChild(loadHighlight);
+        //     document.body.setAttribute('data-highlight', 'highlight-'+highlight)
+        //     localStorage.setItem(pwaName+'-Highlight', highlight)
+        // }))
+        // var rememberHighlight = localStorage.getItem(pwaName+'-Highlight');
+        // if(rememberHighlight){
+        //     document.body.setAttribute('data-highlight', rememberHighlight);
+        //     var loadHighlight = document.createElement("link");
+        //     loadHighlight.rel = "stylesheet";
+        //     loadHighlight.className = "page-highlight";
+        //     loadHighlight.type = "text/css";
+        //     loadHighlight.href = 'css/highlights/highlight_' + rememberHighlight +'.css';
+        //     if(!document.querySelectorAll('.page-highlight').length){
+        //         document.getElementsByTagName("head")[0].appendChild(loadHighlight);
+        //         document.body.setAttribute('data-highlight', 'highlight-'+rememberHighlight)
+        //     }
+        // } else {
+        //     var bodyHighlight = document.body.getAttribute('data-highlight');
+        //     var defaultHighlight = bodyHighlight.split("highlight-")
+        //     document.body.setAttribute('data-highlight', defaultHighlight[1]);
+        //     var loadHighlight = document.createElement("link");
+        //     loadHighlight.rel = "stylesheet";
+        //     loadHighlight.className = "page-highlight";
+        //     loadHighlight.type = "text/css";
+        //     loadHighlight.href = 'css/highlights/highlight_' + defaultHighlight[1] +'.css';
+        //     if(!document.querySelectorAll('.page-highlight').length){
+        //         document.getElementsByTagName("head")[0].appendChild(loadHighlight);
+        //         document.body.setAttribute('data-highlight', 'highlight-'+defaultHighlight[1])
+        //         localStorage.setItem(pwaName+'-Highlight', defaultHighlight[1])
+        //     }
+        // }
 
         //Background Gradient Color
         var gradientData = document.querySelectorAll('[data-change-background]');
@@ -1106,7 +1097,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return true;
             });
         }
+        //creating Android pop installation modal
+        // var androidInstallerModal = document.querySelectorAll('#menu-install-pwa-android');
+        // if(!androidInstallerModal.length){
 
+        // }
 
         //Creating Offline Alert Messages
         var addOfflineClasses = document.querySelectorAll('.offline-message');
@@ -1232,12 +1227,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //PWA Settings
         if(isPWA === true){
+            
             var checkPWA = document.getElementsByTagName('html')[0];
             if(!checkPWA.classList.contains('isPWA')){
+                console.log("pwaLocation:",pwaLocation)
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
                     console.log('Service Worker successfully registered')
+                    console.log("isPwa")
                     });
                 }
 
@@ -1263,7 +1261,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }));
 
                 //Trigger Install Prompt for Android
-                const pwaWindows = document.querySelectorAll('#menu-install-pwa-android, #menu-install-pwa-ios');
+                const pwaWindows = document.querySelectorAll('#menu-install-pwa-android');
+                console.log(isMobile)
                 if(pwaWindows.length){
                     if (isMobile.Android()) {
                         if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
@@ -1442,6 +1441,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+    console.log("init_template")
     }
 
     //Fix Scroll for AJAX pages.
@@ -1464,6 +1464,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // init_template();
+    init_template();
+    console.log('custom.js')
 });
 

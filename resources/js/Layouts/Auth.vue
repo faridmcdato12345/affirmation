@@ -16,10 +16,12 @@
         <slot></slot>
       </div>
     </div>
+    <!-- <InstallModal /> -->
   </div>
 </template>
 <script setup>
 import { useHomeInstallation } from '../Composables/useHomeInstallation'
+// import InstallModal from '../Components/InstallModal.vue'
 
 const { mobileOs, getInitTemplate, pwaNoCache } = useHomeInstallation()
 console.log(pwaNoCache)

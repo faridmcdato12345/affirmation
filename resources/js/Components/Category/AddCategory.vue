@@ -9,7 +9,7 @@
           Add your own category so that you can add your own affirmation.
         </p>
         <form class="mt-3" @submit.prevent="saveCategory">
-          <FormInput id="category" v-model="form.text" :max-length="35" class="mb-1" label="Category" :error="form.errors.text" />
+          <FormInput id="category" v-model="form.text" :max-length="35" class="mb-1" label="Category" :error="form.errors.text" autofocus />
           <FormInput id="blurb" v-model="form.blurb" :max-length="150" label="Description" :error="form.errors.blurb" />
           <div class="flex justify-end gap-x-2 mt-3">
             <Button label="Cancel" color="gray" @click.prevent="modalShown = false" />
@@ -60,7 +60,7 @@ const saveCategory = () => {
       emit('update:modelValue', false)
     },
     onError: () => {
-      toast.error(form.errors.error)
+      toast.error(form.errors.error ?? 'Fields are required')
     },
     onFinish: () => {
       setTimeout(() => {

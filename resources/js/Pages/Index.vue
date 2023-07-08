@@ -1,6 +1,6 @@
 <template>
   <AuthenticatedLayout background-image="the-river-gfd490d610_1280.jpg">
-    <div class="h-screen flex flex-col items-center justify-center md:max-w-7xl mx-auto">
+    <div class="h-screen flex flex-col items-center justify-center md:max-w-7xl">
       <h1 class="px-4 text-4xl md:px-0 md:text-6xl font-medium tracking-tight text-center text-white max-w-5xl">
         {{ modifiedAffirmation }}
       </h1>

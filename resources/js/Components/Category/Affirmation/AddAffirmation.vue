@@ -32,7 +32,8 @@ const props = defineProps({
   modelValue: Boolean,
   category: {
     type: Object,
-  }
+  },
+  errors: Object
 })
 
 let form = reactive({
@@ -64,6 +65,7 @@ const saveAffirmation = () => {
       emit('update:modelValue')
     },
     onError: () => {
+      toast.error(props.errors.error ?? 'You need to be premium to add more affirmations')
       loading.value = false
     },
     onFinish: () => {

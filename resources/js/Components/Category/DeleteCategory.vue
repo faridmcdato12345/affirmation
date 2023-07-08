@@ -50,7 +50,7 @@ const deleteCategory = () => {
   loading.value = true
   router.delete(route('user-category.destroy', props.categoryId), {
     onSuccess: () => {
-      toast.success('Category has been deleted successfully!')
+      toast('Category has been deleted!')
       emit('update:modelValue', false)
     },
     onFinish: () => {

@@ -131,7 +131,7 @@
     </Modal>
 
     <Affirmation v-model="showAffirmationModal" :affirmations="selectedCateg?.affirmations" @add-affirmation="addAffirmation" />
-    <AddAffirmation v-model="addAffirmationModal" :category="selectedCateg" />
+    <AddAffirmation v-model="addAffirmationModal" :category="selectedCateg" :errors="errors" />
 
     <AddCategory v-model="addCategoryModal" />
     <UpdateCategory v-model="updateCategoryModal" :category="selectedCateg" />
@@ -224,7 +224,6 @@ const addAffirmationModal = ref(false)
 // const deleteAffirmationModal = ref(false)
 
 const toggleAffirmation = (category) => {
-  console.log('Category: ', category)
   showAffirmationModal.value = true
   selectedCateg.value = category
 }
@@ -241,7 +240,7 @@ watch([() => addAffirmationModal.value], ([addVal]) => {
 })
 
 watch(() => props.myCategories, () => {
-  selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value.id)[0]
+  selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value?.id)[0]
   console.log('Selected Category: ', selectedCateg)
 })
 

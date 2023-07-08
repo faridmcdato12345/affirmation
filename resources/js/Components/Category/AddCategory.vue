@@ -57,6 +57,7 @@ const saveCategory = () => {
   form.post(route('user-category.store'), {
     onSuccess: () => {
       form.reset()
+      toast.success(form.errors.error ?? 'Category has been added successfully!')
       emit('update:modelValue', false)
     },
     onError: () => {

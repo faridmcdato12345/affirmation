@@ -9,9 +9,6 @@
         content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>{{ env('APP_NAME') }}</title>
     <link rel="icon" type="image/png" sizes="128x128" href="{{ asset('favicon.png') }}">
-    <link
-        href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i&display=swap"
-        rel="stylesheet">
     @include('components.apple-meta')
     @laravelPWA
     @routes

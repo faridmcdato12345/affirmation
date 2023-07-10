@@ -30,8 +30,8 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
-defineProps({
+import { ref, onMounted } from 'vue'
+const props = defineProps({
   label: {
     type: String,
     required: true
@@ -59,6 +59,10 @@ defineProps({
   maxLength: {
     type: [String, Number],
     default: null
+  },
+  autofocus: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -67,6 +71,8 @@ const emit = defineEmits(['update:modelValue', 'blur', 'keyup-enter'])
 const inputRef = ref('')
 
 onMounted(() => {
-  inputRef.value.focus()
+  if(props.autofocus) {
+    inputRef.value.focus()
+  }
 })
 </script>

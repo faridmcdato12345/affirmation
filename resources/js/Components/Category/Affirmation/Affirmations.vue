@@ -14,7 +14,7 @@
             There are no affirmations added to this category.
           </p>
         </div>
-        <p class="text-sm">
+        <p v-if="affirmations.length != 0" class="text-sm">
           Click on an affirmation text to edit and press <span class="font-medium text-black">enter</span> to save update.
         </p>
         <div class="flex justify-end mt-4 gap-x-2">

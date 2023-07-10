@@ -19,12 +19,12 @@
           </template>
         </FormInput>
         <div class="md:flex md:justify-between gap-x-3">
-          <FormInput id="new_password" v-model="form.password" :type="showPass.new_password ? 'text' : 'password'" label="New Password" class="w-1/2" :error="errors.password">
+          <FormInput id="new_password" v-model="form.password" :type="showPass.new_password ? 'text' : 'password'" label="New Password" class="w-full md:w-1/2" :error="errors.password">
             <template #icon-right>
               <component :is="showPass.new_password ? EyeSlashIcon : EyeIcon" class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" @click.prevent="showPass.new_password = !showPass.new_password" />
             </template>
           </FormInput>
-          <FormInput id="confirm_new_password" v-model="form.password_confirmation" :type="showPass.confirm_new_password ? 'text' : 'password'" label="Confirm New Password" class="w-1/2">
+          <FormInput id="confirm_new_password" v-model="form.password_confirmation" :type="showPass.confirm_new_password ? 'text' : 'password'" label="Confirm New Password" class="w-full md:w-1/2">
             <template #icon-right>
               <component :is="showPass.confirm_new_password ? EyeSlashIcon : EyeIcon" class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" @click.prevent="showPass.confirm_new_password = !showPass.confirm_new_password" />
             </template>

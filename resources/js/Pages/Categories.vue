@@ -1,5 +1,5 @@
 <template>
-  <AuthenticatedLayout background-image="the-river-gfd490d610_1280.jpg">
+  <AuthenticatedLayout background-image="the-river-gfd490d610_1280.jpg" class="">
     <Head title="Categories" />
     <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
     <div class="h-screen flex flex-col px-4 md:max-w-7xl mx-auto z-20 relative">
@@ -10,12 +10,12 @@
         <h2 class="text-white font-medium text-2xl mt-8">
           My Categories
         </h2>
-        <hr />
+        <hr class="my-5 border-gray-600" />
         <div class="flex flex-wrap gap-4">
           <div
             v-for="myCategory in myCategories"
             :key="myCategory.id"
-            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer"
+            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-5 py-6 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
               <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
@@ -32,7 +32,7 @@
               {{ myCategory.blurb }}
             </p>
           </div>
-          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer" @click.prevent="addCategoryModal = true">
+          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
             <div class="absolute top-3 right-3">
               <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
             </div>
@@ -50,12 +50,12 @@
           <h2 class="text-white font-medium text-2xl mt-8">
             {{ i == 0 ? 'Free' : 'Premium' }}
           </h2>
-          <hr />
+          <hr class="my-5 border-gray-600" />
           <div class="flex gap-4 flex-wrap">
             <div
               v-for="category in categoryType"
               :key="category.id"
-              class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-4 py-4 cursor-pointer"
+              class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-5 py-6 cursor-pointer"
               :class="[
                 i == 0 || isPremium ? 'bg-white' : 'bg-gray-200'
               ]"
@@ -131,11 +131,11 @@
     </Modal>
 
     <Affirmation v-model="showAffirmationModal" :affirmations="selectedCateg?.affirmations" @add-affirmation="addAffirmation" />
-    <AddAffirmation v-model="addAffirmationModal" :category="selectedCateg" />
+    <AddAffirmation v-model="addAffirmationModal" :category="selectedCateg" :errors="errors" />
 
     <AddCategory v-model="addCategoryModal" />
     <UpdateCategory v-model="updateCategoryModal" :category="selectedCateg" />
-    <DeleteCategory v-model="deleteCategoryModal" :category="selectedCateg.text" :category-id="selectedCateg.id" />
+    <DeleteCategory v-model="deleteCategoryModal" :category="selectedCateg?.text" :category-id="selectedCateg?.id" />
   </AuthenticatedLayout>
 </template>
 <script setup>
@@ -224,7 +224,6 @@ const addAffirmationModal = ref(false)
 // const deleteAffirmationModal = ref(false)
 
 const toggleAffirmation = (category) => {
-  console.log('Category: ', category)
   showAffirmationModal.value = true
   selectedCateg.value = category
 }
@@ -241,7 +240,7 @@ watch([() => addAffirmationModal.value], ([addVal]) => {
 })
 
 watch(() => props.myCategories, () => {
-  selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value.id)[0]
+  selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value?.id)[0]
   console.log('Selected Category: ', selectedCateg)
 })
 

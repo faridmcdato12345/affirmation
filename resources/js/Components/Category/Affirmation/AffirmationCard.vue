@@ -4,7 +4,7 @@
       <h2 v-if="!isEdit" class="font-medium max-w-[45ch]" @click.prevent="isEdit = true">
         {{ affirmation }}
       </h2>
-      <FormInput v-else :id="id" label="Update affirmation" :model-value="affirmation" class="w-[400px]" @update:model-value="logUpdate" @keyup-enter="updateAffirmation" @blur="isEdit = false" />
+      <FormInput v-else :id="id" autofocus label="Update affirmation" :model-value="affirmation" class="w-[400px]" @update:model-value="logUpdate" @keyup-enter="updateAffirmation" @blur="isEdit = false" />
       <p class="text-sm text-gray-500">
         {{ date }}
       </p>

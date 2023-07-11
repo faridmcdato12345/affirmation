@@ -23,10 +23,12 @@
 import { useHomeInstallation } from '../Composables/useHomeInstallation'
 // import InstallModal from '../Components/InstallModal.vue'
 
-const { mobileOs, getInitTemplate, pwaNoCache } = useHomeInstallation()
+const { mobileOs, pwaNoCache, check } = useHomeInstallation()
 console.log(pwaNoCache)
 console.log(mobileOs.value)
-console.log(getInitTemplate)
+console.log(check)
+const androidInstallation = document.getElementById('#menu-install-pwa-android')
+console.log(androidInstallation)
 const isConnected = navigator.onLine
 console.log(isConnected)
 </script>

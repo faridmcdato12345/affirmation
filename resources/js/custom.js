@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		  return d;
 		}
 		let iosVer = iOSversion();
-		if (iosVer.version > 14) {document.querySelectorAll('#page')[0].classList.add('min-ios15');}
+		if (iosVer.version > 14) {document.querySelectorAll('#app')[0].classList.add('min-ios15');}
 
         //Card Extender
         const cards = document.getElementsByClassName('card');
@@ -1206,12 +1206,12 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < androidDev.length; i++) {androidDev[i].classList.add('disabled');}
         }
         if(isMobile.iOS()){
-            document.querySelectorAll('#page')[0].classList.add('device-is-ios');
+            document.querySelectorAll('#app')[0].classList.add('device-is-ios');
             for (let i = 0; i < noDev.length; i++) {noDev[i].classList.add('disabled');}
             for (let i = 0; i < androidDev.length; i++) {androidDev[i].classList.add('disabled');}
         }
         if(isMobile.Android()){
-            document.querySelectorAll('#page')[0].classList.add('device-is-android');
+            document.querySelectorAll('#app')[0].classList.add('device-is-android');
             for (let i = 0; i < iOSDev.length; i++) {iOSDev[i].classList.add('disabled');}
             for (let i = 0; i < noDev.length; i++) {noDev[i].classList.add('disabled');}
         }
@@ -1227,7 +1227,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //PWA Settings
         if(isPWA === true){
-            
             var checkPWA = document.getElementsByTagName('html')[0];
             if(!checkPWA.classList.contains('isPWA')){
                 console.log("pwaLocation:",pwaLocation)
@@ -1235,10 +1234,8 @@ document.addEventListener('DOMContentLoaded', () => {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
                     console.log('Service Worker successfully registered')
-                    console.log("isPwa")
                     });
                 }
-
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours
                 var now = Date.now();
@@ -1249,8 +1246,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.removeItem(pwaName+'-PWA-Prompt')
                     localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
                 }
-
-
                 const pwaClose = document.querySelectorAll('.pwa-dismiss');
                 pwaClose.forEach(el => el.addEventListener('click',e =>{
                     const pwaWindows = document.querySelectorAll('#menu-install-pwa-android, #menu-install-pwa-ios');
@@ -1263,10 +1258,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 //Trigger Install Prompt for Android
                 const pwaWindows = document.querySelectorAll('#menu-install-pwa-android');
                 console.log(isMobile)
+                console.log("length:",pwaWindows.length)
                 if(pwaWindows.length){
                     if (isMobile.Android()) {
                         if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
-                            function showInstallPrompt() {
+                            setTimeout(function(){
+                                if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+                                    console.log('Triggering PWA Window for Android')
+                                    document.getElementById('menu-install-pwa-android').classList.add('menu-active');
+                                    document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                                }
+                            },3500);
+                            var deferredPrompt;
+                            window.addEventListener('beforeinstallprompt', function(event){
+                                console.log("deferredPrompt")
+                                e.preventDefault();
+                                deferredPrompt = e;
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
                                         console.log('Triggering PWA Window for Android')
@@ -1274,16 +1281,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                         document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
                                     }
                                 },3500);
-                            }
-                            var deferredPrompt;
-                            window.addEventListener('beforeinstallprompt', (e) => {
-                                e.preventDefault();
-                                deferredPrompt = e;
-                                showInstallPrompt();
                             });
                         }
                         const pwaInstall = document.querySelectorAll('.pwa-install');
                         pwaInstall.forEach(el => el.addEventListener('click', e => {
+                            console.log("deferredPrompt: ",deferredPrompt)
                             deferredPrompt.prompt();
                             deferredPrompt.userChoice
                                 .then((choiceResult) => {
@@ -1291,6 +1293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                         console.log('Added');
                                     } else {
                                         localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
+                                        console.log("wpwa timeout value")
                                         localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
                                         setTimeout(function(){
                                             if (!window.matchMedia('(display-mode: fullscreen)').matches) {
@@ -1451,7 +1454,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(isAJAX === true){
         if(window.location.protocol !== "file:"){
             const options = {
-                containers: ["#page"],
+                containers: ["#app"],
                 cache:false,
                 animateHistoryBrowsing: false,
                 plugins: [

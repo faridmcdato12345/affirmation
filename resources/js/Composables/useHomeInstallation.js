@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 export function useHomeInstallation(){
   //Global Variables
   const isPWA = ref(true)  // Enables or disables the service worker and PWA
@@ -15,18 +15,16 @@ export function useHomeInstallation(){
   //   iOS: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i)},
   //   any: function() {return (isMobile.Android() || isMobile.iOS())}
   // })
+  const check = ref('hey')
   const mobileOs = ref(navigator.userAgent)
-  const getInitTemplate = async () => {
-    if(isPWA.value){
-      let checkPWA = document.getElementsByTagName('html')[0]
-      if(!checkPWA.classList.contains('isPWA')){
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update()})
-          console.log('Service Worker successfully registered')
-        })
-      }
-    }
-  }
+ 
+ 
+  onMounted(() => {
+    
+   
+    check.value = 'hello'
+    
+  })
     
   return { 
     isPWA, 
@@ -36,7 +34,7 @@ export function useHomeInstallation(){
     pwaNoCache,
     pwaScope,
     pwaLocation,
-    getInitTemplate,
-    mobileOs
+    mobileOs,
+    check
   }
 }

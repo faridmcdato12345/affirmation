@@ -1,6 +1,5 @@
 var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
-    'offline',
     'build/app.css',
     'build/app.js',
     'images/icons/android-launchericon-72-72.png',
@@ -10,8 +9,7 @@ var filesToCache = [
     'images/icons/152.png',
     'images/icons/android-launchericon-192-192.png',
     'images/icons/256.png',
-    'images/icons/android-launchericon-512-512.png',
-    'images/bg1.jpg',
+    'images/icons/android-launchericon-512-512.png'
 ];
 // Cache on install
 self.addEventListener("install", event => {

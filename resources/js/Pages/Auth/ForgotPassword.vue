@@ -12,7 +12,7 @@
       <FormInput id="email" v-model="form.email" type="email" label="Email Address" required />
       <div class="flex items-center justify-center w-full mt-4 flex-col">
         <Button type="submit" label="Email Password Reset Link" color="success" btn-block />
-        <Button component-type="link" :href="route('login')" label="Cancel Reset" class="mt-1" color="error" btn-block />
+        <Button component-type="link" :href="route('login')" label="Cancel Reset" class="mt-1" color="gray" btn-block />
       </div>
     </form>
   </AuthLayout>

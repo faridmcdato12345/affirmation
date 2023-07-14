@@ -26,13 +26,9 @@
 </template>
 <script setup>
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
-import { Head, usePage, Link } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import SettingsNavigation from '../Components/Setting/Navigation.vue'
-import { computed } from 'vue'
 import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
 import { isMobile } from 'mobile-device-detect'
 
-const page = usePage()
-const user = computed(() => page.props.auth.user)
-console.log('User: ', user)
 </script>

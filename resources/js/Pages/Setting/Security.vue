@@ -1,8 +1,8 @@
 <template>
   <component :is="isMobile ? AuthenticateMobileSettingLayoutVue : Settings">
-    <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
+    <div class="md:w-full md:pl-12 md:pr-8 md:py-16 h-full">
       <form @submit.prevent="save">
-        <div class="mb-9 border-b-2 border-hover-theme-green pb-8">
+        <div class="mb-9 border-b-2 border-hover-theme-green pb-5">
           <h1 class="text-theme-green md:text-left text-center">
             Security Settings
           </h1>

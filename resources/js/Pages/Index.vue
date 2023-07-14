@@ -5,13 +5,12 @@
         {{ modifiedAffirmation }}
       </h1>
       <Button
-        v-if="!exerciseFinished"
-        label="Begin Exercise"
+        :label="exerciseFinished ? 'Today\'s Exercise Complete' : 'Begin Exercise'"
         size="lg"
         rounded
         color="success"
         class="mt-4"
-        @click.prevent="modalShown = true" />
+        @click.prevent="checkDailyExerciseStatus" />
     </div>
     <Modal v-model="modalShown">
       <AffirmationExercise :progress-id="progressId" @close-modal="modalShown = false" />
@@ -24,6 +23,8 @@ import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Button from '../Components/Button.vue'
 import Modal from '../Components/Modal.vue'
 import AffirmationExercise from '../Components/AffirmationExercise.vue'
+import { toast } from '../Composables/useToast'
+import { usePage } from '@inertiajs/vue3'
 
 const props = defineProps({
   affirmation: Object,
@@ -31,8 +32,20 @@ const props = defineProps({
   exerciseFinished: Boolean
 })
 
+const page = usePage()
+const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)
 
-const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, 'Yvan')
+const checkDailyExerciseStatus = () => {
+  if(props.exerciseFinished) {
+    return toast('You\'ve already completed today\'s exercise')
+  } 
+
+  modalShown.value = true
+}
+
+console.log('User: ', user)
+
+const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, user.value.name)
 )
 </script>

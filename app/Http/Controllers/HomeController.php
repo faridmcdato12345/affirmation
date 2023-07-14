@@ -28,7 +28,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $affirmation = Auth::user()->getAffirmation();
         $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;

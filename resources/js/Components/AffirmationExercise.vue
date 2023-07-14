@@ -18,7 +18,7 @@
         <AffirmationRate v-if="step == 1" v-model="formData" />
         <AffirmationExperience v-if="step == 2" v-model="formData" />
         <AffirmationFinish v-if="step == 3" />
-        <Button :label="step < 3 ? 'Next' : 'STAY AWESOME!'" btn-block class="mt-4" @click.prevent="nextStep" />
+        <Button :label="step < 3 ? 'Next' : 'STAY AWESOME!'" btn-block class="mt-4" :loading="formData.processing" @click.prevent="nextStep" />
       </div>
     </Transition>
   </div>
@@ -27,6 +27,7 @@
 import { ref, computed } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 import { useAffirmationExercise } from '../Composables/useAffirmationExercise'
+import { toast } from '../Composables/useToast'
 
 import Button from './Button.vue'
 import AffirmationRate from './Affirmation/AffirmationRate.vue'
@@ -56,6 +57,7 @@ const nextStep = () => {
   if(step.value == 3) {
     formData.post(route('exercise.store'), { // eslint-disable-line no-undef
       onSuccess: () => {
+        toast.success('Today\'s exercise has been completed successfuly!')
         formData.reset()
         emit('close-modal')
       }   

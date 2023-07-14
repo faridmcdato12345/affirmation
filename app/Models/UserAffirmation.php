@@ -14,6 +14,6 @@ class UserAffirmation extends Model
 
     protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('F j, Y h:i A');
+        return $date->timezone(auth()->user()->timezone ?? config('app.timezone'))->format('F j, Y h:i A');
     }
 }

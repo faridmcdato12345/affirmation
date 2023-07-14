@@ -46,7 +46,8 @@ defineProps({
 const loginForm = useForm({
   email: '',
   password: '',
-  remember: false
+  remember: false,
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
 })
 
 const showPassword = ref(false)

@@ -27,6 +27,10 @@ class LoginSuccessful
      */
     public function handle(Login $event)
     {
+        auth()->user()->update([
+            'timezone' => request()->timezone
+        ]);
+        
         LoginHistory::create([
             'user_id' => auth()->id(),
             'ip_address' => request()->ip(),

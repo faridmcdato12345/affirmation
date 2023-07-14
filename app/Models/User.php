@@ -34,6 +34,7 @@ class User extends Authenticatable
         'active_category_type',
         'affiliate_id',
         'referred_by',
+        'timezone'
     ];
 
     /**

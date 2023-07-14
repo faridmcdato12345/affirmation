@@ -4,18 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Carbon\Carbon;
 use Spark\Billable;
-use Nette\Utils\Arrays;
 use App\Models\Setting\Feedback;
 use App\Models\Setting\ReportBug;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,6 +34,7 @@ class User extends Authenticatable
         'active_category_type',
         'affiliate_id',
         'referred_by',
+        'timezone'
     ];
 
     /**
@@ -60,15 +57,9 @@ class User extends Authenticatable
         'trial_ends_at'     => 'datetime',
     ];
 
-    /**
-     * Get the current category the User is on.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
     public function activeCategory(): MorphTo
     {
         return $this->morphTo();
-        // return $this->belongsTo(Category::class, 'active_category');
     }
 
     /**

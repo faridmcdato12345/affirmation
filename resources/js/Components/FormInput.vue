@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mt-2" tabindex="0">
+  <div class="relative mt-2">
     <input
       :id="id"
       ref="inputRef"

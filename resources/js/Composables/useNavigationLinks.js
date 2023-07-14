@@ -10,7 +10,8 @@ import {
   CurrencyDollarIcon,
   CalendarIcon,
   ChartBarIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  BoltIcon
 } from '@heroicons/vue/24/solid'
 
 export function useNavigationLinks() {
@@ -66,6 +67,13 @@ export function useNavigationLinks() {
       leftIcon: ChevronRightIcon
     },
     {
+      icon: BoltIcon,
+      link: 'setting.history.index',
+      label: 'Login History',
+      description: 'View your login history',
+      leftIcon: ChevronRightIcon
+    },
+    {
       icon: PencilIcon,
       link: 'setting.feedback.index',
       label: 'Feedback',
@@ -81,5 +89,5 @@ export function useNavigationLinks() {
 
   ]
 
-  return { navLinks,settingNavLinks }
+  return { navLinks, settingNavLinks }
 }

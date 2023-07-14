@@ -30,8 +30,3 @@ Route::apiResource('affirmations', AffirmationController::class)->only(['index',
 
 // TODO: make this more secure
 Route::post('exercise', [ExerciseResultController::class, 'store'])->name('exercise.store');
-// TODO set up admin
-// Route::middleware('admin', {
-    // Route::apiResource('categories', CategoryController::class),
-    // Route::apiResource('categories', AffirmationController::class),
-// }

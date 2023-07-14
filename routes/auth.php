@@ -18,11 +18,6 @@ Route::get('/register',function () {
 
 Route::post('/register',[RegisterController::class,'store'])->name('post.register');
 Route::inertia('/forgot-password','Auth/ForgotPassword')->name('forgot.password');
-Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-->middleware('guest')
-->name('password.email');
-Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-->name('password.reset');
-Route::post('/reset-password', [NewPasswordController::class, 'store'])
-->middleware('guest')
-->name('password.store');
+Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->middleware('guest')->name('password.email');
+Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+Route::post('/reset-password', [NewPasswordController::class, 'store'])->middleware('guest')->name('password.store');

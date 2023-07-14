@@ -8,11 +8,11 @@
       class="border-b-2 text-xl text-theme-green hover:text-hover-theme-green/90 hover:border-hover-theme-green/90 flex items-center py-1">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
-          <component :is="link.icon" class="w-6 h-6" />
+          <component :is="link.icon" class="w-5 h-5" />
         </div>
         <div class="flex flex-col ml-4 justify-center">
-          <span>{{ link.label }}</span>
-          <p v-if="link.description" class="text-base">
+          <span class="text-base">{{ link.label }}</span>
+          <p v-if="link.description" class="text-sm">
             {{ link.description }}
           </p>
         </div>
@@ -47,10 +47,10 @@
       class="text-xl text-theme-green hover:border-hover-theme-green flex items-center">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
-          <PowerIcon class="w-6 h-6" />
+          <PowerIcon class="w-5 h-5" />
         </div>
         <div class="flex flex-col ml-4 justify-center">
-          <span>Logout</span>
+          <span class="text-base">Logout</span>
         </div>
       </div>
     </Link>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Setting\CalendarController;
 use App\Http\Controllers\Setting\ChartController;
 use App\Http\Controllers\Setting\FeedbackController;
+use App\Http\Controllers\Setting\ReminderController;
 use App\Http\Controllers\Setting\ReportBugController;
 use App\Http\Controllers\Setting\SecurityController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
+
+        Route::get('/reminder',[ReminderController::class,'index'])->name('reminder.index');
+        Route::post('/reminder',[ReminderController::class, 'store'])->name('reminder.store');
 
     });
 });

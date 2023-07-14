@@ -58,7 +58,7 @@ import route from 'ziggy-js'
 import { ref } from 'vue'
 import Modal from '../../Components/Modal.vue'
 import InputError from '../../Components/InputError.vue'
-const routeName = ref('Feedback')
+const routeName = ref('Reminder')
 const modal = ref(false)
 const modalTextHeader = ref('')
 const modalTextBody = ref('')

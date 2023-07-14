@@ -153,7 +153,7 @@ class User extends Authenticatable
 
     public function getUserCalendar()
     {
-        $exercises = $this->getUserExercise()->orderBy('created_at','asc')->get();
+        $exercises = $this->getUserExercise()->get();
         $d = $this->generateArrayNumbers(count($exercises) - 1);
         $dataArray = [];
 
@@ -165,7 +165,12 @@ class User extends Authenticatable
                         'title' => $exercise->progress->affirmation->text,
                         'start' => $exercise->created_at->format('Y-m-d'),
                         'backgroundColor' => '#8ABE53',
-                        'borderColor' => '#8ABE53'
+                        'borderColor' => '#8ABE53',
+                        'happiness' => $exercise->happiness_score,
+                        'belief' => $exercise->belief_score,
+                        'input_1' => $exercise->input1,
+                        'input_2' => $exercise->input2,
+                        'input_3' => $exercise->input3,
                     ]);
                 } else {
                     array_push($dataArray,[
@@ -182,7 +187,12 @@ class User extends Authenticatable
                     'title' => $exercise->progress->affirmation->text,
                     'start' => $exercise->created_at->format('Y-m-d'),
                     'backgroundColor' => '#8ABE53',
-                    'borderColor' => '#8ABE53'
+                    'borderColor' => '#8ABE53',
+                    'happiness' => $exercise->happiness_score,
+                    'belief' => $exercise->belief_score,
+                    'input_1' => $exercise->input1,
+                    'input_2' => $exercise->input2,
+                    'input_3' => $exercise->input3,
                 ]);
             }
 
@@ -194,6 +204,7 @@ class User extends Authenticatable
     {
         if(Auth::user()->subscribedToPremium()){
             $exercises = $this->getUserExercise()->orderBy('created_at','asc')->get();
+            
         }else{
             $exercises = $this->getUserExercise()->orderBy('created_at','asc')->latest()->take(6)->get();
             unset($exercises[0]);

@@ -16,26 +16,9 @@
         <slot></slot>
       </div>
     </div>
-    <!-- <InstallModal /> -->
   </div>
 </template>
 <script setup>
-import { useHomeInstallation } from '../Composables/useHomeInstallation'
-// import InstallModal from '../Components/InstallModal.vue'
-
-const { mobileOs, pwaNoCache, check } = useHomeInstallation()
-console.log(pwaNoCache)
-console.log(mobileOs.value)
-console.log(check)
-const androidInstallation = document.getElementById('#menu-install-pwa-android')
-console.log(androidInstallation)
-const isConnected = navigator.onLine
-console.log(isConnected)
 </script>
 <style scoped>
-.left-container{
-    background-image: url('../../../../images/milky-way-ge3b943f98_1280.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 </style>

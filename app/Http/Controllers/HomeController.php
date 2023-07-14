@@ -47,7 +47,8 @@ class HomeController extends Controller
      */
     public function settings()
     {
-        return Inertia::render('Settings');
+        $user = Auth::user()->subscribedToPremium();
+        return Inertia::render('Settings',['isUserSubscribe' => $user]);
     }
 
     /**

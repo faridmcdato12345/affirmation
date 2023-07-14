@@ -3,7 +3,9 @@
     <div v-if="modelValue" class="fixed top-0 left-0 w-full h-screen z-[21]" :class="{ 'modal-open' : modelValue }">
       <div class="w-full h-full bg-gray-800/60" @click.prevent="closeModal"></div>
       <Transition name="slide-fade" appear>
-        <div class="bg-white shadow-md border p-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm w-[96%] md:max-w-[640px]">
+        <div
+          class="bg-white shadow-md border p-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm"
+          :class="checkRoute ? 'w-[96%] md:max-w-[640px]' : 'w-auto'">
           <slot></slot>
         </div>
       </Transition>
@@ -11,7 +13,7 @@
   </Teleport>
 </template>
 <script setup>
-import { watch } from 'vue'
+import { watch,ref } from 'vue'
 const props = defineProps({
   modelValue: Boolean,
   persistent: {
@@ -19,8 +21,8 @@ const props = defineProps({
     default: false
   }
 })
-
 const emit = defineEmits(['update:modelValue'])
+const checkRoute = ref(true)
 
 const closeModal = () => {
   if(props.persistent) return
@@ -34,4 +36,8 @@ watch(() => props.modelValue, (val) => {
     document.body.classList.remove('overflow-hidden')
   }
 })
+const route = window.location.pathname
+if(route.includes('calendar')){
+  checkRoute.value = false
+}
 </script>

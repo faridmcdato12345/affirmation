@@ -1,24 +1,26 @@
 <template>
   <div>
-    <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings">
-      <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <form @submit.prevent="save">
-          <div class="mb-9 border-b-2 border-hover-theme-green pb-8">
-            <h1 class="text-theme-green text-center md:text-left font-semibold">
-              Account Settings
-            </h1>
-          </div>
-          <div class="mb-10">
-            <h1 class="text-theme-green font-medium">
-              Personal Information
-            </h1>
-            <p>Please make sure to enter a correct information</p>
-          </div>
-          <FormInput id="fullname" v-model="form.name" label="Full Name" type="text" />
-          <FormInput id="email" v-model="form.email" type="email" label="Email Address" class="mt-6" />
-          <br />
-          <Button label="Save Changes" />
-        </form>
+    <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route_name="routeName">
+      <div :class="isMobile ? 'w-full h-full p-4' : ''">
+        <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
+          <form @submit.prevent="save">
+            <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8">
+              <h1 class="text-theme-green text-center md:text-left font-semibold">
+                Account Settings
+              </h1>
+            </div>
+            <div class="mb-10">
+              <h1 class="text-theme-green font-medium">
+                Personal Information
+              </h1>
+              <p>Please make sure to enter a correct information</p>
+            </div>
+            <FormInput id="fullname" v-model="form.name" label="Full Name" type="text" />
+            <FormInput id="email" v-model="form.email" type="email" label="Email Address" class="mt-6" />
+            <br />
+            <Button label="Save Changes" />
+          </form>
+        </div>
       </div>
     </component>
     <Modal v-model="modal">
@@ -49,7 +51,7 @@ import Settings from '../Settings.vue'
 import Button from '../../Components/Auth/Button.vue'
 import FormInput from '../../Components/FormInput.vue'
 import Modal from '../../Components/Modal.vue'
-
+const routeName = ref('Account Settings')
 const props = defineProps({
   user: Object
 })

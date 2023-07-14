@@ -21,7 +21,6 @@ import { isMobile } from 'mobile-device-detect'
 import { useNavigationLinks } from '../Composables/useNavigationLinks'
 import { Link } from '@inertiajs/vue3'
 
-// const page = usePage()
 const { navLinks } = useNavigationLinks()
 
 

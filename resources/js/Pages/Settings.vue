@@ -5,7 +5,7 @@
 
     <div class="z-20 md:-mt-14 flex rounded-md w-full md:max-w-7xl h-full md:h-[680px] bg-white md:border-2 border-hover-theme-green">
       <div class="w-full md:w-390px md:max-w-[390px] border-r">
-        <SettingsNavigation>
+        <SettingsNavigation :user_type="userSub.isUserSubscribe">
           <template v-if="isMobile" #header>
             <div class="w-full shadow-sm bg-white py-4 px-4 flex gap-x-3">
               <Link href="/" class="mb-0 items-center flex">
@@ -35,4 +35,9 @@ import { isMobile } from 'mobile-device-detect'
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 console.log('User: ', user)
+
+const userSub = defineProps({
+  isUserSubscribe: Object
+})
+console.log(userSub.isUserSubscribe)
 </script>

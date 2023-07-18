@@ -49,6 +49,15 @@ class UserController extends Controller
         return Inertia::render('Setting/Account', ['user' => Auth::user()]);
     }
 
+    public function switchBackground(User $user, Request $request)
+    {
+        $user->update([
+            'background_image' => $request->img
+        ]);
+
+        return back()->with('success', 'Image has been switched successfully!');
+    }
+
     public function update(User $user, UpdateUserRequest $request)
     {
         $user->update($request->validated());

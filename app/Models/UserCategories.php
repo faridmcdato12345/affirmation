@@ -11,14 +11,12 @@ class UserCategories extends Model
 
     protected $guarded = [];
 
-    public function getRandomAffirmation()
-    {
-        return $this->affirmations->random(1)->first();
-    }
-
-
     public function affirmations()
     {
         return $this->hasMany(UserAffirmation::class);
+    }
+    public function getRandomAffirmation()
+    {
+        return $this->affirmations->random(1)->first();
     }
 }

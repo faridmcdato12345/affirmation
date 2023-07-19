@@ -5,6 +5,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\UserAffirmationController;
 use App\Http\Controllers\UserCategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,6 +34,7 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/chart',[ChartController::class,'index'])->name('chart.index');
   });
 
+  Route::put('user/{user}/switch-background', [UserController::class, 'switchBackground']);
   Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
   Route::apiResource('/user-category', UserCategoryController::class)->only(['store', 'update', 'destroy']);
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);

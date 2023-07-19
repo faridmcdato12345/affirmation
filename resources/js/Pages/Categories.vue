@@ -3,7 +3,7 @@
     <Head title="Categories" />
     <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
     <div class="h-screen flex flex-col px-4 md:max-w-7xl mx-auto z-20 relative">
-      <h1 class="text-white text-3xl mt-8 text-center">
+      <h1 class="text-white text-3xl mt-20 text-center">
         Categories
       </h1>
       <div class="flex flex-col w-full pb-2">

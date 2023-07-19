@@ -77,7 +77,6 @@ const options = reactive({
   events: response.result,
   eventClick: function(info){
     modal.value = true,
-    alert(JSON.stringify(info.event))
     modalAffirmTitle.value = JSON.stringify(info.event.title),
     modalAffirmDate.value = dateFormatter.format(info.event.start),
     modalAffirmHappiness.value = JSON.stringify(info.event.extendedProps.happiness),

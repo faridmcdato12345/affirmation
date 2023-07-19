@@ -1229,7 +1229,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isPWA === true){
             var checkPWA = document.getElementsByTagName('html')[0];
             if(!checkPWA.classList.contains('isPWA')){
-                console.log("pwaLocation:",pwaLocation)
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})

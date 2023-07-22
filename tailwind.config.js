@@ -2,6 +2,7 @@ module.exports = {
   darkMode: "class",
   content: [
     "./resources/js/**/*.vue",
+    "./resources/views/**/*.blade.php"
   ],
   theme: {
     screens: {

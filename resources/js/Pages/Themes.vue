@@ -2,7 +2,7 @@
   <AuthenticatedLayout>
     <Head title="Themes" />
     <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
-    <div class="z-20 md:max-w-7xl mx-auto relative flex flex-col h-screen px-4 md:pb-0">
+    <div class="z-20 md:max-w-7xl w-full mx-auto relative flex flex-col h-screen px-6 pb-12 md:pb-0">
       <h1 class="text-white text-3xl mt-24 md:mt-12 text-center">
         Background Image
       </h1>
@@ -10,23 +10,22 @@
         System Background
       </h2>
       <hr class="my-5 border-gray-600" />
-      <div class="flex flex-wrap gap-2 items-stretch">
-        <div v-for="img in images" :key="img" class="relative w-[400px] h-[200px] rounded-md border border-gray-800 object-cover items-stretch hover:-translate-y-1 cursor-pointer ease-out duration-150" @click.prevent="toggleSwitchBackground(img)">
-          <CheckCircleIcon v-if="bgImage === img" class="w-7 text-green-600 absolute top-2 right-3 z-20" />
+      <div class="flex flex-wrap gap-2 items-stretch pb-20">
+        <div v-for="img in images" :key="img" class="relative w-full h-[160px] md:w-[400px] md:h-[200px] rounded-md border border-gray-200/30 object-cover items-stretch hover:-translate-y-1 cursor-pointer ease-out duration-150" @click.prevent="toggleSwitchBackground(img)">
+          <CheckCircleIcon v-if="bgImage === img" class="w-6 md:w-7 text-green-600 absolute top-2 right-3 z-20" />
           <img :src="img" alt="Background Image" class="object-cover w-full h-full rounded-md brightness-75 hover:brightness-100" />
         </div>
       </div>
-      <div class="relative md:hidden h-72 w-full"></div>
     </div>
 
     <!-- SWITCH CATEGORY MODAL -->
     <Modal v-model="switchBackgroundModal">
       <div class="text-center">
-        <CheckCircleIcon class="w-14 mx-auto text-green-600" />
+        <CheckCircleIcon class="w-10 md:w-14 mx-auto text-green-600" />
         <h1 class="mt-2">
           Change Background
         </h1>
-        <p class="text-base max-w-md mx-auto leading-6 mt-2 font-light">
+        <p class="text-sm md:text-base max-w-md mx-auto leading-6 mt-2 font-light">
           Are you sure you want to switch your current background image to this? You can still switch back if you'd like to. 
         </p>
       </div>

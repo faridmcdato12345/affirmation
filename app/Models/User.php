@@ -7,6 +7,7 @@ namespace App\Models;
 use Spark\Billable;
 use App\Models\Setting\Feedback;
 use App\Models\Setting\ReportBug;
+use App\Services\CacheAffirmationService;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
@@ -86,23 +87,22 @@ class User extends Authenticatable
     public function getAffirmation()
     {
         $todaysAffirmation = null;
-
         $progress = $this->progress->where('created_at', '>', today())->first();
-
         if ($progress) {
             // return today's previously generated affirmation
-            $todaysAffirmation = $progress->affirmation;
+            $todaysAffirmation = (new CacheAffirmationService())
+                                ->getData()
+                                ->where('id',$progress->affirmation_id)
+                                ->first();
         } else {
             // generate and store a new daily affirmation
             $todaysAffirmation = $this->activeCategory->getRandomAffirmation();
-
             Progress::create([
                 'user_id'            => $this->id,
                 'affirmation_id'     => $todaysAffirmation->id,
                 'affirmation_type'   => $this->active_category_type == 'App\Models\Category' ? Affirmation::class : UserAffirmation::class
             ]);
         }
-
         return $todaysAffirmation;
     }
 

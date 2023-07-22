@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use App\Services\CacheAffirmationService;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
@@ -33,7 +36,11 @@ class Category extends Model
      */
     public function getRandomAffirmation()
     {
-        return $this->affirmations->random(1)->first();
+        return (new CacheAffirmationService())
+                ->getData()
+                ->where('category_id',Auth::user()->active_category_id)
+                ->random(1)
+                ->first();
     }
 
     /**

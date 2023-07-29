@@ -59,16 +59,16 @@ class User extends Authenticatable
         'trial_ends_at'     => 'datetime',
     ];
 
+    public function backgroundImages()
+    {
+        return $this->hasMany(UserBackground::class);
+    }
+
     public function activeCategory(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * Get all of the progress for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function progress(): HasMany
     {
         return $this->hasMany(Progress::class);
@@ -106,22 +106,11 @@ class User extends Authenticatable
         return $todaysAffirmation;
     }
 
-    /**
-     * Get a referral link for the User.
-     *
-     * @return String
-     */
     public function getReferralLink(): String
     {
         return env('APP_URL') . 'register?ref=' . $this->affiliate_id;
     }
 
-    /**
-     * Determine if user is subscribed to one of the premium subscriptions
-     * as ->subscribed() does not seem to work as intended.
-     *
-     * @return Bool
-     */
     public function subscribedToPremium(): Bool
     {
         $plans = config('spark.billables.user.plans');
@@ -132,9 +121,7 @@ class User extends Authenticatable
         }
         return false;
     }
-    /**
-     * get the exercise result of the user
-     */
+
     public function getUserExercise()
     {
         $user = ExerciseResult::with('progress.affirmation')->whereHas('progress',function($query){

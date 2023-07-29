@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\ExerciseResult;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
+use App\Models\UserBackground;
 use App\Models\UserCategories;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -68,7 +69,9 @@ class HomeController extends Controller
 
     public function themes()
     {
-        return Inertia::render('Themes');
+        return Inertia::render('Themes', [
+            'backgroundImages' => UserBackground::where('user_id', auth()->id())->get(['user_id', 'image'])
+        ]);
     }
 
     /**

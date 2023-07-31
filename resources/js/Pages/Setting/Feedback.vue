@@ -21,7 +21,7 @@
             cols="200"
             rows="10"
             placeholder="Write your feedback"
-            class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1"></textarea>
+            class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="form.errors.description" />
           <Button label="Submit" class="mt-3" />
         </form>

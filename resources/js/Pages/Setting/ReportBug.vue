@@ -20,7 +20,7 @@
             name=""
             cols="200"
             rows="10"
-            class="border-2 border-hover-theme-green w-full rounded-md"></textarea>
+            class="border-2 border-hover-theme-green w-full rounded-md dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="form.errors.description" />
           <Button label="Submit" class="mt-3" />
         </form>

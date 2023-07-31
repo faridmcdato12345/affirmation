@@ -39,9 +39,6 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
   Route::apiResource('/user-category', UserCategoryController::class)->only(['store', 'update', 'destroy']);
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
-  Route::get('cache/affirmation',function(){
-    dd(Auth::user()->getAffirmation());
-  });
 });
 
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');

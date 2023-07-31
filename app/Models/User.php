@@ -36,7 +36,8 @@ class User extends Authenticatable
         'affiliate_id',
         'referred_by',
         'timezone',
-        'background_image'
+        'background_image',
+        'fcm_token'
     ];
 
     /**

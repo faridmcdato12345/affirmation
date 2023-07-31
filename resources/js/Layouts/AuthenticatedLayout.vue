@@ -6,10 +6,10 @@
     
       <Link href="/themes">
         <div class="cursor-pointer rounded-full flex items-center justify-center fixed right-20 top-5 md:right-24 md:top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-40" @click.prevent="toggleDarkMode">
-          <component :is="isDarkMode ? SunIcon : MoonIcon" class="w-5 h-5 md:w-6 md:h-6 text-white" />
+          <component :is="isDarkMode ? SunIcon : MoonIcon" class="w-4 h-4 md:w-6 md:h-6 text-white" />
         </div>
         <div class="cursor-pointer rounded-full flex items-center justify-center fixed right-5 top-5 md:right-10 md:top-6 bg-white/40 hover:bg-white/60 duration-150 ease-out p-3 z-40">
-          <LightBulbIcon class="w-5 h-5 md:w-6 md:h-6 text-white" />
+          <LightBulbIcon class="w-4 h-4 md:w-6 md:h-6 text-white" />
         </div>
       </Link>
       <NavigationBar v-if="checkRoute" />

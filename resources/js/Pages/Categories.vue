@@ -2,7 +2,7 @@
   <AuthenticatedLayout background-image="the-river-gfd490d610_1280.jpg" class="">
     <Head title="Categories" />
     <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
-    <div class="h-screen flex flex-col px-4 md:max-w-7xl mx-auto z-20 relative">
+    <div class="h-screen w-full flex flex-col px-6 md:max-w-7xl mx-auto z-20 relative">
       <h1 class="text-white text-3xl mt-20 text-center">
         Categories
       </h1>
@@ -11,11 +11,11 @@
           My Categories
         </h2>
         <hr class="my-5 border-gray-600" />
-        <div class="flex flex-wrap gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div
             v-for="myCategory in myCategories"
             :key="myCategory.id"
-            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-5 py-6 cursor-pointer"
+            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
               <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
@@ -32,7 +32,7 @@
               {{ myCategory.blurb }}
             </p>
           </div>
-          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
+          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
             <div class="absolute top-3 right-3">
               <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
             </div>
@@ -51,11 +51,11 @@
             {{ i == 0 ? 'Free' : 'Premium' }}
           </h2>
           <hr class="my-5 border-gray-600" />
-          <div class="flex gap-4 flex-wrap">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div
               v-for="category in categoryType"
               :key="category.id"
-              class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-96 rounded-md shadow px-5 py-6 cursor-pointer"
+              class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
               :class="[
                 i == 0 || isPremium ? 'bg-white' : 'bg-gray-200'
               ]"

@@ -9,8 +9,7 @@ on:
     branches:
       - staging
 
-jobs:
-
+jobs: 
   tag:
     name: Deploy Staging
 
@@ -19,6 +18,22 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with: 
+          path: vendor
+          key: composer-${{ hashFile('**/composer.lock') }}
+          restore-keys: |
+            composer-
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with: 
+          php-version: 8.1
+
+      - name: Run Composer
+        run: composer install --no-interaction 
 
       - name: Use Node.js
         uses: actions/setup-node@v3

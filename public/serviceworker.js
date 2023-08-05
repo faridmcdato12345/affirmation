@@ -1,6 +1,5 @@
 var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
-    'offline',
     'build/app.css',
     'build/app.js',
     'images/icons/android-launchericon-72-72.png',
@@ -10,9 +9,8 @@ var filesToCache = [
     'images/icons/152.png',
     'images/icons/android-launchericon-192-192.png',
     'images/icons/256.png',
-    'images/icons/android-launchericon-512-512.png',
+    'images/icons/android-launchericon-512-512.png'
 ];
-
 // Cache on install
 self.addEventListener("install", event => {
     this.skipWaiting();
@@ -23,7 +21,6 @@ self.addEventListener("install", event => {
             })
     )
 });
-
 // Clear cache on activate
 self.addEventListener('activate', event => {
     event.waitUntil(
@@ -37,7 +34,6 @@ self.addEventListener('activate', event => {
         })
     );
 });
-
 // Serve from Cache
 self.addEventListener("fetch", event => {
     event.respondWith(

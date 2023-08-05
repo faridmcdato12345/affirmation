@@ -11,8 +11,8 @@
     <form @submit.prevent="submit">
       <FormInput id="email" v-model="form.email" type="email" label="Email Address" required />
       <div class="flex items-center justify-center w-full mt-4 flex-col">
-        <Button type="submit" label="Email Password Reset Link" color="success" btn-block />
-        <Button component-type="link" :href="route('login')" label="Cancel Reset" class="mt-1" color="error" btn-block />
+        <Button type="submit" :loading="form.processing" label="Email Password Reset Link" color="success" btn-block />
+        <Button component-type="link" :href="route('login')" label="Go Back" class="mt-1" color="gray" btn-block />
       </div>
     </form>
   </AuthLayout>
@@ -23,6 +23,7 @@ import FormInput from '../../Components/FormInput.vue'
 import AuthLayout from '../../Layouts/Auth.vue'
 import Button from '../../Components/Button.vue'
 import route from 'ziggy-js'
+import { toast } from '../../Composables/useToast'
 
 defineProps({
   status: {
@@ -33,8 +34,14 @@ defineProps({
 const form = useForm({
   email: '',
 })
+
 const submit = () => {
-  form.post(route('password.email'))
+  form.post(route('password.email'),{
+    onSuccess: () => {
+      toast.success('Password reset instructions has been sent to your email')
+      form.reset()
+    }
+  })
 }
 </script>
 <style scoped>

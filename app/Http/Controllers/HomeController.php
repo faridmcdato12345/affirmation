@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\ExerciseResult;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\SendInBlue;
+use App\Models\UserBackground;
+use App\Models\UserCategories;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
@@ -26,12 +29,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
+        $affirmation = Auth::user()->getAffirmation();
+        $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
+
         return Inertia::render('Index', [
-            'affirmation' => Auth::user()->getAffirmation(), 
-            'progressId' => Auth::user()->progress()->where('created_at', '>', today())->first()->id , 
-            'active' => 'home'
+            'affirmation'      => $affirmation,
+            'progressId'       => $progressId,
+            'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
         ]);
     }
 
@@ -42,7 +48,7 @@ class HomeController extends Controller
      */
     public function settings()
     {
-        return view('settings', ['active' => 'settings']);
+        return Inertia::render('Settings');
     }
 
     /**
@@ -53,14 +59,19 @@ class HomeController extends Controller
     public function categories()
     {
         return Inertia::render('Categories', [
-            'categories' => Category::all()->groupBy('premium'), 
-            'activeCategory' => Auth::user()->active_category
+            'categories'         => Category::all()->groupBy('premium'),
+            'myCategories'       => UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get(),
+            'isPremium'          => Auth::user()->subscribed(),
+            'activeCategory'     => Auth::user()->active_category_id,
+            'activeCategoryType' => Auth::user()->active_category_type
         ]);
     }
 
     public function themes()
     {
-        return Inertia::render('Themes');
+        return Inertia::render('Themes', [
+            'backgroundImages' => UserBackground::where('user_id', auth()->id())->get(['user_id', 'image'])
+        ]);
     }
 
     /**
@@ -72,13 +83,20 @@ class HomeController extends Controller
     public function setActiveCategory(Request $request)
     {
         $validated = $request->validate([
-        'category_id' => 'required|integer',
+            'category_id' => 'required|integer',
         ]);
 
         $user = Auth::user();
-        $user->active_category = $validated['category_id'];
-        $user->save();
-        return redirect()->route('categories', ['categories' => Category::all()->groupBy('premium'), 'active' => 'categories', 'activeCategory' => $user->active_category]);
+        $user->update([
+            'active_category_id' => $validated['category_id'],
+            'active_category_type' => $request->type == 'personal' ? UserCategories::class : Category::class,
+        ]);
+
+        return redirect()->route('categories', [
+            'categories' => Category::all()->groupBy('premium'),
+            'active' => 'categories',
+            'activeCategory' => $user->active_category
+        ]);
     }
 
     /**
@@ -90,7 +108,7 @@ class HomeController extends Controller
     public function report(Request $request)
     {
         $user = Auth::user();
-        
+
         $sib = new SendInBlue();
         try {
             $sib->sendReportEmail(Auth::user(), htmlspecialchars($request->contactMessageTextarea));

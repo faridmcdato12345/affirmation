@@ -1,9 +1,6 @@
 // JS
 import LazyLoad from "~vanilla-lazyload"
-import "./bootstrap"
-import * as bootstrap from "~bootstrap"
 import "./custom"
-import Alpine from "alpinejs"
 
 //Inertia Vue
 import { createApp, h } from "vue"
@@ -12,29 +9,28 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers"
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { 
-  faEyeSlash, 
+import {
+  faEyeSlash,
   faEye,
   faAngleLeft,
   faLightbulb
 } from '@fortawesome/free-solid-svg-icons'
 
+import { options } from './toastOptions'
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import rate from 'vue-rate'
 import 'vue-rate/dist/vue-rate.css'
 
 // CSS
 import "../css/app.css"
-import "../css/bootstrap.css"
 import "../css/style.css"
 import "../sass/star_rating.scss"
 
-window.bootstrap = bootstrap
 window.LazyLoad = LazyLoad
-window.Alpine = Alpine
-Alpine.start()
-library.add([ 
-  faEyeSlash, 
+library.add([
+  faEyeSlash,
   faEye,
   faAngleLeft,
   faLightbulb
@@ -51,6 +47,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(rate)
+      .use(Toast, options)
       .use(ZiggyVue,Ziggy)
       .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)

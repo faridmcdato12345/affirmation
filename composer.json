@@ -15,17 +15,20 @@
         "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.9",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/spark-stripe": "^4.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
         "livewire/livewire": "^2.10",
+        "predis/predis": "^2.2",
         "sendinblue/api-v3-sdk": "^8.4",
         "silviolleite/laravelpwa": "^2.0",
         "tightenco/ziggy": "^1.6"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
@@ -63,7 +66,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {

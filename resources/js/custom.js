@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     'use strict'
-
+    
     //Removing Preloader
     setTimeout(function () {
         var preloader = document.getElementById('preloader')
@@ -27,14 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		var menuHider = document.getElementsByClassName('menu-hider');
 		if(!menuHider.length){var hider = document.createElement('div'); hider.setAttribute("class", "menu-hider");document.body.insertAdjacentElement('beforebegin', hider);}
 		setTimeout(function(){if(menuHider[0].classList.contains('menu-active')){menuHider[0].classList.remove('menu-active')}},0);
-
-
         //Demo function for programtic creation of Menu
         //menu('menu-settings', 'show', 250);
 
         //Activating Menus
         document.querySelectorAll('.menu').forEach(el=>{el.style.display='block'})
-
+        
         //Validator
         var inputField = document.querySelectorAll('input');
         if(inputField.length){
@@ -123,59 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-
-
-        //Image Sliders
-        var splide = document.getElementsByClassName('splide');
-        if(splide.length){
-            var singleSlider = document.querySelectorAll('.single-slider');
-            if(singleSlider.length){
-                singleSlider.forEach(function(e){
-                    var single = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        interval:4000,
-                        perPage: 1,
-                    }).mount();
-                    var sliderNext = document.querySelectorAll('.slider-next');
-                    var sliderPrev = document.querySelectorAll('.slider-prev');
-                    sliderNext.forEach(el => el.addEventListener('click', el => {single.go('>');}));
-                    sliderPrev.forEach(el => el.addEventListener('click', el => {single.go('<');}));
-                });
-            }
-
-            var doubleSlider = document.querySelectorAll('.double-slider');
-            if(doubleSlider.length){
-                doubleSlider.forEach(function(e){
-                     var double = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        interval:4000,
-                        arrows:false,
-                        perPage: 2,
-                    }).mount();
-                });
-            }
-
-            var trippleSlider = document.querySelectorAll('.tripple-slider');
-            if(trippleSlider.length){
-                trippleSlider.forEach(function(e){
-                     var tripple = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        padding: {
-                            left   :'0px',
-                            right: '80px',
-                        },
-                        interval:4000,
-                        arrows:false,
-                        perPage: 2,
-                        perMove: 1,
-                    }).mount();
-                });
-            }
-        }
-
         //Don't jump on Empty Links
         const emptyHref = document.querySelectorAll('a[href="#"]')
         emptyHref.forEach(el => el.addEventListener('click', e => {
@@ -199,10 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
                document.getElementsByClassName('hide-map')[0].classList.add('disabled');
             })
         }
-
-
-
-
         //To Do List
         var toDoList = document.querySelectorAll('.todo-list a');
         toDoList.forEach(el => el.addEventListener('click', e => {
@@ -315,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		  return d;
 		}
 		let iosVer = iOSversion();
-		if (iosVer.version > 14) {document.querySelectorAll('#page')[0].classList.add('min-ios15');}
+		if (iosVer.version > 14) {document.querySelectorAll('#app')[0].classList.add('min-ios15');}
 
         //Card Extender
         const cards = document.getElementsByClassName('card');
@@ -352,47 +293,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         //Page Highlights
-        var highlightData = document.querySelectorAll('[data-change-highlight]');
-        highlightData.forEach(el => el.addEventListener('click', e =>{
-            var highlight = el.getAttribute('data-change-highlight');
-            var pageHighlight = document.querySelectorAll('.page-highlight');
-            if(pageHighlight.length){pageHighlight.forEach(function(e){e.remove();});}
-            var loadHighlight = document.createElement("link");
-            loadHighlight.rel = "stylesheet";
-            loadHighlight.className = "page-highlight";
-            loadHighlight.type = "text/css";
-            loadHighlight.href = 'css/highlights/highlight_' + highlight +'.css';
-            document.getElementsByTagName("head")[0].appendChild(loadHighlight);
-            document.body.setAttribute('data-highlight', 'highlight-'+highlight)
-            localStorage.setItem(pwaName+'-Highlight', highlight)
-        }))
-        var rememberHighlight = localStorage.getItem(pwaName+'-Highlight');
-        if(rememberHighlight){
-            document.body.setAttribute('data-highlight', rememberHighlight);
-            var loadHighlight = document.createElement("link");
-            loadHighlight.rel = "stylesheet";
-            loadHighlight.className = "page-highlight";
-            loadHighlight.type = "text/css";
-            loadHighlight.href = 'css/highlights/highlight_' + rememberHighlight +'.css';
-            if(!document.querySelectorAll('.page-highlight').length){
-                document.getElementsByTagName("head")[0].appendChild(loadHighlight);
-                document.body.setAttribute('data-highlight', 'highlight-'+rememberHighlight)
-            }
-        } else {
-            var bodyHighlight = document.body.getAttribute('data-highlight');
-            var defaultHighlight = bodyHighlight.split("highlight-")
-            document.body.setAttribute('data-highlight', defaultHighlight[1]);
-            var loadHighlight = document.createElement("link");
-            loadHighlight.rel = "stylesheet";
-            loadHighlight.className = "page-highlight";
-            loadHighlight.type = "text/css";
-            loadHighlight.href = 'css/highlights/highlight_' + defaultHighlight[1] +'.css';
-            if(!document.querySelectorAll('.page-highlight').length){
-                document.getElementsByTagName("head")[0].appendChild(loadHighlight);
-                document.body.setAttribute('data-highlight', 'highlight-'+defaultHighlight[1])
-                localStorage.setItem(pwaName+'-Highlight', defaultHighlight[1])
-            }
-        }
+        // var highlightData = document.querySelectorAll('[data-change-highlight]');
+        // highlightData.forEach(el => el.addEventListener('click', e =>{
+        //     var highlight = el.getAttribute('data-change-highlight');
+        //     var pageHighlight = document.querySelectorAll('.page-highlight');
+        //     if(pageHighlight.length){pageHighlight.forEach(function(e){e.remove();});}
+        //     var loadHighlight = document.createElement("link");
+        //     loadHighlight.rel = "stylesheet";
+        //     loadHighlight.className = "page-highlight";
+        //     loadHighlight.type = "text/css";
+        //     loadHighlight.href = 'css/highlights/highlight_' + highlight +'.css';
+        //     document.getElementsByTagName("head")[0].appendChild(loadHighlight);
+        //     document.body.setAttribute('data-highlight', 'highlight-'+highlight)
+        //     localStorage.setItem(pwaName+'-Highlight', highlight)
+        // }))
+        // var rememberHighlight = localStorage.getItem(pwaName+'-Highlight');
+        // if(rememberHighlight){
+        //     document.body.setAttribute('data-highlight', rememberHighlight);
+        //     var loadHighlight = document.createElement("link");
+        //     loadHighlight.rel = "stylesheet";
+        //     loadHighlight.className = "page-highlight";
+        //     loadHighlight.type = "text/css";
+        //     loadHighlight.href = 'css/highlights/highlight_' + rememberHighlight +'.css';
+        //     if(!document.querySelectorAll('.page-highlight').length){
+        //         document.getElementsByTagName("head")[0].appendChild(loadHighlight);
+        //         document.body.setAttribute('data-highlight', 'highlight-'+rememberHighlight)
+        //     }
+        // } else {
+        //     var bodyHighlight = document.body.getAttribute('data-highlight');
+        //     var defaultHighlight = bodyHighlight.split("highlight-")
+        //     document.body.setAttribute('data-highlight', defaultHighlight[1]);
+        //     var loadHighlight = document.createElement("link");
+        //     loadHighlight.rel = "stylesheet";
+        //     loadHighlight.className = "page-highlight";
+        //     loadHighlight.type = "text/css";
+        //     loadHighlight.href = 'css/highlights/highlight_' + defaultHighlight[1] +'.css';
+        //     if(!document.querySelectorAll('.page-highlight').length){
+        //         document.getElementsByTagName("head")[0].appendChild(loadHighlight);
+        //         document.body.setAttribute('data-highlight', 'highlight-'+defaultHighlight[1])
+        //         localStorage.setItem(pwaName+'-Highlight', defaultHighlight[1])
+        //     }
+        // }
 
         //Background Gradient Color
         var gradientData = document.querySelectorAll('[data-change-background]');
@@ -406,33 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
         var pageBackground = localStorage.getItem(pwaName+'-Gradient');
         if(pageBackground){document.body.setAttribute('data-gradient', 'body-'+pageBackground+'');}
 
-
-        //Dark Mode
-        const toggleDark = document.querySelectorAll('[data-toggle-theme]');
-        function activateDarkMode(){
-            document.body.classList.add('theme-dark');
-            document.body.classList.remove('theme-light', 'detect-theme');
-            for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked="checked"};
-            localStorage.setItem(pwaName+'-Theme', 'dark-mode');
-        }
-        function activateLightMode(){
-            document.body.classList.add('theme-light');
-            document.body.classList.remove('theme-dark','detect-theme');
-            for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked=false};
-            localStorage.setItem(pwaName+'-Theme', 'light-mode');
-        }
         function removeTransitions(){var falseTransitions = document.querySelectorAll('.btn, .header, #footer-bar, .menu-box, .menu-active'); for(let i = 0; i < falseTransitions.length; i++) {falseTransitions[i].style.transition = "all 0s ease";}}
         function addTransitions(){var trueTransitions = document.querySelectorAll('.btn, .header, #footer-bar, .menu-box, .menu-active'); for(let i = 0; i < trueTransitions.length; i++) {trueTransitions[i].style.transition = "";}}
-
-        function setColorScheme() {
-            const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-            const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-            const isNoPreference = window.matchMedia("(prefers-color-scheme: no-preference)").matches
-            window.matchMedia("(prefers-color-scheme: dark)").addListener(e => e.matches && activateDarkMode())
-            window.matchMedia("(prefers-color-scheme: light)").addListener(e => e.matches && activateLightMode())
-            if(isDarkMode) activateDarkMode();
-            if(isLightMode) activateLightMode();
-        }
 
         //Activating Dark Mode
         const darkModeSwitch = document.querySelectorAll('[data-toggle-theme]')
@@ -520,37 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof(getLocation) != 'undefined' && getLocation != null){
                 getLocation.addEventListener('click',function(){this.classList.add('disabled'); geoLocate();})
             }
-        }
-
-        //Card Effects
-        const cardScale = document.querySelectorAll('.card-scale');
-        if(cardScale.length){
-            cardScale.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-scale-image');}));
-            cardScale.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-scale-image');}));
-        }
-
-        const cardHide = document.querySelectorAll('.card-hide');
-        if(cardHide.length){
-            cardHide.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.add('card-hide-image');}));
-            cardHide.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.remove('card-hide-image');}));
-        }
-
-        const cardRotate = document.querySelectorAll('.card-rotate');
-        if(cardRotate.length){
-            cardRotate.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-rotate-image');}));
-            cardRotate.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-rotate-image');}));
-        }
-
-        const cardGray = document.querySelectorAll('.card-grayscale');
-        if (cardGray.length){
-            cardGray.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-grayscale-image');}));
-            cardGray.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-grayscale-image');}));
-        }
-
-        const cardBlur = document.querySelectorAll('.card-blur');
-        if(cardBlur.length){
-            cardBlur.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-blur-image');}));
-            cardBlur.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-blur-image');}));
         }
 
         //Adding Local Storage for Visited Links
@@ -1106,7 +991,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return true;
             });
         }
+        //creating Android pop installation modal
+        // var androidInstallerModal = document.querySelectorAll('#menu-install-pwa-android');
+        // if(!androidInstallerModal.length){
 
+        // }
 
         //Creating Offline Alert Messages
         var addOfflineClasses = document.querySelectorAll('.offline-message');
@@ -1211,12 +1100,12 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let i = 0; i < androidDev.length; i++) {androidDev[i].classList.add('disabled');}
         }
         if(isMobile.iOS()){
-            document.querySelectorAll('#page')[0].classList.add('device-is-ios');
+            document.querySelectorAll('#app')[0].classList.add('device-is-ios');
             for (let i = 0; i < noDev.length; i++) {noDev[i].classList.add('disabled');}
             for (let i = 0; i < androidDev.length; i++) {androidDev[i].classList.add('disabled');}
         }
         if(isMobile.Android()){
-            document.querySelectorAll('#page')[0].classList.add('device-is-android');
+            document.querySelectorAll('#app')[0].classList.add('device-is-android');
             for (let i = 0; i < iOSDev.length; i++) {iOSDev[i].classList.add('disabled');}
             for (let i = 0; i < noDev.length; i++) {noDev[i].classList.add('disabled');}
         }
@@ -1234,13 +1123,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isPWA === true){
             var checkPWA = document.getElementsByTagName('html')[0];
             if(!checkPWA.classList.contains('isPWA')){
+                console.log("pwaLocation:",pwaLocation)
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
                     navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
                     console.log('Service Worker successfully registered')
                     });
                 }
-
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours
                 var now = Date.now();
@@ -1251,8 +1140,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.removeItem(pwaName+'-PWA-Prompt')
                     localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
                 }
-
-
                 const pwaClose = document.querySelectorAll('.pwa-dismiss');
                 pwaClose.forEach(el => el.addEventListener('click',e =>{
                     const pwaWindows = document.querySelectorAll('#menu-install-pwa-android, #menu-install-pwa-ios');
@@ -1263,11 +1150,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 }));
 
                 //Trigger Install Prompt for Android
-                const pwaWindows = document.querySelectorAll('#menu-install-pwa-android, #menu-install-pwa-ios');
+                const pwaWindows = document.querySelectorAll('#menu-install-pwa-android');
+                console.log(isMobile)
+                console.log("length:",pwaWindows.length)
                 if(pwaWindows.length){
                     if (isMobile.Android()) {
                         if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
-                            function showInstallPrompt() {
+                            setTimeout(function(){
+                                if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+                                    console.log('Triggering PWA Window for Android')
+                                    document.getElementById('menu-install-pwa-android').classList.add('menu-active');
+                                    document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                                }
+                            },3500);
+                            var deferredPrompt;
+                            window.addEventListener('beforeinstallprompt', function(event){
+                                console.log("deferredPrompt")
+                                e.preventDefault();
+                                deferredPrompt = e;
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
                                         console.log('Triggering PWA Window for Android')
@@ -1275,16 +1175,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                         document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
                                     }
                                 },3500);
-                            }
-                            var deferredPrompt;
-                            window.addEventListener('beforeinstallprompt', (e) => {
-                                e.preventDefault();
-                                deferredPrompt = e;
-                                showInstallPrompt();
                             });
                         }
                         const pwaInstall = document.querySelectorAll('.pwa-install');
                         pwaInstall.forEach(el => el.addEventListener('click', e => {
+                            console.log("deferredPrompt: ",deferredPrompt)
                             deferredPrompt.prompt();
                             deferredPrompt.userChoice
                                 .then((choiceResult) => {
@@ -1292,6 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                         console.log('Added');
                                     } else {
                                         localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
+                                        console.log("wpwa timeout value")
                                         localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
                                         setTimeout(function(){
                                             if (!window.matchMedia('(display-mode: fullscreen)').matches) {
@@ -1442,6 +1338,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+    console.log("init_template")
     }
 
     //Fix Scroll for AJAX pages.
@@ -1451,7 +1348,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(isAJAX === true){
         if(window.location.protocol !== "file:"){
             const options = {
-                containers: ["#page"],
+                containers: ["#app"],
                 cache:false,
                 animateHistoryBrowsing: false,
                 plugins: [
@@ -1464,6 +1361,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // init_template();
+    init_template();
+    console.log('custom.js')
 });
-

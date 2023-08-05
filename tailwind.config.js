@@ -2,6 +2,7 @@ module.exports = {
   darkMode: "class",
   content: [
     "./resources/js/**/*.vue",
+    "./resources/views/**/*.blade.php"
   ],
   theme: {
     screens: {
@@ -24,18 +25,18 @@ module.exports = {
     },
     extend: {
       colors: {
-        "theme-green": "#8ABE53",
-        "hover-theme-green": "#9cd75e"
+        "theme-green": "#096A2E",
+        "hover-theme-green": "#8ABE53"
       }
     },
   },
   safelist: [
     'border-2',
-    'border-solid', 
+    'border-solid',
     'focus:ring',
     {
-      pattern: /bg-(red|green|blue|orange)-(100|200|300|400|500|600|700)/,
-      variants: ['hover', 'focus', 'lg:hover', 'active'],
+      pattern: /bg-(red|green|blue|orange|gray)-(100|200|300|400|500|600|700)/,
+      variants: ['hover', 'focus', 'lg:hover', 'active', 'disabled:hover'],
     },
     {
       pattern: /ring-(red|green|blue|orange)-(100|200|300|400|500|600|700)/,
@@ -48,4 +49,3 @@ module.exports = {
   ],
   plugins: [],
 }
-

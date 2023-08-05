@@ -9,9 +9,6 @@
         content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>{{ env('APP_NAME') }}</title>
     <link rel="icon" type="image/png" sizes="128x128" href="{{ asset('favicon.png') }}">
-    <link
-        href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i|Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i,900,900i&display=swap"
-        rel="stylesheet">
     @include('components.apple-meta')
     @laravelPWA
     @routes
@@ -26,6 +23,21 @@
     @inertia
 
     {{-- <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script> --}}
-
+    <script type="text/javascript" src="scripts/custom.js"></script> --}}
+    {{-- @include('components.popups') --}}
+    <div id="menu-install-pwa-android" class="menu menu-box-bottom menu-box-detached rounded-md"
+        style="width:95%; margin:0 auto; background:#f9f9f9">
+        <div class="boxed-text-l mt-4 pb-3">
+            <img class="rounded-l mb-3" src="{{ asset('/images/icons/128.png') }}" alt="img" width="128"
+                style="margin: 0 auto">
+            <h4 class="mt-3">Add Affirm on your Home Screen</h4>
+            <p>
+                Install Affirm on your home screen, and access it just like a regular app. It really is that simple!
+            </p>
+            <a 
+              href="#"
+              class="pwa-install btn btn-s rounded-s shadow-l text-uppercase font-900 bg-highlight mt-2.5 block w-full py-2.5 px-4"
+                >Add to Home Screen</a><br>
+        </div>
+    </div>
 </body>

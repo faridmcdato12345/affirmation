@@ -120,56 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }));
             }
         }
-        //Image Sliders
-        var splide = document.getElementsByClassName('splide');
-        if(splide.length){
-            var singleSlider = document.querySelectorAll('.single-slider');
-            if(singleSlider.length){
-                singleSlider.forEach(function(e){
-                    var single = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        interval:4000,
-                        perPage: 1,
-                    }).mount();
-                    var sliderNext = document.querySelectorAll('.slider-next');
-                    var sliderPrev = document.querySelectorAll('.slider-prev');
-                    sliderNext.forEach(el => el.addEventListener('click', el => {single.go('>');}));
-                    sliderPrev.forEach(el => el.addEventListener('click', el => {single.go('<');}));
-                });
-            }
-
-            var doubleSlider = document.querySelectorAll('.double-slider');
-            if(doubleSlider.length){
-                doubleSlider.forEach(function(e){
-                     var double = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        interval:4000,
-                        arrows:false,
-                        perPage: 2,
-                    }).mount();
-                });
-            }
-
-            var trippleSlider = document.querySelectorAll('.tripple-slider');
-            if(trippleSlider.length){
-                trippleSlider.forEach(function(e){
-                     var tripple = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        padding: {
-                            left   :'0px',
-                            right: '80px',
-                        },
-                        interval:4000,
-                        arrows:false,
-                        perPage: 2,
-                        perMove: 1,
-                    }).mount();
-                });
-            }
-        }
 
         //Don't jump on Empty Links
         const emptyHref = document.querySelectorAll('a[href="#"]')
@@ -397,33 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
         var pageBackground = localStorage.getItem(pwaName+'-Gradient');
         if(pageBackground){document.body.setAttribute('data-gradient', 'body-'+pageBackground+'');}
 
-
-        //Dark Mode
-        const toggleDark = document.querySelectorAll('[data-toggle-theme]');
-        function activateDarkMode(){
-            document.body.classList.add('theme-dark');
-            document.body.classList.remove('theme-light', 'detect-theme');
-            for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked="checked"};
-            localStorage.setItem(pwaName+'-Theme', 'dark-mode');
-        }
-        function activateLightMode(){
-            document.body.classList.add('theme-light');
-            document.body.classList.remove('theme-dark','detect-theme');
-            for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked=false};
-            localStorage.setItem(pwaName+'-Theme', 'light-mode');
-        }
         function removeTransitions(){var falseTransitions = document.querySelectorAll('.btn, .header, #footer-bar, .menu-box, .menu-active'); for(let i = 0; i < falseTransitions.length; i++) {falseTransitions[i].style.transition = "all 0s ease";}}
         function addTransitions(){var trueTransitions = document.querySelectorAll('.btn, .header, #footer-bar, .menu-box, .menu-active'); for(let i = 0; i < trueTransitions.length; i++) {trueTransitions[i].style.transition = "";}}
-
-        function setColorScheme() {
-            const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
-            const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-            const isNoPreference = window.matchMedia("(prefers-color-scheme: no-preference)").matches
-            window.matchMedia("(prefers-color-scheme: dark)").addListener(e => e.matches && activateDarkMode())
-            window.matchMedia("(prefers-color-scheme: light)").addListener(e => e.matches && activateLightMode())
-            if(isDarkMode) activateDarkMode();
-            if(isLightMode) activateLightMode();
-        }
 
         //Activating Dark Mode
         const darkModeSwitch = document.querySelectorAll('[data-toggle-theme]')
@@ -511,37 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof(getLocation) != 'undefined' && getLocation != null){
                 getLocation.addEventListener('click',function(){this.classList.add('disabled'); geoLocate();})
             }
-        }
-
-        //Card Effects
-        const cardScale = document.querySelectorAll('.card-scale');
-        if(cardScale.length){
-            cardScale.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-scale-image');}));
-            cardScale.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-scale-image');}));
-        }
-
-        const cardHide = document.querySelectorAll('.card-hide');
-        if(cardHide.length){
-            cardHide.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.add('card-hide-image');}));
-            cardHide.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.remove('card-hide-image');}));
-        }
-
-        const cardRotate = document.querySelectorAll('.card-rotate');
-        if(cardRotate.length){
-            cardRotate.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-rotate-image');}));
-            cardRotate.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-rotate-image');}));
-        }
-
-        const cardGray = document.querySelectorAll('.card-grayscale');
-        if (cardGray.length){
-            cardGray.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-grayscale-image');}));
-            cardGray.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-grayscale-image');}));
-        }
-
-        const cardBlur = document.querySelectorAll('.card-blur');
-        if(cardBlur.length){
-            cardBlur.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-blur-image');}));
-            cardBlur.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-blur-image');}));
         }
 
         //Adding Local Storage for Visited Links
@@ -1470,4 +1364,3 @@ document.addEventListener('DOMContentLoaded', () => {
     init_template();
     console.log('custom.js')
 });
-

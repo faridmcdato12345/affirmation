@@ -70,6 +70,10 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
+  },
+  darken: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -88,10 +92,23 @@ const btnColorClass = {
   'gray': 'gray'
 }
 
+const darkenState = computed(() => {
+  return {
+    normal: props.darken ? '700' : '600',
+    hover: props.darken ? '800' : '700',
+    active: props.darken ? '900' : '800'
+  }
+})
+
 const text = computed(() => props.uppercase ? props.label.toUpperCase() : props.label)
 const btnSize = computed(() => btnSizeClass[props.size])
 const btnColor = computed(() => {
   if(props.outline) return `border-2 border-${btnColorClass[props.color]}-600 border-solid`
-  return `bg-${btnColorClass[props.color]}-600 hover:bg-${btnColorClass[props.color]}-700 active:bg-${btnColorClass[props.color]}-800 disabled:hover:bg-${btnColorClass[props.color]}-600 focus:ring focus:ring-${btnColorClass[props.color]}-600`
+  return `
+    bg-${btnColorClass[props.color]}-${darkenState.value.normal} 
+    hover:bg-${btnColorClass[props.color]}-${darkenState.value.hover} 
+    active:bg-${btnColorClass[props.color]}-${darkenState.value.active}
+    disabled:hover:bg-${btnColorClass[props.color]}-600 
+    focus:ring focus:ring-${btnColorClass[props.color]}-600`
 })
 </script>

@@ -32,6 +32,9 @@ jobs:
         with: 
           php-version: 8.1
 
+      - name: Add HTTP basic auth credentials
+        run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
+
       - name: Run Composer
         run: composer install --no-interaction 
 

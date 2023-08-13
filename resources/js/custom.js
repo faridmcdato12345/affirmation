@@ -1189,25 +1189,25 @@ document.addEventListener('DOMContentLoaded', () => {
                             const pwaInstall = document.querySelectorAll('.pwa-install');
                             pwaInstall.addEventListener('click', async () => {
                                 console.log("deferredPrompt: ",deferredPrompt)
-                                await deferredPrompt.prompt();
-                                deferredPrompt.userChoice
-                                    .then((choiceResult) => {
-                                        if (choiceResult.outcome === 'accepted') {
-                                            console.log('Added');
-                                        } else {
-                                            localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
-                                            console.log("wpwa timeout value")
-                                            localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
-                                            setTimeout(function(){
-                                                if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                                    document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
-                                                    document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
-                                                }
-                                            },50);
+                                if(!deferredPrompt){
+                                    return;
+                                }
+                                const result = await deferredPrompt.prompt();
+                                if (result.outcome === 'accepted') {
+                                    console.log('Added');
+                                } else {
+                                    localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
+                                    console.log("wpwa timeout value")
+                                    localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
+                                    setTimeout(function(){
+                                        if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+                                            document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                                            document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
                                         }
-                                        deferredPrompt = null;
-                                    });
-                            }));
+                                    },50);
+                                }
+                                deferredPrompt = null;
+                            });
                             window.addEventListener('appinstalled', (evt) => {
                                 document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
                                 document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');

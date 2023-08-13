@@ -1171,8 +1171,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                     document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
                                 }
                             },3500);
-                            var deferredPrompt;
-                            window.addEventListener('beforeinstallprompt', function(event){
+                            let deferredPrompt = null;
+                            window.addEventListener('beforeinstallprompt', (event) => {
                                 console.log("deferredPrompt")
                                 event.preventDefault();
                                 deferredPrompt = event;

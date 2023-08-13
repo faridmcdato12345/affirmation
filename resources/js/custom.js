@@ -1172,10 +1172,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                             },3500);
                             var deferredPrompt;
-                            window.addEventListener('beforeinstallprompt', function(e){
+                            window.addEventListener('beforeinstallprompt', function(event){
                                 console.log("deferredPrompt")
-                                e.preventDefault();
-                                deferredPrompt = e;
+                                event.preventDefault();
+                                deferredPrompt = event;
                                 console.log("e-defferedPromt: ", deferredPrompt)
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {

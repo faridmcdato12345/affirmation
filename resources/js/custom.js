@@ -1172,10 +1172,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                             },3500);
                             var deferredPrompt;
-                            window.addEventListener('beforeinstallprompt', function(event){
+                            window.addEventListener('beforeinstallprompt', function(e){
                                 console.log("deferredPrompt")
                                 e.preventDefault();
                                 deferredPrompt = e;
+                                console.log("e-defferedPromt: ", deferredPrompt)
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
                                         console.log('Triggering PWA Window for Android')

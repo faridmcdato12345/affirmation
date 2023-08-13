@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reminders', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(User::class)->onDeleteCascade();
-            $table->time('time')->nullable();
-            $table->string('custom_message')->nullable();
-            $table->timestamps();
+        Schema::table('Users', function (Blueprint $table) {
+            $table->boolean('isNotify')->default(false);
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reminders');
+        Schema::table('Users', function (Blueprint $table) {
+            $table->dropColumn('isNotify');
+        });
     }
 };

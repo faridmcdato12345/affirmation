@@ -33,5 +33,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/reminder',[ReminderController::class,'index'])->name('reminder.index');
         Route::post('/reminder',[ReminderController::class, 'store'])->name('reminder.store');
 
+        Route::patch('/reminder/{reminder}',[ReminderController::class,'update'])->name('reminder.update');
+        Route::delete('/reminder/{reminder}',[ReminderController::class,'delete'])->name('reminder.delete');
+
+        Route::patch('/reminder/status/{reminder}',[ReminderController::class,'changeStatus'])->name('reminder.status.update');
     });
 });

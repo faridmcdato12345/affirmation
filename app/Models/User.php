@@ -37,7 +37,8 @@ class User extends Authenticatable
         'referred_by',
         'timezone',
         'background_image',
-        'fcm_token'
+        'fcm_token',
+        'isNotify',
     ];
 
     /**
@@ -68,6 +69,11 @@ class User extends Authenticatable
     public function activeCategory(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function reminders(): HasMany
+    {
+        return $this->hasMany(Reminder::class);
     }
 
     public function progress(): HasMany

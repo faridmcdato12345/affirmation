@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Setting Service Worker Locations scope = folder | location = service worker js location
     var pwaScope = ".";
     var pwaLocation = "/serviceworker.js";
+    var firebaseLocation = "/firebase-messaging-sw.js";
 
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
@@ -1234,6 +1235,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
                     console.log('Service Worker successfully registered')
                     });
+                    navigator.serviceWorker.register(firebaseLocation)
+                    .then(reg => {
+                        console.log(`firebase service worker registration (Scope: ${reg.scope}`);
+                    })
+                    .catch(error => {
+                        const msg = `firebase service worker error (${error})`;
+                        console.error(msg);
+                    })
                 }
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours
@@ -1281,33 +1290,34 @@ document.addEventListener('DOMContentLoaded', () => {
                                     }
                                 },3500);
                             });
+                        
+                            const pwaInstall = document.querySelectorAll('.pwa-install');
+                            pwaInstall.forEach(el => el.addEventListener('click', e => {
+                                console.log("deferredPrompt: ",deferredPrompt)
+                                deferredPrompt.prompt();
+                                deferredPrompt.userChoice
+                                    .then((choiceResult) => {
+                                        if (choiceResult.outcome === 'accepted') {
+                                            console.log('Added');
+                                        } else {
+                                            localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
+                                            console.log("wpwa timeout value")
+                                            localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
+                                            setTimeout(function(){
+                                                if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+                                                    document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                                                    document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
+                                                }
+                                            },50);
+                                        }
+                                        deferredPrompt = null;
+                                    });
+                            }));
+                            window.addEventListener('appinstalled', (evt) => {
+                                document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                                document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
+                            });
                         }
-                        const pwaInstall = document.querySelectorAll('.pwa-install');
-                        pwaInstall.forEach(el => el.addEventListener('click', e => {
-                            console.log("deferredPrompt: ",deferredPrompt)
-                            deferredPrompt.prompt();
-                            deferredPrompt.userChoice
-                                .then((choiceResult) => {
-                                    if (choiceResult.outcome === 'accepted') {
-                                        console.log('Added');
-                                    } else {
-                                        localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
-                                        console.log("wpwa timeout value")
-                                        localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
-                                        setTimeout(function(){
-                                            if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                                document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
-                                                document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
-                                            }
-                                        },50);
-                                    }
-                                    deferredPrompt = null;
-                                });
-                        }));
-                        window.addEventListener('appinstalled', (evt) => {
-                            document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
-                            document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
-                        });
                     }
                     //Trigger Install Guide iOS
                     if (isMobile.iOS()) {

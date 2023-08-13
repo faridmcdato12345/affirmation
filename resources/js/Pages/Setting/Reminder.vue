@@ -2,32 +2,49 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route_name="routeName">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <form @submit.prevent="save">
-          <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8">
-            <h1 class="text-theme-green md:text-left text-center">
-              Feedback
-            </h1>
-          </div>
-          <div class="mb-6">
+        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8">
+          <h1 class="text-theme-green md:text-left text-center">
+            Reminders
+          </h1>
+        </div>
+        <div class="flex justify-between">
+          <h3>Would you like to receive notification?</h3>
+          <ToggleSwitch :notifiable="isNotify" @toggle-checkbox="updateNotifs" />
+        </div>
+        <div v-if="toggleSwitch.value" class="mb-6 flex justify-between">
+          <div>
             <h1 class="text-theme-green font-medium">
-              Write a feedback
+              Personal Reminder
             </h1>
-            <p>We would like your feedback to help us improve our app</p>
+            <p>Schedule your reminder to make your affrimation fir your routine.</p>
           </div>
-          <textarea
-            id="description"
-            v-model="form.description"
-            name=""
-            cols="200"
-            rows="10"
-            placeholder="Write your feedback"
-            class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1"></textarea>
-          <InputError class="mt-2 mb-2" :message="form.errors.description" />
-          <Button label="Submit" class="mt-3" />
-        </form>
+          <div v-if="isSubscribed.value">
+            <ButtonVue label="Add" color="success" class="mt-3" @click.prevent="addTimeModal = true" />
+          </div>
+        </div>
+        <div v-if="toggleSwitch.value" class="">
+          <div class="overflow-y-auto relative h-auto md:h-auto">
+            <div v-for="reminder in response.reminders" :key="reminder.id" class="flex justify-between bg-hover-theme-green md:p-4 text-white rounded items-center mb-4">
+              <div>
+                <p class="text-white text-base font-semibold">
+                  {{ convertToAMPPM(reminder.original_time) }}
+                </p>
+                <p v-if="isSubscribed.value" class="text-white">
+                  "{{ reminder.custom_message ? reminder.custom_message : 'You can add your custom message' }}"
+                </p>
+              </div>
+              <div>
+                <ToggleStatusSwitch :notifiable="reminder.status" :reminder="reminder" />
+              </div>
+              <div class="flex justify-between">
+                <component :is="PencilSquareIcon" v-if="isSubscribed.value" class=" w-5 h-5 cursor-pointer  duration-200 ease-out text-blue-500" @click.stop="toggleModal('edit',reminder)" />
+                <component :is="TrashIcon" class="w-5 h-5 cursor-pointer duration-200 ease-out text-rose-400" @click.stop="toggleModal('delete',reminder)" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
     <Modal v-model="modal">
       <div class="text-center">
         <component
@@ -45,39 +62,125 @@
         <Button label="Cancel" color="error" @click.prevent="modal = false" />
       </div>
     </Modal>
+    <UpdateReminder v-model="updateTimeModal" :reminder="selectedReminder" />
+    <AddReminderModal v-model="addTimeModal" :is-subscribed="isSubscribed" />
+    <DeleteReminderModal v-model="deleteTimeModal" :reminder="selectedReminder" />
   </component>
 </template>
 <script setup>
+import ToggleStatusSwitch from '../../Components/ToggleStatusSwitch.vue'
+import UpdateReminder from '../../Components/Reminder/UpdateReminder.vue'
+import AddReminderModal from '../../Components/Reminder/AddReminder.vue'
+import DeleteReminderModal from '../../Components/Reminder/DeleteReminder.vue'
+import { initializeApp } from '@firebase/app'
+import { getMessaging, getToken } from '@firebase/messaging'
+import ToggleSwitch from '../../Components/ToggleSwitch.vue'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import { isMobile } from 'mobile-device-detect'
-import { useForm } from '@inertiajs/vue3'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
 import Settings from '../Settings.vue'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid'
 import Button from '../../Components/Auth/Button.vue'
-import route from 'ziggy-js'
-import { ref } from 'vue'
+import ButtonVue from '../../Components/Button.vue'
+import { ref,reactive } from 'vue'
 import Modal from '../../Components/Modal.vue'
-import InputError from '../../Components/InputError.vue'
+import {  router } from '@inertiajs/vue3'
+
+
 const routeName = ref('Reminder')
 const modal = ref(false)
-const modalTextHeader = ref('')
 const modalTextBody = ref('')
+const addTimeModal = ref(false)
+const updateTimeModal = ref(false)
+const deleteTimeModal = ref(false)
+const modalTextHeader = ref('')
 const modalIcon = ref(true)
-const form = useForm({
-  description: '',
+const selectedReminder = ref({})
+const isSubscribed = reactive({
+  value: localStorage.getItem('isSubcribe') === 'true' ? true : false
+})
+const isNotify = ref(0)
+const response = defineProps({
+  reminders: Object
 })
 
-const save = () => {
-  form.post(route('setting.feedback.store'),{
-    onSuccess: () => {
-      form.reset('description'),
-      modal.value = true,
-      modalTextBody.value = 'Successfully submitted a feedback. Your feedback will undergo thorough analysis and study!',
-      modalTextHeader.value = 'Thank you'
-    },
-    onError: () => {
-      modalIcon.value = false
+isSubscribed.value = localStorage.getItem('isSubcribe')
+isNotify.value = localStorage.getItem('isNotify')
+
+
+
+const toggleSwitch = reactive({
+  value: isNotify.value == 1 ? true : false
+})
+const updateNotifs = (data) => {
+
+  toggleSwitch.value = data
+  if(data){
+    const firebaseConfig = {
+      apiKey: 'AIzaSyBGis6onNBKFoppXu-wPxCP5TrsNBVkZXc',
+      authDomain: 'affirm-618f9.firebaseapp.com',
+      projectId: 'affirm-618f9',
+      storageBucket: 'affirm-618f9.appspot.com',
+      messagingSenderId: '142532545526',
+      appId: '1:142532545526:web:3715ccaf284865529815d7',
+      measurementId: 'G-ZT5ZLC9V4W'
     }
+    
+    const app = initializeApp(firebaseConfig)
+    const messaging = getMessaging(app)
+    if(Notification.permission !== 'denied'){
+      Notification.requestPermission().then((permission) => {
+      // If the user accepts, let's create a notification
+        if (permission === 'granted') {
+          getToken(messaging, {vapidKey: 'BMa-Lyz6AeLZX31Ts0UdZBtTKCWqx1q73EQ_MEUJRxM7AXz31CF27BEYFaoBSlY0Koa52mkT3l10TIf9Il2eSEw'}).then(result => {
+            const token = reactive({
+              fcm_token: result,
+              isNotify: true,
+            })
+            router.post(route('fcmToken'), token)
+            localStorage.setItem('isNotify',1)
+          })
+        }
+      })
+    }
+    messaging.onMessage(function(payload) {
+
+      const noteTitle = payload.notification.title
+
+      const noteOptions = {
+
+        body: payload.notification.body,
+
+        icon: payload.notification.icon,
+
+      }
+
+      new Notification(noteTitle, noteOptions)
+
+    })
+  }else{
+    const token = reactive({
+      isNotify: false,
+    })
+    router.post(route('fcmToken'), token)
+    localStorage.setItem('isNotify',0)
+  }
+  
+}
+
+const toggleModal = (type,reminder) => {
+  selectedReminder.value = reminder
+  type === 'delete' ? deleteTimeModal.value = true : updateTimeModal.value = true
+}
+
+const convertToAMPPM = (time) => {
+  const [hours, minutes] = time.split(':')
+  const date = new Date(0, 0, 0, hours, minutes)
+  return date.toLocaleString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
   })
 }
+
 </script>

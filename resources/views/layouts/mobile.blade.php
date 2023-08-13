@@ -10,6 +10,8 @@
     <title>{{ env('APP_NAME') }}</title>
     <link rel="icon" type="image/png" sizes="128x128" href="{{ asset('favicon.png') }}">
     @include('components.apple-meta')
+    @include('components.firebase-script')
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
     @laravelPWA
     @routes
     @vite(['resources/js/app.js'])
@@ -34,10 +36,9 @@
             <p>
                 Install Affirm on your home screen, and access it just like a regular app. It really is that simple!
             </p>
-            <a 
-              href="#"
-              class="pwa-install btn btn-s rounded-s shadow-l text-uppercase font-900 bg-highlight mt-2.5 block w-full py-2.5 px-4"
-                >Add to Home Screen</a><br>
+            <a href="#"
+                class="pwa-install btn btn-s rounded-s shadow-l text-uppercase font-900 bg-highlight mt-2.5 block w-full py-2.5 px-4">Add
+                to Home Screen</a><br>
         </div>
     </div>
 </body>

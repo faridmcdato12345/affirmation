@@ -1194,7 +1194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                                 const result = await deferredPrompt.prompt();
                                 if (result.outcome === 'accepted') {
-                                    console.log('Added');
+                                    console.log('Added to home screen');
                                 } else {
                                     localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
                                     console.log("wpwa timeout value")

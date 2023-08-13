@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="absolute right-8">
-      <p class="text-rose-500 font-medium">
+      <p class="text-green-700 font-medium">
         Step {{ step }} / 3
       </p>
     </div>
@@ -18,7 +18,14 @@
         <AffirmationRate v-if="step == 1" v-model="formData" />
         <AffirmationExperience v-if="step == 2" v-model="formData" />
         <AffirmationFinish v-if="step == 3" />
-        <Button :label="step < 3 ? 'Next' : 'STAY AWESOME!'" btn-block class="mt-4" :loading="formData.processing" @click.prevent="nextStep" />
+        <Button 
+          :label="step < 3 ? 'Next' : 'STAY AWESOME!'" 
+          btn-block 
+          :darken="step >= 3"
+          class="mt-4" 
+          color="success"
+          :loading="formData.processing" 
+          @click.prevent="nextStep" />
       </div>
     </Transition>
   </div>

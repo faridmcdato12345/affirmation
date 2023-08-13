@@ -40,7 +40,7 @@
               Add Category
             </h3>
             <p class="text-gray-600 text-sm">
-              Create your own category to be able to add your custom affirmations
+              Add your own category for your own affirmations
             </p>
           </div>
         </div>

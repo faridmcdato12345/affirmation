@@ -89,7 +89,6 @@ class RegisterController extends Controller
             'affiliate_id'         => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
             'referred_by'          => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
         ]);
-
         if ($user->save()) {
             Cookie::queue(Cookie::forget('referral'));
         }

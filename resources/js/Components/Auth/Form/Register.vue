@@ -43,7 +43,7 @@ const registrationForm = useForm({
   name: '',
   email: '',
   password: '',
-  password_confirmation: ''
+  password_confirmation: '',
 })
 
 const showPass = reactive({

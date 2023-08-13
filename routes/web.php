@@ -1,5 +1,7 @@
 <?php
 
+use Inertia\Inertia;
+use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -42,8 +44,16 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::apiResource('/user-category', UserCategoryController::class)->only(['store', 'update', 'destroy']);
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
 
-  Route::get('cache/affirmation',function(){
-    dd(Auth::user()->getAffirmation());
+  Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
+  Route::post('/send-notification',[HomeController::class,'sendNotification'])->name('send.notification');
+  Route::get('/notif-text',[HomeController::class,'notifText'])->name('notif.test');
+  Route::get('/notif-view',function(){
+    return Inertia::render('SendNotif');
+  });
+  Route::get('/sample-utc',function(){
+    date_default_timezone_get();
+    $serverTimeNow = date("h:i:s");
+    dd($serverTimeNow);
   });
 });
 

@@ -1,16 +1,25 @@
 <template>
-  <div class="w-full h-full p-4">
+  <div class="">
     <div class="mb-10">
-      <Link :href="route('settings')">
-        <component 
-          :is="ArrowLeftCircleIcon" 
-          class="text-hover-theme-green duration-200 ease-out flex items-start justify-start w-10" />
-      </Link>
+      <template v-if="isMobile">
+        <div class="w-full shadow-sm bg-white py-4 px-4 flex gap-x-3">
+          <Link :href="route('settings')" class="mb-0 items-center flex">
+            <ArrowLeftIcon class="w-5" />
+          </Link>
+          <h1 class="text-[20px] font-medium mb-0">
+            {{ routeName.route_name }}
+          </h1>
+        </div>
+      </template>
     </div>
     <slot></slot>
   </div>
 </template>
 <script setup>
-import { ArrowLeftCircleIcon } from '@heroicons/vue/24/solid'
+import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
 import { Link } from '@inertiajs/vue3'
+import { isMobile } from 'mobile-device-detect'
+const routeName = defineProps({
+  route_name: String
+})
 </script>

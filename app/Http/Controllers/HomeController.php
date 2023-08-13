@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
+use Inertia\Inertia;
 use App\Models\Category;
-use App\Models\ExerciseResult;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Reminder;
 use App\Helpers\SendInBlue;
+use Illuminate\Http\Request;
+use App\Models\ExerciseResult;
 use App\Models\UserBackground;
 use App\Models\UserCategories;
 use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
+
+use Illuminate\Support\Facades\Auth;
+use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends Controller
 {
@@ -33,11 +37,13 @@ class HomeController extends Controller
     {
         $affirmation = Auth::user()->getAffirmation();
         $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
-
         return Inertia::render('Index', [
             'affirmation'      => $affirmation,
             'progressId'       => $progressId,
             'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
+            'isSubscribed'     => Auth::user()->subscribedToPremium(),
+            'isNotify'         => Auth::user()->isNotify,
+            'user_id'          => Auth::user()->id
         ]);
     }
 
@@ -48,7 +54,8 @@ class HomeController extends Controller
      */
     public function settings()
     {
-        return Inertia::render('Settings');
+        $user = Auth::user()->subscribedToPremium();
+        return Inertia::render('Settings',['isUserSubscribe' => $user]);
     }
 
     /**
@@ -118,5 +125,71 @@ class HomeController extends Controller
             Log::warning('User Generated error report: ' . $request->contactMessageTextarea);
             return redirect()->route('settings', ['active' => 'settings'])->with('alert', 'Report saved. Thank you!');
         }
+    }
+
+    public function updateToken(Request $request)
+    {
+        try{
+            if(isEmpty(auth()->user()->fcm_token)){
+                auth()->user()->update([
+                    'fcm_token'=>$request->fcm_token,
+                    'isNotify' => $request->isNotify
+                ]);
+            }
+            auth()->user()->update(['isNotify' => $request->isNotify]);
+        }catch(\Exception $e){
+            report($e);
+            return response()->json([
+                'success'=>false
+            ],500);
+        }
+    }
+    public function sendNotification(Request $request)
+    {
+        $userId = [];
+        date_default_timezone_get();
+        $serverTimeNow = date("h:i:s");
+        $reminders = Reminder::where([
+            ['status',1]
+            ])->get();
+        foreach ($reminders as $reminder) {
+            $userId[] = $reminder->user_id;
+        }
+        $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
+          
+        $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
+  
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => 'Affirm',
+                "body" => 'This is body',
+            ],
+            "data" => $userId
+        ];
+        $dataString = json_encode($data);
+    
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+    
+        $ch = curl_init();
+      
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+               
+        $response = curl_exec($ch);
+  
+        // dd($response);
+    }
+
+    public function sampleSendNotif()
+    {
+        return Inertia::render('SendNotif');
     }
 }

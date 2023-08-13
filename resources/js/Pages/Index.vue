@@ -29,13 +29,17 @@ import { usePage } from '@inertiajs/vue3'
 const props = defineProps({
   affirmation: Object,
   progressId: [Number, String],
-  exerciseFinished: Boolean
+  exerciseFinished: Boolean,
+  isSubscribed: Boolean,
+  isNotify: Boolean,
+  user_id: Number
 })
-
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)
-
+localStorage.setItem('isSubcribe', props.isSubscribed)
+localStorage.setItem('isNotify', props.isNotify)
+localStorage.setItem('userId', props.user_id)
 const checkDailyExerciseStatus = () => {
   if(props.exerciseFinished) {
     return toast('You\'ve already completed today\'s exercise')

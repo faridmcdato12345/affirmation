@@ -1,30 +1,33 @@
 <template>
-  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings">
-    <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-      <form @submit.prevent="save">
-        <div class="mb-9 border-b-2 border-hover-theme-green pb-8">
-          <h1 class="text-theme-green md:text-left text-center">
-            Feedback
-          </h1>
-        </div>
-        <div class="mb-6">
-          <h1 class="text-theme-green font-medium">
-            Write a feedback
-          </h1>
-          <p>We would like your feedback to help us improve our app</p>
-        </div>
-        <textarea
-          id="description"
-          v-model="form.description"
-          name=""
-          cols="200"
-          rows="10"
-          placeholder="Write your feedback"
-          class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1"></textarea>
-        <InputError class="mt-2 mb-2" :message="form.errors.description" />
-        <Button label="Submit" class="mt-3" />
-      </form>
+  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route_name="routeName">
+    <div :class="isMobile ? 'w-full h-full p-4' : ''">
+      <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
+        <form @submit.prevent="save">
+          <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8">
+            <h1 class="text-theme-green md:text-left text-center">
+              Feedback
+            </h1>
+          </div>
+          <div class="mb-6">
+            <h1 class="text-theme-green font-medium">
+              Write a feedback
+            </h1>
+            <p>We would like your feedback to help us improve our app</p>
+          </div>
+          <textarea
+            id="description"
+            v-model="form.description"
+            name=""
+            cols="200"
+            rows="10"
+            placeholder="Write your feedback"
+            class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800"></textarea>
+          <InputError class="mt-2 mb-2" :message="form.errors.description" />
+          <Button label="Submit" class="mt-3" />
+        </form>
+      </div>
     </div>
+    
     <Modal v-model="modal">
       <div class="text-center">
         <component
@@ -55,7 +58,7 @@ import route from 'ziggy-js'
 import { ref } from 'vue'
 import Modal from '../../Components/Modal.vue'
 import InputError from '../../Components/InputError.vue'
-
+const routeName = ref('Feedback')
 const modal = ref(false)
 const modalTextHeader = ref('')
 const modalTextBody = ref('')

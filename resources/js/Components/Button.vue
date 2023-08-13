@@ -89,7 +89,8 @@ const btnColorClass = {
   'error': 'red',
   'warning': 'orange',
   'primary': 'blue',
-  'gray': 'gray'
+  'gray': 'gray',
+  'theme-color-green': '#096A2E'
 }
 
 const darkenState = computed(() => {

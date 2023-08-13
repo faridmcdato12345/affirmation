@@ -1187,9 +1187,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             });
                         
                             const pwaInstall = document.querySelectorAll('.pwa-install');
-                            pwaInstall.forEach(el => el.addEventListener('click', e => {
+                            pwaInstall.addEventListener('click', async () => {
                                 console.log("deferredPrompt: ",deferredPrompt)
-                                deferredPrompt.prompt();
+                                await deferredPrompt.prompt();
                                 deferredPrompt.userChoice
                                     .then((choiceResult) => {
                                         if (choiceResult.outcome === 'accepted') {

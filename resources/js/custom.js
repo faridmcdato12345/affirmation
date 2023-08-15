@@ -1159,12 +1159,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 //Trigger Install Prompt for Android
                 const pwaWindows = document.querySelectorAll('#menu-install-pwa-android');
-                localStorage.setItem(pwaName+'-PWA-Install-Prompt', 0);
                 if(pwaWindows.length){
                     let deferredPrompt = null;
                     if (isMobile.Android()) {
                         if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
-                            if(localStorage.getItem(pwaName+'-PWA-Install-Prompt') != 1){
+                            if(localStorage.getItem(pwaName+'-PWA-Install-Prompt') != 1 || localStorage.getItem(pwaName+'-PWA-Install-Prompt') === null){
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
                                         console.log('Triggering PWA Window for Android')
@@ -1194,6 +1193,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (result.outcome === 'accepted') {
                                 console.log('Added to home screen');
                                 localStorage.setItem(pwaName+'-PWA-Install-Prompt', 1);
+                                setTimeout(function(){
+                                    if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+                                        document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                                        document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
+                                    }
+                                },50);
                             } else {
                                 localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
                                 localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');

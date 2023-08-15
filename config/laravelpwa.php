@@ -14,35 +14,35 @@ return [
         'icons' => [
             '72x72' => [
                 'path' => '/images/icons/android-launchericon-72-72.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '96x96' => [
                 'path' => '/images/icons/android-launchericon-96-96.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '128x128' => [
                 'path' => '/images/icons/128.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '144x144' => [
                 'path' => '/images/icons/android-launchericon-144-144.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '152x152' => [
                 'path' => '/images/icons/152.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '192x192' => [
                 'path' => '/images/icons/android-launchericon-192-192.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '384x384' => [
                 'path' => '/images/icons/256.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
             '512x512' => [
                 'path' => '/images/icons/android-launchericon-512-512.png',
-                'purpose' => 'any maskable'
+                'purpose' => 'any'
             ],
         ],
         'splash' => [

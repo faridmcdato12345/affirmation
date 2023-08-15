@@ -1185,7 +1185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 },3500);
                             });
                         }
-                        const pwaInstall = document.querySelectorAll('.pwa-install');
+                        const pwaInstall = document.querySelector('.pwa-install');
                         pwaInstall.addEventListener('click', async () => {
                             if(!deferredPrompt){
                                 return;
@@ -1207,6 +1207,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                         window.addEventListener('appinstalled', (evt) => {
                             document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                            const d = document.getElementsByClassName('menu-active')
+                            if(d.length > 0){
+                                console.log('menu-active is shown')
+                            }
                             document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
                         });
                     }

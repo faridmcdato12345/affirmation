@@ -44,6 +44,7 @@ const registrationForm = useForm({
   email: '',
   password: '',
   password_confirmation: '',
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
 })
 
 const showPass = reactive({

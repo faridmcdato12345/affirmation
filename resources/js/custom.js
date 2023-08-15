@@ -1159,8 +1159,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 //Trigger Install Prompt for Android
                 const pwaWindows = document.querySelectorAll('#menu-install-pwa-android');
-                console.log(isMobile)
-                console.log("length:",pwaWindows.length)
                 if(pwaWindows.length){
                     let deferredPrompt = null;
                     if (isMobile.Android()) {
@@ -1172,13 +1170,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                     document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
                                 }
                             },3500);
-                            
                             window.addEventListener('beforeinstallprompt', (event) => {
                                 event.preventDefault();
                                 deferredPrompt = event;
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                        console.log('Triggering PWA Window for Android')
+                                        console.log('Triggering PWA Window for Android - beforeinstall')
                                         document.getElementById('menu-install-pwa-android').classList.add('menu-active');
                                         document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
                                     }
@@ -1206,7 +1203,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             deferredPrompt = null;
                         });
                         window.addEventListener('appinstalled', (evt) => {
-                            document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                            var removeClass = document.getElementById('menu-install-pwa-android');
+                            removeClass.classList.remove('menu-active');
                             const d = document.getElementsByClassName('menu-active')
                             if(d.length > 0){
                                 console.log('menu-active is shown')

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Http\Traits\ConvertTimeZone;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
@@ -18,6 +19,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
+    use ConvertTimeZone;
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -88,14 +90,21 @@ class RegisterController extends Controller
             'active_category_id'   => 1,
             'affiliate_id'         => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
             'referred_by'          => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
+            'timezone'             => $request->timezone
         ]);
         if ($user->save()) {
             Cookie::queue(Cookie::forget('referral'));
+            $clientOriginalTime = '09:00:00';
+            $user->reminders()->create(
+                [
+                    'original_time' => $clientOriginalTime,
+                    'time' => $this->convertTimeZone($request->timezone, $clientOriginalTime),
+                    'timezone' => $request->timezone
+                ]
+            );
         }
-
         event(new Registered($user));
         Auth::login($user);
-
         return redirect(RouteServiceProvider::HOME);
     }
 }

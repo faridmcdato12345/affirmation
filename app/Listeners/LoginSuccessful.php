@@ -51,15 +51,6 @@ class LoginSuccessful
                     );
                 }
             }
-        }else{
-            $this->clientOriginalTime = '09:00:00';
-            auth()->user()->reminders()->create(
-                [
-                    'original_time' => $this->clientOriginalTime,
-                    'time' => $this->convertTimeZone(request()->timezone, $this->clientOriginalTime),
-                    'timezone' => request()->timezone
-                ]
-            );
         }
         LoginHistory::create([
             'user_id' => auth()->id(),

@@ -34,12 +34,12 @@ class SendNotification extends Command
         date_default_timezone_get();
         $serverTimeNow = date("h:i:s");
         $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
-        if($firebaseToken || $firebaseToken->isNotEmpty()){
+        if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
-            $reminders = Reminder::select('time','status')->where([
-                ['time','LIKE','%'.$serverTimeNow.'%'],
-                ['status',true]
-                ])->get();
+            $reminders = Reminder::select('user_id','time','status')
+                ->where('time',$serverTimeNow)
+                ->where('status',true)
+                ->get();
             
             if($reminders || $reminders->isNotEmpty()){
                 $userId = [];
@@ -73,6 +73,5 @@ class SendNotification extends Command
                 $response = curl_exec($ch);
             }
         }
-        
     }
 }

@@ -117,27 +117,31 @@ const updateNotifs = (data) => {
   toggleSwitch.value = data
   if(data){
     const firebaseConfig = {
-      apiKey: 'AIzaSyBGis6onNBKFoppXu-wPxCP5TrsNBVkZXc',
-      authDomain: 'affirm-618f9.firebaseapp.com',
-      projectId: 'affirm-618f9',
-      storageBucket: 'affirm-618f9.appspot.com',
-      messagingSenderId: '142532545526',
-      appId: '1:142532545526:web:3715ccaf284865529815d7',
-      measurementId: 'G-ZT5ZLC9V4W'
+      apiKey: 'AIzaSyCDL5jn4IThej6gpOILzj8XmrzOFMRn0H0',
+      authDomain: 'affirm-7b375.firebaseapp.com',
+      projectId: 'affirm-7b375',
+      storageBucket: 'affirm-7b375.appspot.com',
+      messagingSenderId: '629732409638',
+      appId: '1:629732409638:web:48727d1382c07824e941e7',
+      measurementId: 'G-G2NDWXEH44'
     }
     
     const app = initializeApp(firebaseConfig)
+    
     const messaging = getMessaging(app)
+    console.log('initializedeAPp')
     if(Notification.permission !== 'denied'){
+      console.log('Notification.permission: ',Notification.permission)
       Notification.requestPermission().then((permission) => {
       // If the user accepts, let's create a notification
         if (permission === 'granted') {
-          getToken(messaging, {vapidKey: 'BMa-Lyz6AeLZX31Ts0UdZBtTKCWqx1q73EQ_MEUJRxM7AXz31CF27BEYFaoBSlY0Koa52mkT3l10TIf9Il2eSEw'}).then(result => {
+          getToken(messaging, {vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'}).then(result => {
             const token = reactive({
               fcm_token: result,
               isNotify: true,
             })
             router.post(route('fcmToken'), token)
+            console.log('wtf')
             localStorage.setItem('isNotify',1)
           })
         }

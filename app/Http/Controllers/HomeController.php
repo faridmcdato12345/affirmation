@@ -164,8 +164,7 @@ class HomeController extends Controller
             "notification" => [
                 "title" => 'Affirm',
                 "body" => 'This is body',
-            ],
-            "data" => $userId
+            ]
         ];
         $dataString = json_encode($data);
     
@@ -185,7 +184,7 @@ class HomeController extends Controller
                
         $response = curl_exec($ch);
   
-        // dd($response);
+        dd($response);
     }
 
     public function sampleSendNotif()

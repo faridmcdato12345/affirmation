@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Reminder;
 use Illuminate\Support\Facades\Auth;
@@ -50,13 +51,13 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::get('/notif-view',function(){
     return Inertia::render('SendNotif');
   });
-  Route::get('/sample-utc',function(){
-    date_default_timezone_get();
-    $serverTimeNow = date("h:i:s");
-    dd($serverTimeNow);
-  });
+  
 });
-
+Route::get('/sample-utc',function(){
+  date_default_timezone_get();
+  $serverTimeNow = date("h:i:s");
+  dd($serverTimeNow);
+});
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 
 require __DIR__.'/auth.php';

@@ -59,6 +59,7 @@ let isMobile = {
   any: function() {return (isMobile.Android() || isMobile.iOS());}
 };
 const _os = navigator.userAgent
+const serviceWorkerDir = '/serviceworker.js'
 console.log("_os: ", _os)
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
@@ -67,12 +68,20 @@ onMessage(messaging, (payload) => {
   };
   console.log("payload: ", payload.notification.body)
   console.log("payload: ", payload.data)
-  if(isMobile.Android() || isMobile.iOS()){
-    self.registration.showNotification(noteTitle, noteOptions)
-    console.log("isMobile here")
-  }else{
-    new Notification(noteTitle, noteOptions);
-  }
+  navigator.serviceWorker.register(serviceWorkerDir)
+  Notification.requestPermission(function(result){
+    if(result === 'granted'){
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification(noteTitle, noteOptions);
+      });
+    }
+  })
+  // if(isMobile.Android() || isMobile.iOS()){
+  //   self.registration.showNotification(noteTitle, noteOptions)
+  //   console.log("isMobile here")
+  // }else{
+  //   new Notification(noteTitle, noteOptions);
+  // }
 });
 createInertiaApp({
   title: (title) => `${title} - Affirm`,

@@ -18,7 +18,7 @@ trait ConvertTimeZone {
         
         $serverTime = new DateTimeZone(date_default_timezone_get()); 
         $this->_convertedTime->setTimezone($serverTime); 
-        return $this->_convertedTime->format('H:i:s');
+        return $this->_convertedTime->format('H:i');
     }
 
 }

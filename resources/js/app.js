@@ -69,6 +69,7 @@ onMessage(messaging, (payload) => {
   console.log("payload: ", payload.data)
   if(isMobile.Android() || isMobile.iOS()){
     self.registration.showNotification(noteTitle, noteOptions)
+    console.log("isMobile here")
   }else{
     new Notification(noteTitle, noteOptions);
   }

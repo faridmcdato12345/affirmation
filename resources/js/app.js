@@ -58,6 +58,8 @@ let isMobile = {
   iOS: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i);},
   any: function() {return (isMobile.Android() || isMobile.iOS());}
 };
+const _os = navigator.userAgent
+console.log("_os: ", _os)
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
   const noteOptions = {
@@ -70,7 +72,6 @@ onMessage(messaging, (payload) => {
   }else{
     new Notification(noteTitle, noteOptions);
   }
-  
 });
 createInertiaApp({
   title: (title) => `${title} - Affirm`,

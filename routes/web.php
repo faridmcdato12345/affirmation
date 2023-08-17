@@ -3,6 +3,7 @@
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Reminder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -52,11 +53,6 @@ Route::middleware(['auth','verified'])->group(function () {
     return Inertia::render('SendNotif');
   });
   
-});
-Route::get('/sample-utc',function(){
-  date_default_timezone_get();
-  $serverTimeNow = date("h:i:s");
-  dd($serverTimeNow);
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 

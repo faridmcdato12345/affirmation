@@ -10,7 +10,6 @@
     <title>{{ env('APP_NAME') }}</title>
     <link rel="icon" type="image/png" sizes="128x128" href="{{ asset('favicon.png') }}">
     @include('components.apple-meta')
-    @include('components.firebase-script')
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
     @laravelPWA
     @routes

@@ -40,8 +40,9 @@ class SendNotification extends Command
                 ->where('time',$serverTimeNow)
                 ->where('status',true)
                 ->get();
-            
-            if($reminders || $reminders->isNotEmpty()){
+            \Log::info('reminders = '.$reminders);
+           \Log::info('reminder type = ' .gettype($reminders));
+            if($reminders || $reminders->isNotEmpty() || !is_object($reminders) || count(get_object_vars($reminders)) == 0){
                 $userId = [];
                 foreach ($reminders as $reminder) {
                     $userId[] = $reminder->user_id;

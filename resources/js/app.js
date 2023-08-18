@@ -60,7 +60,7 @@ onMessage(messaging, (payload) => {
       body: payload.notification.body,
   };
   const dataArray = JSON.parse(payload.data.user)
-  if(JSON.parse(payload.data.user).includes(userId)){
+  if(dataArray.includes(userId)){
     navigator.serviceWorker.register(serviceWorkerDir)
     Notification.requestPermission(function(result){
       if(result === 'granted'){

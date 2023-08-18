@@ -59,16 +59,17 @@ onMessage(messaging, (payload) => {
   const noteOptions = {
       body: payload.notification.body,
   };
-  console.log("payload: ", payload.notification.body)
-  console.log("payload: ", payload.data)
-  navigator.serviceWorker.register(serviceWorkerDir)
-  Notification.requestPermission(function(result){
-    if(result === 'granted'){
-      navigator.serviceWorker.ready.then(function(registration) {
-        registration.showNotification(noteTitle, noteOptions);
-      });
-    }
-  })
+  const dataArray = JSON.parse(payload.data.user)
+  if(JSON.parse(payload.data.user).includes(userId)){
+    navigator.serviceWorker.register(serviceWorkerDir)
+    Notification.requestPermission(function(result){
+      if(result === 'granted'){
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(noteTitle, noteOptions);
+        });
+      }
+    })
+  }
 });
 createInertiaApp({
   title: (title) => `${title} - Affirm`,

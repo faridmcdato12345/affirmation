@@ -51,16 +51,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const messaging = getMessaging(app);
-
+const userId = localStorage.getItem('userId')
 //const token = getToken(messaging, {vapidKey: "BMa-Lyz6AeLZX31Ts0UdZBtTKCWqx1q73EQ_MEUJRxM7AXz31CF27BEYFaoBSlY0Koa52mkT3l10TIf9Il2eSEw"});
-let isMobile = {
-  Android: function() {return navigator.userAgent.match(/Android/i);},
-  iOS: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i);},
-  any: function() {return (isMobile.Android() || isMobile.iOS());}
-};
-const _os = navigator.userAgent
 const serviceWorkerDir = '/serviceworker.js'
-console.log("_os: ", _os)
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
   const noteOptions = {
@@ -76,12 +69,6 @@ onMessage(messaging, (payload) => {
       });
     }
   })
-  // if(isMobile.Android() || isMobile.iOS()){
-  //   self.registration.showNotification(noteTitle, noteOptions)
-  //   console.log("isMobile here")
-  // }else{
-  //   new Notification(noteTitle, noteOptions);
-  // }
 });
 createInertiaApp({
   title: (title) => `${title} - Affirm`,

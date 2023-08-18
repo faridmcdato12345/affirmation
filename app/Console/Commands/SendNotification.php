@@ -38,11 +38,11 @@ class SendNotification extends Command
         if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
             $reminders = Reminder::select('user_id','time','status')
-                ->where('time',$serverTimeNow)
+                // ->where('time',$serverTimeNow)
                 ->where('status',true)
                 ->get();
             \Log::info('reminders = '.$reminders);
-           \Log::info('reminder type = ' .gettype($reminders));
+            \Log::info('reminder type = ' .gettype($reminders));
             if(!$reminders->isEmpty()){
                 $userId = [];
                 foreach ($reminders as $reminder) {
@@ -53,7 +53,9 @@ class SendNotification extends Command
                     "notification" => [
                         "title" => 'Affirm',
                         "body" => 'This is body',
-                        "user" =>  $userId
+                    ],
+                    "data" => [
+                        "user" => $userId
                     ]
                 ];
                 $dataString = json_encode($data);

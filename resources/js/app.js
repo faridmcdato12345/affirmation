@@ -53,23 +53,24 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 const userId = localStorage.getItem('userId')
 //const token = getToken(messaging, {vapidKey: "BMa-Lyz6AeLZX31Ts0UdZBtTKCWqx1q73EQ_MEUJRxM7AXz31CF27BEYFaoBSlY0Koa52mkT3l10TIf9Il2eSEw"});
-const serviceWorkerDir = '/serviceworker.js'
+const serviceWorkerDir = '/firebase-messaging-sw.js'
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
   const noteOptions = {
       body: payload.notification.body,
   };
   const dataArray = JSON.parse(payload.data.user)
-  if(dataArray.includes(userId)){
+  
     navigator.serviceWorker.register(serviceWorkerDir)
     Notification.requestPermission(function(result){
       if(result === 'granted'){
-        navigator.serviceWorker.ready.then(function(registration) {
-          registration.showNotification(noteTitle, noteOptions);
-        });
+        if(dataArray.includes(userId)){
+          navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification(noteTitle, noteOptions);
+          });
+        }
       }
     })
-  }
 });
 createInertiaApp({
   title: (title) => `${title} - Affirm`,

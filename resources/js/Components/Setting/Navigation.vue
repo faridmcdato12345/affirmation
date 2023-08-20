@@ -40,11 +40,10 @@
 <script setup>
 import route from 'ziggy-js'
 import { Link } from '@inertiajs/vue3'
+import { PowerIcon} from '@heroicons/vue/24/solid'
 import { useNavigationLinks } from '../../Composables/useNavigationLinks'
 
 const { settingNavLinks } = useNavigationLinks()
-const isUserSub = defineProps({
-  user_type: Boolean 
-})
+
 
 </script>

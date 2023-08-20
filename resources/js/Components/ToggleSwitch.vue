@@ -78,4 +78,9 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+@media screen and (max-width: 480px) {
+  .slider:before {
+    left: 0px;
+  }
+}
 </style>

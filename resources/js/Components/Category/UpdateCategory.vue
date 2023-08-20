@@ -53,7 +53,6 @@ let form = useForm({
 
 watch(() => props.category, () => {
   form = useForm({...props.category})
-  console.log('Forms: ', form)
 })
 
 const loading = ref(false)

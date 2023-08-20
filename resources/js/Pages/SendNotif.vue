@@ -47,7 +47,6 @@ const messaging = getMessaging(app)
 
 
 onMessage(messaging, (payload) => {
-  console.log('hey message: ', payload)
   // const noteTitle = payload.notification.title;
   // const noteOptions = {
   //     body: payload.notification.body,

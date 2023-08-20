@@ -9,7 +9,7 @@
       </p>
       <div class="flex justify-end gap-x-2 mt-3">
         <Button label="Cancel" color="gray" @click.prevent="modalShown = false" />
-        <Button label="Delete" color="error" :loading="loading" @click.prevent="deleteCategory" />
+        <Button label="Delete" color="error" :loading="loading" @click.prevent="deleteReminder" />
       </div>
     </div>
   </Modal>
@@ -39,9 +39,8 @@ let form = useForm({
 })
 watch(() => props.reminder, () => {
   form = useForm({...props.reminder})
-  console.log('Forms: ', form.id)
 })
-const deleteCategory = () => {
+const deleteReminder = () => {
   form.delete(route('setting.reminder.delete',form.id),{
     onSuccess: () => {
       form.reset()

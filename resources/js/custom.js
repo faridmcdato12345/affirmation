@@ -639,7 +639,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById(timedAdData).querySelectorAll('.close-menu')[0].classList.remove('no-click');
                         document.getElementById(timedAdData).querySelectorAll('span')[0].style.display ="none";
                   } else {
-                      //console.log(timedAdTimer);
                   }
                   document.getElementById(timedAdData).querySelectorAll('span')[0].innerHTML = timedAdTimer -= 1;
                 }, 1000);
@@ -977,12 +976,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 var menuAge = document.querySelectorAll('#menu-age');
                 var menuAgeFail = document.querySelectorAll('#menu-age-fail');
                 var menuAgeOkay = document.querySelectorAll('#menu-age-okay');
-
-                console.log(currdate);
-                console.log(setDate);
-                console.log(dateBirthMonth);
                 if ((currdate - setDate) > 0){
-                    console.log("above 18");
                     menuAge[0].classList.remove('menu-active')
                     menuAgeOkay[0].classList.add('menu-active');
                 }else{
@@ -1162,19 +1156,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(pwaWindows.length){
                     let deferredPrompt = null;
                     if (isMobile.Android()) {
-                        // if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
-                        //     //if pwa prompt is equal to install-reject and pwa prompt is not null
-                        //     if(localStorage.getItem(pwaName+'-PWA-Install-Prompt') != 1 || localStorage.getItem(pwaName+'-PWA-Install-Prompt') === null){
-                        //         setTimeout(function(){
-                        //             if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                        //                 console.log('Triggering PWA Window for Android')
-                        //                 document.getElementById('menu-install-pwa-android').classList.add('menu-active');
-                        //                 document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
-                        //             }
-                        //         },3500);
-                        //     }
-                            
-                        // }
                         window.addEventListener('beforeinstallprompt', (event) => {
                             event.preventDefault();
                             deferredPrompt = event;
@@ -1209,10 +1190,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.addEventListener('appinstalled', (evt) => {
                             var removeClass = document.querySelector('#menu-install-pwa-android');
                             removeClass.classList.remove('menu-active');
-                            const d = document.getElementsByClassName('menu-active')
-                            if(d.length > 0){
-                                console.log('menu-active is shown')
-                            }
                             document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
                         });
                     }
@@ -1350,7 +1327,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    console.log("init_template")
     }
 
     //Fix Scroll for AJAX pages.

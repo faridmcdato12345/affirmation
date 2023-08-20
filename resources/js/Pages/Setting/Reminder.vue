@@ -1,31 +1,33 @@
 <template>
-  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route_name="routeName">
+  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName" :is-button-header="true">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8">
+        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8" :class="isMobile ?? 'flex justify-between'">
           <h1 class="text-theme-green md:text-left text-center">
             Reminders
           </h1>
         </div>
-        <div class="flex justify-between">
-          <h3>Would you like to receive notification?</h3>
+        <div class="flex justify-between mb-6">
+          <component :is="isMobile ? 'h5' : 'h1'" class="text-theme-green md:text-left font-medium">
+            Would you like to receive notification?
+          </component>
           <ToggleSwitch :notifiable="isNotify" @toggle-checkbox="updateNotifs" />
         </div>
-        <div v-if="toggleSwitch.value" class="mb-6 flex justify-between">
+        <div v-if="toggleSwitch.value" :class="!isMobile ? 'mb-6 flex justify-between' : 'mb-2'">
           <div>
             <h1 class="text-theme-green font-medium">
               Personal Reminder
             </h1>
-            <p>Schedule your reminder to make your affrimation fir your routine.</p>
+            <p>Schedule your reminder to make your affirmation fit your routine.</p>
           </div>
-          <div v-if="isSubscribed.value">
-            <ButtonVue label="Add" color="success" class="mt-3" @click.prevent="addTimeModal = true" />
+          <div v-if="isSubscribed.value" :class="isMobile ? 'flex justify-end' : ''">
+            <component :is="PlusCircleIcon" class="mt-3 w-10 h-10 text-theme-green" @click.prevent="addTimeModal = true" />
           </div>
         </div>
         <div v-if="toggleSwitch.value" class="">
           <div class="overflow-y-auto relative h-auto md:h-auto">
-            <div v-for="reminder in response.reminders" :key="reminder.id" class="flex justify-between bg-hover-theme-green md:p-4 text-white rounded items-center mb-4">
-              <div>
+            <div v-for="reminder in response.reminders" :key="reminder.id" class="flex justify-between bg-hover-theme-green p-4 text-white rounded items-center mb-4">
+              <div :class="!isMobile ? 'w-60' : ''" @click="isMobile ? toggleModal('edit',reminder): ''">
                 <p class="text-white text-base font-semibold">
                   {{ convertToAMPPM(reminder.original_time) }}
                 </p>
@@ -33,10 +35,10 @@
                   "{{ reminder.custom_message ? reminder.custom_message : 'You can add your custom message' }}"
                 </p>
               </div>
-              <div>
+              <div :class="!isMobile ? 'w-52' : ''">
                 <ToggleStatusSwitch :notifiable="reminder.status" :reminder="reminder" />
               </div>
-              <div class="flex justify-between">
+              <div v-if="!isMobile" class="flex justify-between w-10">
                 <component :is="PencilSquareIcon" v-if="isSubscribed.value" class=" w-5 h-5 cursor-pointer  duration-200 ease-out text-blue-500" @click.stop="toggleModal('edit',reminder)" />
                 <component :is="TrashIcon" class="w-5 h-5 cursor-pointer duration-200 ease-out text-rose-400" @click.stop="toggleModal('delete',reminder)" />
               </div>
@@ -79,9 +81,8 @@ import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSet
 import { isMobile } from 'mobile-device-detect'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
 import Settings from '../Settings.vue'
-import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid'
+import { PencilSquareIcon, TrashIcon, PlusCircleIcon } from '@heroicons/vue/24/solid'
 import Button from '../../Components/Auth/Button.vue'
-import ButtonVue from '../../Components/Button.vue'
 import { ref,reactive } from 'vue'
 import Modal from '../../Components/Modal.vue'
 import {  router } from '@inertiajs/vue3'
@@ -129,9 +130,7 @@ const updateNotifs = (data) => {
     const app = initializeApp(firebaseConfig)
     
     const messaging = getMessaging(app)
-    console.log('initializedeAPp')
     if(Notification.permission !== 'denied'){
-      console.log('Notification.permission: ',Notification.permission)
       Notification.requestPermission().then((permission) => {
       // If the user accepts, let's create a notification
         if (permission === 'granted') {
@@ -141,7 +140,6 @@ const updateNotifs = (data) => {
               isNotify: true,
             })
             router.post(route('fcmToken'), token)
-            console.log('wtf')
             localStorage.setItem('isNotify',1)
           })
         }

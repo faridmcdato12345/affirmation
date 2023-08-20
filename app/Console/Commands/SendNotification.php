@@ -32,7 +32,7 @@ class SendNotification extends Command
     public function handle()
     {
         date_default_timezone_get();
-        $serverTimeNow = date("h:i");
+        $serverTimeNow = date("H:i");
         $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
         if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');

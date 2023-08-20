@@ -12,7 +12,7 @@ use App\Http\Controllers\ChartController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\UserCategoryController;
 use App\Http\Controllers\UserAffirmationController;
-
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +50,5 @@ Route::middleware(['auth','verified'])->group(function () {
   
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
-
 require __DIR__.'/auth.php';
 require __DIR__.'/setting.php';

@@ -33,16 +33,13 @@ class SendNotification extends Command
     {
         date_default_timezone_get();
         $serverTimeNow = date("h:i");
-        \Log::info("servertimenow: " .$serverTimeNow);
         $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
         if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
             $reminders = Reminder::select('user_id','time','status')
-                // ->where('time',$serverTimeNow)
+                ->where('time',$serverTimeNow)
                 ->where('status',true)
                 ->get();
-            \Log::info('reminders = '.$reminders);
-            \Log::info('reminder type = ' .gettype($reminders));
             if(!$reminders->isEmpty()){
                 $userId = [];
                 foreach ($reminders as $reminder) {

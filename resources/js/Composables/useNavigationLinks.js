@@ -11,7 +11,8 @@ import {
   CalendarIcon,
   ChartBarIcon,
   ChevronRightIcon,
-  BoltIcon
+  BoltIcon,
+  ClockIcon
 } from '@heroicons/vue/24/solid'
 
 export function useNavigationLinks() {
@@ -78,6 +79,13 @@ export function useNavigationLinks() {
       link: 'setting.feedback.index',
       label: 'Feedback',
       description: 'Write feedback to help',
+      leftIcon: ChevronRightIcon
+    },
+    {
+      icon: ClockIcon,
+      link: 'setting.reminder.index',
+      label: 'Reminder',
+      description: 'Schedule your personal reminder',
       leftIcon: ChevronRightIcon
     },
     {

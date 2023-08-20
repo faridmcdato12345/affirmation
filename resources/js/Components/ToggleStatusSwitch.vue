@@ -20,7 +20,6 @@ let form = useForm({
 const disallow = ref(props.notifiable == 1 ? true : false)
 watch(() => props.reminder, () => {
   form = useForm({...props.reminder})
-  console.log('Forms: ', form)
 })
 const toggleSwitch = () => {
   disallow.value = !disallow.value
@@ -98,5 +97,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+@media screen and (max-width: 480px) {
+  .slider:before {
+    left: 0px;
+  }
 }
 </style>

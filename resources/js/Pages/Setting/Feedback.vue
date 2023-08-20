@@ -1,5 +1,5 @@
 <template>
-  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route_name="routeName">
+  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
         <form @submit.prevent="save">

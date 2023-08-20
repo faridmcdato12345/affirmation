@@ -7,7 +7,7 @@
             <ArrowLeftIcon class="w-5" />
           </Link>
           <h1 class="text-[20px] font-medium mb-0">
-            {{ routeName.route_name }}
+            {{ routeName.routeName }}
           </h1>
         </div>
       </template>
@@ -20,6 +20,6 @@ import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
 import { Link } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
 const routeName = defineProps({
-  route_name: String
+  routeName: String,
 })
 </script>

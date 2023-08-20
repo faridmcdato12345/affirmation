@@ -47,11 +47,6 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
 
   Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
-  Route::post('/send-notification',[HomeController::class,'sendNotification'])->name('send.notification');
-  Route::get('/notif-text',[HomeController::class,'notifText'])->name('notif.test');
-  Route::get('/notif-view',function(){
-    return Inertia::render('SendNotif');
-  });
   
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');

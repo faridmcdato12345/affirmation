@@ -22,25 +22,6 @@
       </div>
     </Link>
     <Link
-      v-if="isUserSub.user_type"
-      :href="route('setting.reminder.index')"
-      class="border-b-2 text-xl text-theme-green hover:text-hover-theme-green/90 hover:border-hover-theme-green/90 flex items-center py-1">
-      <div class="flex justify-start relative w-full h-[70px] p-4">
-        <div class="flex items-center justify-center">
-          <BellIcon class="w-6 h-6" />
-        </div>
-        <div class="flex flex-col ml-4 justify-center">
-          <span>Reminder</span>
-          <p class="text-base">
-            Set up alarm
-          </p>
-        </div>
-        <div class="flex items-center absolute right-4">
-          <ChevronRightIcon class="w-6 h-6" />
-        </div>
-      </div>
-    </Link>
-    <Link
       :href="route('setting.logout')"
       method="post"
       as="button"
@@ -59,13 +40,10 @@
 <script setup>
 import route from 'ziggy-js'
 import { Link } from '@inertiajs/vue3'
-import { PowerIcon, ChevronRightIcon, BellIcon } from '@heroicons/vue/24/solid'
+import { PowerIcon} from '@heroicons/vue/24/solid'
 import { useNavigationLinks } from '../../Composables/useNavigationLinks'
 
 const { settingNavLinks } = useNavigationLinks()
-const isUserSub = defineProps({
-  user_type: Boolean 
-})
-console.log(isUserSub.user_type)
+
 
 </script>

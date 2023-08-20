@@ -49,7 +49,7 @@ class SendNotification extends Command
                     "registration_ids" => $firebaseToken,
                     "notification" => [
                         "title" => 'Affirm',
-                        "body" => 'This is body',
+                        "body" => 'Custom Message',
                     ],
                     "data" => [
                         "user" => $userId

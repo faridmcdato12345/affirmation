@@ -11,17 +11,14 @@ var firebaseConfig = {
   measurementId: 'G-G2NDWXEH44'
 } 
 
+
 const app = firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging();
-const userId = localStorage.getItem('userId')
 messaging.onBackgroundMessage((payload) => {
   // Customize notification here
   const notificationTitle = 'Affirm';
   const notificationOptions = {
     body: 'Background Message body.',
   };
-  const dataArray = JSON.parse(payload.data.user)
-  if(dataArray.includes(userId)){
-    self.registration.showNotification(notificationTitle, notificationOptions);
-  }
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });

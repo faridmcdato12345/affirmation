@@ -46,30 +46,26 @@ const firebaseConfig = {
   appId: '1:629732409638:web:48727d1382c07824e941e7',
   measurementId: 'G-G2NDWXEH44'
 }
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const messaging = getMessaging(app);
-const userId = localStorage.getItem('userId')
-//const token = getToken(messaging, {vapidKey: "BMa-Lyz6AeLZX31Ts0UdZBtTKCWqx1q73EQ_MEUJRxM7AXz31CF27BEYFaoBSlY0Koa52mkT3l10TIf9Il2eSEw"});
-const serviceWorkerDir = '/firebase-messaging-sw.js'
+const serviceWorkerDir = '/serviceworker.js'
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
   const noteOptions = {
       body: payload.notification.body,
   };
   const dataArray = JSON.parse(payload.data.user)
-  
+  let userId = localStorage.getItem('userId')
     navigator.serviceWorker.register(serviceWorkerDir)
     Notification.requestPermission(function(result){
       if(result === 'granted'){
-        if(dataArray.includes(userId)){
+        if(dataArray.includes(parseInt(userId))){
           navigator.serviceWorker.ready.then(function(registration) {
             registration.showNotification(noteTitle, noteOptions);
           });
         }
-      }
+      }else{console.log("not included")}
     })
 });
 createInertiaApp({

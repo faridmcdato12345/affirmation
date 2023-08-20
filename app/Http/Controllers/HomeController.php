@@ -164,7 +164,8 @@ class HomeController extends Controller
             "notification" => [
                 "title" => 'Affirm',
                 "body" => 'This is body',
-            ]
+            ],
+            "user" => $userId
         ];
         $dataString = json_encode($data);
     

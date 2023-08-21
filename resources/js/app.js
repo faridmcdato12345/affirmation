@@ -59,6 +59,7 @@ onMessage(messaging, (payload) => {
   const noteOptions = {
       body: payload.notification.body,
   };
+  let __noteOptions = {}
   const user_data = JSON.parse(payload.data.user_reminders)
   
   console.log("user_reminder: ",user_data)
@@ -71,6 +72,11 @@ onMessage(messaging, (payload) => {
     console.log("typeof user_id: ",typeof(user.user_id))
     console.log("user_message: ",user.custom_message)
     console.log("type of user_message: ",typeof(user.custom_message))
+    let user_original_time = user.original_time
+    if(parseInt(userId) == user.user_id && user_original_time.substring(0,5) === getTimeNow()){
+      __noteOptions["body"] = user.custom_message
+      console.log("__noteOptions: ",__noteOptions)
+    }
   }
   navigator.serviceWorker.register(serviceWorkerDir)
   Notification.requestPermission(function(result){

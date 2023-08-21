@@ -36,7 +36,7 @@ class SendNotification extends Command
         $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
         if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
-            $reminders = Reminder::select('user_id','time','status','custom_message')
+            $reminders = Reminder::select('user_id','time','status','custom_message','original_time')
                 //->where('time',$serverTimeNow)
                 ->where('status',true)
                 ->get();

@@ -40,6 +40,8 @@ const modalShown = ref(false)
 localStorage.setItem('isSubcribe', props.isSubscribed)
 localStorage.setItem('isNotify', props.isNotify)
 localStorage.setItem('userId', props.user_id)
+let worker = new Worker('firebase-messaging-sw.js')
+worker.postMessage({'user_id' : props.user_id})
 const checkDailyExerciseStatus = () => {
   if(props.exerciseFinished) {
     return toast('You\'ve already completed today\'s exercise')

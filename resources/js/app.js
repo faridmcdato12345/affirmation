@@ -59,23 +59,44 @@ onMessage(messaging, (payload) => {
   const noteOptions = {
       body: payload.notification.body,
   };
-  const dd = JSON.parse(payload.data.user_reminders)
-
-  console.log("user_reminder: ",dd)
-  console.log("typof user reminders: ", typeof(dd))
+  const user_data = JSON.parse(payload.data.user_reminders)
+  
+  console.log("user_reminder: ",user_data)
+  console.log("typof user reminders: ", typeof(user_data))
   const dataArray = JSON.parse(payload.data.user)
   let userId = localStorage.getItem('userId')
-    navigator.serviceWorker.register(serviceWorkerDir)
-    Notification.requestPermission(function(result){
-      if(result === 'granted'){
-        if(dataArray.includes(parseInt(userId))){
-          navigator.serviceWorker.ready.then(function(registration) {
-            registration.showNotification(noteTitle, noteOptions);
-          });
-        }
-      }else{console.log("not included")}
-    })
+  console.log("timenow: ",getTimeNow())
+  for(let user of user_data){
+    console.log("user_id: ",user.user_id)
+    console.log("typeof user_id: ",typeof(user.user_id))
+    console.log("user_message: ",user.custom_message)
+    console.log("type of user_message: ",typeof(user.custom_message))
+  }
+  navigator.serviceWorker.register(serviceWorkerDir)
+  Notification.requestPermission(function(result){
+    if(result === 'granted'){
+      if(dataArray.includes(parseInt(userId))){
+        navigator.serviceWorker.ready.then(function(registration) {
+          registration.showNotification(noteTitle, noteOptions);
+        });
+      }
+    }else{console.log("not included")}
+  })
 });
+
+const getTimeNow = () => {
+  // Create a new Date object representing the current time
+  var currentTime = new Date();
+
+  // Get the hours, minutes, and seconds from the Date object
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+
+  // Format the time in 24-hour format
+  var formattedTime = hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+
+  return formattedTime;
+}
 createInertiaApp({
   title: (title) => `${title} - Affirm`,
   resolve: (name) =>

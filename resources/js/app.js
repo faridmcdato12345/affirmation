@@ -52,9 +52,17 @@ const messaging = getMessaging(app);
 const serviceWorkerDir = '/serviceworker.js'
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
+  // let noteOption = null
+  // if(payload.data.custom_message){
+  //   noteOption = JSON.parse(payload.data.user_reminder)
+  // }
   const noteOptions = {
       body: payload.notification.body,
   };
+  const dd = JSON.parse(payload.data.user_reminders)
+
+  console.log("user_reminder: ",dd)
+  console.log("typof user reminders: ", typeof(dd))
   const dataArray = JSON.parse(payload.data.user)
   let userId = localStorage.getItem('userId')
     navigator.serviceWorker.register(serviceWorkerDir)

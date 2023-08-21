@@ -83,7 +83,7 @@ onMessage(messaging, (payload) => {
     if(result === 'granted'){
       if(dataArray.includes(parseInt(userId))){
         navigator.serviceWorker.ready.then(function(registration) {
-          registration.showNotification(noteTitle, noteOptions);
+          registration.showNotification(noteTitle, __noteOptions);
         });
       }
     }else{console.log("not included")}
@@ -99,7 +99,7 @@ const getTimeNow = () => {
   var minutes = currentTime.getMinutes();
 
   // Format the time in 24-hour format
-  var formattedTime = hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+  var formattedTime = (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
 
   return formattedTime;
 }

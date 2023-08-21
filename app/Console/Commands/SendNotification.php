@@ -36,15 +36,17 @@ class SendNotification extends Command
         $firebaseToken = User::whereNotNull('fcm_token')->pluck('fcm_token')->all();
         if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
-            $reminders = Reminder::select('user_id','time','status')
-                ->where('time',$serverTimeNow)
+            $reminders = Reminder::select('user_id','time','status','custom_message')
+                //->where('time',$serverTimeNow)
                 ->where('status',true)
                 ->get();
             if(!$reminders->isEmpty()){
                 $userId = [];
+                $userMessage = $reminders;
                 foreach ($reminders as $reminder) {
                     $userId[] = $reminder->user_id;
                 }
+                \Log::info('userMessage: '.$userMessage);
                 $data = [
                     "registration_ids" => $firebaseToken,
                     "notification" => [
@@ -52,7 +54,8 @@ class SendNotification extends Command
                         "body" => 'Custom Message',
                     ],
                     "data" => [
-                        "user" => $userId
+                        "user" => $userId,
+                        "user_reminders" => $reminders
                     ]
                 ];
                 $dataString = json_encode($data);

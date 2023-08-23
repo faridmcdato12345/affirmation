@@ -25,6 +25,7 @@ import Modal from '../Components/Modal.vue'
 import AffirmationExercise from '../Components/AffirmationExercise.vue'
 import { toast } from '../Composables/useToast'
 import { usePage } from '@inertiajs/vue3'
+import Localbase from 'localbase'
 
 const props = defineProps({
   affirmation: Object,
@@ -37,11 +38,22 @@ const props = defineProps({
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)
+const db = new Localbase('user_data')
+db.collection('user').get().then(user => {
+  if(user.length === 0){
+    db.collection('user').add({
+      id: 1,
+      user_id: props.user_id
+    }, 'user_key')
+  }else{
+    db.collection('user').doc({ id: 1 }).update({
+      user_id: props.user_id
+    }, 'user_key')
+  }
+})
 localStorage.setItem('isSubcribe', props.isSubscribed)
 localStorage.setItem('isNotify', props.isNotify)
 localStorage.setItem('userId', props.user_id)
-let worker = new Worker('firebase-messaging-sw.js')
-worker.postMessage({'user_id' : props.user_id})
 const checkDailyExerciseStatus = () => {
   if(props.exerciseFinished) {
     return toast('You\'ve already completed today\'s exercise')

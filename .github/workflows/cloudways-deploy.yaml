@@ -47,7 +47,7 @@ jobs:
 
       - name: Extract Build
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB#refs/heads/})"
+        run: echo "##[name=branch;]$(echo ${GITHUB#refs/heads/})"
         id: extract_branch
 
       - name: Commit Changes

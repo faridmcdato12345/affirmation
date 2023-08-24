@@ -4,7 +4,6 @@ import {
   StarIcon,
   Cog6ToothIcon,
   UserIcon,
-  LockClosedIcon,
   BugAntIcon,
   PencilIcon,
   CurrencyDollarIcon,
@@ -54,10 +53,10 @@ export function useNavigationLinks() {
       leftIcon: ChevronRightIcon
     },
     {
-      icon: LockClosedIcon,
-      link: 'setting.security.index',
-      label: 'Security',
-      description: 'Change Password',
+      icon: ClockIcon,
+      link: 'setting.reminder.index',
+      label: 'Reminder',
+      description: 'Schedule your personal reminder',
       leftIcon: ChevronRightIcon
     },
     {
@@ -68,13 +67,6 @@ export function useNavigationLinks() {
       leftIcon: ChevronRightIcon
     },
     {
-      icon: BoltIcon,
-      link: 'setting.history.index',
-      label: 'Login History',
-      description: 'View your login history',
-      leftIcon: ChevronRightIcon
-    },
-    {
       icon: PencilIcon,
       link: 'setting.feedback.index',
       label: 'Feedback',
@@ -82,10 +74,10 @@ export function useNavigationLinks() {
       leftIcon: ChevronRightIcon
     },
     {
-      icon: ClockIcon,
-      link: 'setting.reminder.index',
-      label: 'Reminder',
-      description: 'Schedule your personal reminder',
+      icon: BoltIcon,
+      link: 'setting.history.index',
+      label: 'Login History',
+      description: 'View your login history',
       leftIcon: ChevronRightIcon
     },
     {

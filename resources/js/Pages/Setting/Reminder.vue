@@ -2,7 +2,7 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName" :is-button-header="true">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8" :class="isMobile ?? 'flex justify-between'">
+        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-5" :class="isMobile ?? 'flex justify-between'">
           <h1 class="text-theme-green md:text-left text-center">
             Reminders
           </h1>

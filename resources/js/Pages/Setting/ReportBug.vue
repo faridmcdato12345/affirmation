@@ -3,7 +3,7 @@
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
         <form @submit.prevent="save">
-          <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8">
+          <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-5">
             <h1 class="text-theme-green md:text-left text-center">
               Report Bug
             </h1>

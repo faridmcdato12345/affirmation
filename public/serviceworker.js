@@ -29,7 +29,9 @@ self.addEventListener('activate', event => {
                 cacheNames
                     .filter(cacheName => (cacheName.startsWith("pwa-")))
                     .filter(cacheName => (cacheName !== staticCacheName))
-                    .map(cacheName => caches.delete(cacheName))
+                    .map(cacheName => {
+                        caches.delete(cacheName)
+                    })
             );
         })
     );

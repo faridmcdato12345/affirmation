@@ -18,8 +18,10 @@
             <FormInput id="fullname" v-model="form.name" label="Full Name" type="text" />
             <FormInput id="email" v-model="form.email" type="email" label="Email Address" class="mt-6" />
             <br />
-            <Button label="Save Changes" />
+            <Button label="Save Changes" btn-block color="success" />
           </form>
+          <hr class="my-6" />
+          <Button label="Generate QR" color="gray" btn-block class="mx-auto mt-3" />
         </div>
       </div>
     </component>
@@ -28,7 +30,6 @@
         <component
           :is="modalIcon ? CheckCircleIcon : XCircleIcon"
           class="w-14 mx-auto text-green-600 duration-200 ease-out" />
-        <!-- <CheckCircleIcon class="w-14 mx-auto text-green-600" /> -->
         <h1 class="mt-2">
           {{ modalTextHeader }}
         </h1>
@@ -43,18 +44,20 @@
   </div>
 </template>
 <script setup>
-import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import { ref } from 'vue'
 import { isMobile } from 'mobile-device-detect'
 import { useForm } from '@inertiajs/vue3'
 import Settings from '../Settings.vue'
-import Button from '../../Components/Auth/Button.vue'
-import FormInput from '../../Components/FormInput.vue'
 import Modal from '../../Components/Modal.vue'
-const routeName = ref('Account Settings')
+import Button from '../../Components/Button.vue'
+import FormInput from '../../Components/FormInput.vue'
+import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
+
 const props = defineProps({
   user: Object
 })
+
+const routeName = ref('Account Settings')
 const form = useForm({
   name: props.user.name,
   email: props.user.email

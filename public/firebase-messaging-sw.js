@@ -11,12 +11,43 @@ var firebaseConfig = {
   measurementId: 'G-G2NDWXEH44'
 } 
 let userId = null
+const dbName = "user_data";
+const dbVersion = 2;
+
+const request = indexedDB.open(dbName, dbVersion);
+
+request.onsuccess = function(event) {
+    const db = event.target.result;
+    console.log("db: ",db)
+    // Now you can interact with the database
+    const transaction = db.transaction("user", "readonly")
+    console.log("trans: ",transaction)
+    const objectStore = transaction.objectStore('user')
+    console.log("objstore: ",objectStore)
+    const getRequest = objectStore.get("user_key")
+
+    getRequest.onsuccess = function(event) {
+        const data = event.target.result;
+        if (data) {
+            userId =  data.user_id
+            console.log("userId: ", userId)
+        } else {
+            console.log("No data found.")
+        }
+    };
+
+    getRequest.onerror = function(event) {
+        console.error("Error retrieving data:", event.target.error);
+    };
+};
+
+request.onerror = function(event) {
+    console.error("Database error:", event.target.error);
+};
 
 const app = firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging();
-self.onmessage = (ev) => {
-  userId = ev.data.user_id
-}
+
 messaging.onBackgroundMessage((payload) => {
   // Customize notification here
   const notificationTitle = payload.notification.title;
@@ -74,5 +105,6 @@ const getTimeNow = () => {
 
   return formattedTime;
 }
+
 
 

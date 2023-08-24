@@ -43,6 +43,7 @@
         "@vueuse/core": "^10.2.0",
         "chart.js": "^3.9.1",
         "firebase": "^10.1.0",
+        "localbase": "^0.7.5",
         "mobile-device-detect": "^0.4.3",
         "qrcode.vue": "^3.4.1",
         "vanilla-lazyload": "^17.8.3",

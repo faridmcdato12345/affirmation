@@ -5,7 +5,7 @@
       v-for="link in settingNavLinks"
       :key="`${link.label}-route`"
       :href="link.link != 'subscription' ? route(link.link) : '/billing'"
-      class="border-b-2 text-xl text-theme-green hover:text-hover-theme-green/90 hover:border-hover-theme-green/90 flex items-center py-1">
+      class="border-b-2 text-xl dark:text-white text-theme-green hover:text-hover-theme-green/90 hover:border-hover-theme-green/90 flex items-center py-1">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
           <component :is="link.icon" class="w-5 h-5" />
@@ -25,7 +25,7 @@
       :href="route('setting.logout')"
       method="post"
       as="button"
-      class="text-xl text-theme-green hover:border-hover-theme-green flex items-center">
+      class="text-xl dark:text-white text-theme-green hover:border-hover-theme-green flex items-center">
       <div class="flex justify-start relative w-full h-[70px] p-4">
         <div class="flex items-center justify-center">
           <PowerIcon class="w-5 h-5" />

@@ -45,25 +45,25 @@ jobs:
       - run: npm install
       - run: npm run build --if-present
 
-      - name: Extract Build
-        shell: bash
-        run: echo "##[name=branch;]$(echo ${GITHUB#refs/heads/})"
-        id: extract_branch
+      # - name: Extract Build
+      #   shell: bash
+      #   run: echo "##[name=branch;]$(echo ${GITHUB#refs/heads/})"
+      #   id: extract_branch
 
-      - name: Commit Changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Build Project
-          branch: ${{ steps.extract_branch.outputs.branch }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Cloudways API Git Pull
-      #   uses: roelmagdaleno/cloudways-api-git-pull-action@stable
+      # - name: Commit Changes
+      #   uses: stefanzweifel/git-auto-commit-action@v4
       #   with:
-      #     email: ${{ secrets.CLOUDWAYS_EMAIL }}
-      #     api-key: ${{ secrets.CLOUDWAYS_API_KEY }}
-      #     server-id: ${{ secrets.CLOUDWAYS_SERVER_ID }}
-      #     app-id: ${{ secrets.CLOUDWAYS_APP_ID }}
-      #     branch-name: ${{ secrets.CLOUDWAYS_BRANCH_NAME }}
-      #     deploy-path: ${{ secrets.CLOUDWAYS_DEPLOY_PATH }}
+      #     commit_message: Build Project
+      #     branch: ${{ steps.extract_branch.outputs.branch }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cloudways API Git Pull
+        uses: roelmagdaleno/cloudways-api-git-pull-action@stable
+        with:
+          email: ${{ secrets.CLOUDWAYS_EMAIL }}
+          api-key: ${{ secrets.CLOUDWAYS_API_KEY }}
+          server-id: ${{ secrets.CLOUDWAYS_SERVER_ID }}
+          app-id: ${{ secrets.CLOUDWAYS_APP_ID }}
+          branch-name: ${{ secrets.CLOUDWAYS_BRANCH_NAME }}
+          deploy-path: ${{ secrets.CLOUDWAYS_DEPLOY_PATH }}

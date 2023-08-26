@@ -3,16 +3,18 @@
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
         <form @submit.prevent="save">
-          <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-5">
-            <h1 class="text-theme-green md:text-left text-center">
+          <div v-if="!isMobile" class="mb-5 border-b-2 border-hover-theme-green pb-5">
+            <h1 class="dark:text-white text-theme-green md:text-left text-center">
               Report Bug
             </h1>
           </div>
           <div class="mb-4">
-            <h1 class="text-theme-green font-medium">
+            <h1 class="dark:text-white text-theme-green font-medium">
               Tell Us What Happened
             </h1>
-            <p>Briefly discuss the problem that you encountered so we can help more.</p>
+            <p class="dark:text-gray-300">
+              Briefly discuss the problem that you encountered so we can help more.
+            </p>
           </div>
           <textarea
             id="description"

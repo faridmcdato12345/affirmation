@@ -3,7 +3,7 @@
     <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
     <Head title="Settings" />
 
-    <div class="z-20 dark:bg-gray-800 dark:border-gray-800 md:-mt-14 flex rounded-md w-full md:max-w-7xl h-full md:h-[680px] bg-white md:border-2 border-hover-theme-green">
+    <div class="z-20 dark:bg-gray-800 dark:shadow-lg dark:shadow-white/10 dark:border-gray-800 md:-mt-14 flex rounded-md w-full md:max-w-7xl h-full md:h-[680px] bg-white md:border-2 border-hover-theme-green">
       <div class="w-full md:w-390px md:max-w-[390px] border-r">
         <SettingsNavigation :user_type="userSub.isUserSubscribe">
           <template v-if="isMobile" #header>

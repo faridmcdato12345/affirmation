@@ -5,7 +5,7 @@
       ref="inputRef"
       :value="modelValue"
       :type="type"
-      class="block px-2.5 py-3 w-full text-base text-gray-900 dark:text-gray-500 bg-transparent rounded-lg border-2 border-hover-theme-green appearance-none focus:outline-none focus:ring-0 focus:border focus:border-green-600 peer"
+      class="block px-2.5 py-3 w-full text-base text-gray-900 dark:text-gray-200 bg-transparent rounded-lg border-2 border-hover-theme-green appearance-none focus:outline-none focus:ring-0 focus:border focus:border-green-600 peer"
       placeholder=" "
       autofocus
       :required="required"
@@ -13,7 +13,7 @@
       @input="(e) => emit('update:modelValue', e.target.value)"
       @blur="emit('blur')"
       @keyup.enter="emit('keyup-enter')" />
-    <label :for="id" class="dark:border-gray-800 dark:bg-gray-800 absolute text-sm cursor-text text-gray-500 duration-300 transform -translate-y-4 scale-75 top-1.5 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-8 peer-focus:top-1.5 peer-focus:scale-75 left-1">
+    <label :for="id" class="dark:border-gray-800 dark:bg-gray-800 absolute text-sm cursor-text dark:text-gray-300 text-gray-500 duration-300 transform -translate-y-4 scale-75 top-1.5 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-8 peer-focus:top-1.5 peer-focus:scale-75 left-1">
       {{ label }}
     </label>
     <div class="absolute right-4 top-[18px]">

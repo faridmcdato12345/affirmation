@@ -18,14 +18,14 @@
   </AuthenticatedLayout>
 </template>
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Button from '../Components/Button.vue'
 import Modal from '../Components/Modal.vue'
 import AffirmationExercise from '../Components/AffirmationExercise.vue'
 import { toast } from '../Composables/useToast'
 import { usePage } from '@inertiajs/vue3'
-import Localbase from 'localbase'
+import { useInsertIndexdb } from '../Composables/useInsertIndexdb'
 
 const props = defineProps({
   affirmation: Object,
@@ -38,19 +38,7 @@ const props = defineProps({
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)
-const db = new Localbase('user_data')
-db.collection('user').get().then(user => {
-  if(user.length === 0){
-    db.collection('user').add({
-      id: 1,
-      user_id: props.user_id
-    }, 'user_key')
-  }else{
-    db.collection('user').doc({ id: 1 }).update({
-      user_id: props.user_id
-    }, 'user_key')
-  }
-})
+const { insertData } = useInsertIndexdb()
 localStorage.setItem('isSubcribe', props.isSubscribed)
 localStorage.setItem('isNotify', props.isNotify)
 localStorage.setItem('userId', props.user_id)
@@ -61,7 +49,9 @@ const checkDailyExerciseStatus = () => {
 
   modalShown.value = true
 }
-
-const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, user.value.name)
-)
+onMounted(() => {
+  insertData(props.user_id).then(()=>console.log('Data inserted to indexdb'))
+  console.log('onMounted')
+})
+const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, user.value.name))
 </script>

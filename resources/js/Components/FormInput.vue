@@ -23,7 +23,7 @@
       <p class="text-xs text-red-500 ml-2">
         {{ error }}
       </p>
-      <p v-if="maxLength" :class="{'text-red-500' : modelValue.length >= maxLength}">
+      <p v-if="maxLength" class="dark:text-gray-400" :class="{'text-red-500' : modelValue.length >= maxLength}">
         {{ modelValue.length }} / {{ maxLength }}
       </p>
     </div>

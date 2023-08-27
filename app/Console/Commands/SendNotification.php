@@ -37,7 +37,7 @@ class SendNotification extends Command
         if($firebaseToken || count($firebaseToken) > 0){
             $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
             $reminders = Reminder::select('user_id','time','status','custom_message','original_time')
-                //->where('time',$serverTimeNow)
+                ->where('time',$serverTimeNow)
                 ->where('status',true)
                 ->get();
             if(!$reminders->isEmpty()){
@@ -46,7 +46,6 @@ class SendNotification extends Command
                 foreach ($reminders as $reminder) {
                     $userId[] = $reminder->user_id;
                 }
-                \Log::info('userMessage: '.$userMessage);
                 $data = [
                     "registration_ids" => $firebaseToken,
                     "notification" => [

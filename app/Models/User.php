@@ -91,6 +91,16 @@ class User extends Authenticatable
         return $this->hasMany(Feedback::class);
     }
 
+    public function affirmationStatus()
+    {
+        return $this->hasOneThrough(ExerciseResult::class, Progress::class);
+    }
+
+    public function accountabilityReminders()
+    {
+        return $this->hasOne(AccountabilityPartnerNotification::class, 'partner_id')->whereDate('created_at', today())->latest();
+    }
+
     public function getAffirmation()
     {
         $todaysAffirmation = null;

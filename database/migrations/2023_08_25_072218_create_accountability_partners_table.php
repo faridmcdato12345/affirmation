@@ -16,8 +16,11 @@ return new class extends Migration
     {
         Schema::create('accountability_partners', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->cascadeOnDelete();
-            $table->foreignId('partner_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('inviter_id')->constrained('users')->cascadeOnDelete();
+            $table->string('email');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->dateTime('accepted_at')->nullable();
+            $table->dateTime('declined_at')->nullable();
             $table->timestamps();
         });
     }

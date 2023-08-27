@@ -17,6 +17,12 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/account/{user}', [UserController::class,'update'])->name('user.update');
         
         Route::get('/account/partner', [UserController::class, 'accountabilityPartner'])->name('user.accountability');
+        Route::delete('/account/{accountabilityPartnerInvite}', [UserController::class, 'deleteInvite'])->name('accountability.delete');
+        Route::patch('/account/{accountabilityPartnerInvite}/approve', [UserController::class, 'approveInvite'])->name('accountability.approve');
+        Route::post('/account/partner/invite', [UserController::class, 'sendInvite'])->name('accountability.invite');
+        Route::post('/account/partner/remind', [UserController::class, 'remindPartner'])->name('accountability.remind');
+        
+        Route::patch('/partner/mark-as-read/{exerciseReminder}', [UserController::class, 'markAsRead'])->name('reminder.read');
 
         Route::get('/security', [SecurityController::class, 'index'])->name('security.index');
         Route::patch('/security', [SecurityController::class, 'update'])->name('security.update');

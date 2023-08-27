@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('accountability_partner_invites', function (Blueprint $table) {
+        Schema::create('accountability_partner_notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->cascadeOnDelete();
-            $table->string('email');
-            $table->dateTime('accepted_at')->nullable();
-            $table->dateTime('declined_at')->nullable();
+            $table->string('message');
+            $table->foreignId('partner_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->dateTime('seen_at')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accountability_partner_invites');
+        Schema::dropIfExists('accountability_partner_notifications');
     }
 };

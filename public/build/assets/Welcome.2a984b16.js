@@ -1,1 +1,0 @@
-import{o as t,f as a,b as s,w as l,l as r,u as n,q as c,a as e}from"../app.js";const i=e("p",{class:"text-blue-500 font-semibold"}," Hello World! ",-1),_=e("p",null,"Hello",-1),p={__name:"Welcome",setup(u){return(o,d)=>(t(),a("div",null,[i,s(n(c),{href:o.route("login")},{default:l(()=>[r(" Navigate to Login with progress ")]),_:1},8,["href"]),_]))}};export{p as default};

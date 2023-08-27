@@ -15,13 +15,6 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-
-    /**
-     * Delete a user account.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function delete(Request $request) {
         $user = $request->user();
         if (Hash::check($request->password, $user->password)) {
@@ -37,12 +30,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Return a daily affirmation.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function getAffirmation(Request $request)
     {
         return Auth::user()->getAffirmation();
@@ -90,5 +77,10 @@ class UserController extends Controller
     public function update(User $user, UpdateUserRequest $request)
     {
         $user->update($request->validated());
+    }
+
+    public function accountabilityPartner()
+    {
+        return Inertia::render('Setting/AccountabilityPartner');
     }
 }

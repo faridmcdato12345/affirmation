@@ -98,10 +98,10 @@
     <Modal v-model="setCategoryModal">
       <div class="text-center">
         <CheckCircleIcon class="w-14 mx-auto text-green-600" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white">
           {{ selectedCategory.text }}
         </h1>
-        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
+        <p class="dark:text-gray-300 text-lg max-w-md mx-auto leading-6 mt-2 font-light">
           {{ selectedCategory.blurb }}
         </p>
       </div>
@@ -116,10 +116,10 @@
       <div class="py-2 flex">
         <LockClosedIcon class="w-14 mx-auto text-gray-400" />
         <div>
-          <h1 class="mt-2">
+          <h1 class="mt-2 dark:text-white">
             Subscribe to Premium
           </h1>
-          <p class="text-base max-w-md mx-auto leading-6 mt-2 font-light">
+          <p class="dark:text-gray-400 text-base max-w-md mx-auto leading-6 mt-2 font-light">
             Gain access to our premium categories, exclusive contents and exciting features within our app.
           </p>
         </div>

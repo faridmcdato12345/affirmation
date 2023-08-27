@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportBugController extends Controller
 {
-    public function index()
-    {
-        return Inertia::render('Setting/ReportBug');
-    }
-
     public function store(Request $request)
     {
 
@@ -23,8 +18,10 @@ class ReportBugController extends Controller
         ],[
             'description' => 'You forgot to write something'
         ]);
+        
         $user = Auth::user();
         $user->bug()->create($validated);
-        return redirect()->route('setting.reportbug.index');
+
+        return back()->with('success', 'Issue has been sent successfully!');
     }
 }

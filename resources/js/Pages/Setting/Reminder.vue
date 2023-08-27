@@ -2,32 +2,40 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName" :is-button-header="true">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-8" :class="isMobile ?? 'flex justify-between'">
-          <h1 class="text-theme-green md:text-left text-center">
+        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-5" :class="isMobile ?? 'flex justify-between'">
+          <h1 class="dark:text-white text-theme-green md:text-left text-center">
             Reminders
           </h1>
         </div>
-        <div class="flex justify-between mb-6">
-          <component :is="isMobile ? 'h5' : 'h1'" class="text-theme-green md:text-left font-medium">
-            Would you like to receive notification?
+        <div class="flex justify-between">
+          <component :is="isMobile ? 'h5' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium">
+            Receive notification
           </component>
           <ToggleSwitch :notifiable="isNotify" @toggle-checkbox="updateNotifs" />
         </div>
+        <p class="dark:text-gray-300">
+          Enable to start receiving notifications
+        </p>
         <div v-if="toggleSwitch.value" :class="!isMobile ? 'mb-6 flex justify-between' : 'mb-2'">
-          <div>
-            <h1 class="text-theme-green font-medium">
+          <div class="mt-7">
+            <h1 class="dark:text-white text-theme-green font-medium">
               Personal Reminder
             </h1>
-            <p>Schedule your reminder to make your affirmation fit your routine.</p>
+            <p class="dark:text-gray-300">
+              Schedule your reminder to make your affirmation fit your routine.
+            </p>
           </div>
           <div v-if="isSubscribed.value" :class="isMobile ? 'flex justify-end' : ''">
-            <component :is="PlusCircleIcon" class="mt-3 w-10 h-10 text-theme-green" @click.prevent="addTimeModal = true" />
+            <component :is="PlusCircleIcon" class="mt-7 w-8 h-8 text-theme-green cursor-pointer hover:text-theme-green/70 transition-all dark:text-green-600 dark:hover:text-green-700" @click.prevent="addTimeModal = true" />
           </div>
         </div>
         <div v-if="toggleSwitch.value" class="">
           <div class="overflow-y-auto relative h-auto md:h-auto">
-            <div v-for="reminder in response.reminders" :key="reminder.id" class="flex justify-between bg-hover-theme-green p-4 text-white rounded items-center mb-4">
-              <div :class="!isMobile ? 'w-60' : ''" @click="isMobile ? toggleModal('edit',reminder): ''">
+            <div 
+              v-for="reminder in response.reminders" 
+              :key="reminder.id" 
+              class="flex justify-between bg-green-800 p-4 text-white rounded items-center mb-4">
+              <div :class="!isMobile ? 'w-60' : ''" @click="isMobile ? toggleModal('edit', reminder): ''">
                 <p class="text-white text-base font-semibold">
                   {{ convertToAMPPM(reminder.original_time) }}
                 </p>
@@ -38,9 +46,16 @@
               <div :class="!isMobile ? 'w-52' : ''">
                 <ToggleStatusSwitch :notifiable="reminder.status" :reminder="reminder" />
               </div>
-              <div v-if="!isMobile" class="flex justify-between w-10">
-                <component :is="PencilSquareIcon" v-if="isSubscribed.value" class=" w-5 h-5 cursor-pointer  duration-200 ease-out text-blue-500" @click.stop="toggleModal('edit',reminder)" />
-                <component :is="TrashIcon" class="w-5 h-5 cursor-pointer duration-200 ease-out text-rose-400" @click.stop="toggleModal('delete',reminder)" />
+              <div v-if="!isMobile" class="flex justify-between gap-x-2">
+                <component 
+                  :is="PencilSquareIcon" 
+                  v-if="isSubscribed.value" 
+                  class="w-6 h-6 cursor-pointer  duration-200 ease-out " 
+                  @click.stop="toggleModal('edit',reminder)" />
+                <component 
+                  :is="TrashIcon" 
+                  class="w-6 h-6 cursor-pointer duration-200 ease-out" 
+                  @click.stop="toggleModal('delete',reminder)" />
               </div>
             </div>
           </div>

@@ -35,8 +35,9 @@ import { Link, useForm } from '@inertiajs/vue3'
 import FormInput from '../../FormInput.vue'
 import Button from '../../Button.vue'
 
-defineProps({
-  errors: Object
+const props = defineProps({
+  errors: Object,
+  redirectTo: String
 })
 
 const registrationForm = useForm({
@@ -44,7 +45,8 @@ const registrationForm = useForm({
   email: '',
   password: '',
   password_confirmation: '',
-  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  redirectTo: props.redirectTo
 })
 
 const showPass = reactive({
@@ -56,9 +58,12 @@ const loading = ref(false)
 
 const register = () => {
   loading.value = true
-  registrationForm.post(route('register'),{
+  registrationForm.post(route('register'), {
     onFinish: () => {
-      [registrationForm.reset('password'),registrationForm.reset('password_confirmation')]
+      [ 
+        registrationForm.reset('password'),
+        registrationForm.reset('password_confirmation')
+      ]
       loading.value = false
     }
   })

@@ -45,6 +45,7 @@
         "firebase": "^10.1.0",
         "localbase": "^0.7.5",
         "mobile-device-detect": "^0.4.3",
+        "qrcode.vue": "^3.4.1",
         "vanilla-lazyload": "^17.8.3",
         "vue-chart-3": "^3.1.8",
         "vue-rate": "^3.1.1",

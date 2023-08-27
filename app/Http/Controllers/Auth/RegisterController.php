@@ -38,7 +38,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo        = RouteServiceProvider::HOME;
+    protected $redirectToBilling = RouteServiceProvider::BILLING;
 
     /**
      * Create a new controller instance.
@@ -77,7 +78,7 @@ class RegisterController extends Controller
 
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", 'confirmed'],
         ]);
 
@@ -88,10 +89,11 @@ class RegisterController extends Controller
             'active_category'      => 1,
             'active_category_type' => Category::class,
             'active_category_id'   => 1,
-            'affiliate_id'         => Str::random(16), //TODO: create a helper function to ensure this is unique on creation.
+            'affiliate_id'         => Str::uuid(), 
             'referred_by'          => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
             'timezone'             => $request->timezone
         ]);
+
         if ($user->save()) {
             Cookie::queue(Cookie::forget('referral'));
             $clientOriginalTime = '09:00:00';
@@ -104,7 +106,13 @@ class RegisterController extends Controller
             );
         }
         event(new Registered($user));
+
         Auth::login($user);
+
+        if($request->redirectTo === '/billing') {
+            return redirect(RouteServiceProvider::BILLING);
+        }
+
         return redirect(RouteServiceProvider::HOME);
     }
 }

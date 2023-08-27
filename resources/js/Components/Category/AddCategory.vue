@@ -2,11 +2,11 @@
   <div>
     <Modal v-model="modalShown">
       <div class="py-2">
-        <h1 class="">
+        <h1 class="dark:text-white">
           Custom Category
         </h1>
-        <p class="text-base mt-2 font-light">
-          Add your own category so that you can add your own affirmation.
+        <p class="text-base mt-2 font-light dark:text-gray-400">
+          Add your own category so that you can add your own affirmation
         </p>
         <form class="mt-3" @submit.prevent="saveCategory">
           <FormInput id="category" v-model="form.text" :max-length="35" class="mb-1" label="Category" :error="form.errors.text" autofocus />

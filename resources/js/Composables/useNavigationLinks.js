@@ -4,15 +4,14 @@ import {
   StarIcon,
   Cog6ToothIcon,
   UserIcon,
-  LockClosedIcon,
-  BugAntIcon,
   PencilIcon,
   CurrencyDollarIcon,
   CalendarIcon,
   ChartBarIcon,
   ChevronRightIcon,
   BoltIcon,
-  ClockIcon
+  ClockIcon,
+  UsersIcon
 } from '@heroicons/vue/24/solid'
 
 export function useNavigationLinks() {
@@ -54,24 +53,17 @@ export function useNavigationLinks() {
       leftIcon: ChevronRightIcon
     },
     {
-      icon: LockClosedIcon,
-      link: 'setting.security.index',
-      label: 'Security',
-      description: 'Change Password',
+      icon: UsersIcon,
+      link: 'setting.user.accountability',
+      label: 'Accountability Partner',
+      description: 'Get additional support from other people',
       leftIcon: ChevronRightIcon
     },
     {
-      icon: BugAntIcon,
-      link: 'setting.reportbug.index',
-      label: 'Report Bug',
-      description: 'Write a report to help',
-      leftIcon: ChevronRightIcon
-    },
-    {
-      icon: BoltIcon,
-      link: 'setting.history.index',
-      label: 'Login History',
-      description: 'View your login history',
+      icon: ClockIcon,
+      link: 'setting.reminder.index',
+      label: 'Reminder',
+      description: 'Schedule your personal reminder',
       leftIcon: ChevronRightIcon
     },
     {
@@ -82,10 +74,10 @@ export function useNavigationLinks() {
       leftIcon: ChevronRightIcon
     },
     {
-      icon: ClockIcon,
-      link: 'setting.reminder.index',
-      label: 'Reminder',
-      description: 'Schedule your personal reminder',
+      icon: BoltIcon,
+      link: 'setting.history.index',
+      label: 'Login History',
+      description: 'View your login history',
       leftIcon: ChevronRightIcon
     },
     {

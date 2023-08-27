@@ -22,8 +22,8 @@ const toggleSwitch = () => {
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 50px;
+  height: 24px;
 }
 
 .switch input { 
@@ -47,10 +47,10 @@ const toggleSwitch = () => {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
   background-color: #8ABE53;
   -webkit-transition: .4s;
   transition: .4s;

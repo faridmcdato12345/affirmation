@@ -11,7 +11,7 @@ var firebaseConfig = {
   measurementId: 'G-G2NDWXEH44'
 } 
 let userId = null
-const dbName = "user_data";
+const dbName = "user_info";
 const dbVersion = 2;
 
 const request = indexedDB.open(dbName, dbVersion);
@@ -24,7 +24,7 @@ request.onsuccess = function(event) {
     console.log("trans: ",transaction)
     const objectStore = transaction.objectStore('user')
     console.log("objstore: ",objectStore)
-    const getRequest = objectStore.get("user_key")
+    const getRequest = objectStore.get(1)
 
     getRequest.onsuccess = function(event) {
         const data = event.target.result;

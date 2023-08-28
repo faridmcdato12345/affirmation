@@ -48,11 +48,8 @@ class SendNotification extends Command
                 }
                 $data = [
                     "registration_ids" => $firebaseToken,
-                    "notification" => [
-                        "title" => 'Affirm',
-                        "icon" => public_path('images/icons/128.png'),
-                    ],
                     "data" => [
+                        "title" => 'Affirm',
                         "user" => $userId,
                         "user_reminders" => $reminders
                     ]

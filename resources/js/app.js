@@ -51,7 +51,7 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 const serviceWorkerDir = '/serviceworker.js'
 onMessage(messaging, (payload) => {
-  const noteTitle = payload.notification.title;
+  const noteTitle = payload.data.title;
   let __noteOptions = {
     body: "You did not wrote your custom notification message. "
   }

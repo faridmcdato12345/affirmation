@@ -50,7 +50,7 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
   // Customize notification here
-  const notificationTitle = payload.notification.title;
+  const notificationTitle = payload.data.title;
   let noteOptions = {
     body: "You did not wrote your custom notification message. "
   }

@@ -52,9 +52,6 @@ const messaging = getMessaging(app);
 const serviceWorkerDir = '/serviceworker.js'
 onMessage(messaging, (payload) => {
   const noteTitle = payload.notification.title;
-  const noteOptions = {
-      body: payload.notification.body,
-  };
   let __noteOptions = {
     body: "You did not wrote your custom notification message. "
   }

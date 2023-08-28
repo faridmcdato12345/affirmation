@@ -1,12 +1,13 @@
 export function useInsertIndexdb() {
   
   const insertData = async (userId) => {
-    const request = indexedDB.open('user_info', 2)
+    const request = indexedDB.open('user_info', 3)
     request.onupgradeneeded = (event) => {
       const db = event.target.result
 
       if(!db.objectStoreNames.contains('user')){
         db.createObjectStore('user', { keyPath: 'id',autoIncrement: false})
+        console.log('onupgraded')
       }
     }
     request.onsuccess = (event) => {
@@ -46,6 +47,7 @@ export function useInsertIndexdb() {
               }
             }
           } else {
+            
             // Add data if the table doesn't exist
             const newData = { id: 1, user_id: userId }
     
@@ -60,13 +62,6 @@ export function useInsertIndexdb() {
             }
           }
         }
-      } else {
-        const transaction = db.transaction('user', 'readwrite')
-        const store = transaction.objectStore('user')
-        store.add({
-          id: 1,
-          user_id: userId
-        })
       }
     }
     request.onerror = (event) => {

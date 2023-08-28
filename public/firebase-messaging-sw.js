@@ -12,7 +12,7 @@ var firebaseConfig = {
 } 
 let userId = null
 const dbName = "user_info";
-const dbVersion = 2;
+const dbVersion = 3;
 
 const request = indexedDB.open(dbName, dbVersion);
 

@@ -28,15 +28,11 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index(Request $request)
     {
         $affirmation = Auth::user()->getAffirmation();
         $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
+        
         return Inertia::render('Index', [
             'affirmation'      => $affirmation,
             'progressId'       => $progressId,
@@ -47,11 +43,6 @@ class HomeController extends Controller
         ]);
     }
 
-    /**
-     * Show the application settings page.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function settings()
     {
         $user = Auth::user()->subscribedToPremium();

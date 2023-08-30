@@ -14,13 +14,14 @@ var firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-  let userId = fetchUserIndexDB()
+messaging.onBackgroundMessage(async (payload) => {
+  let userId = await fetchUserIndexDB()
   // Customize notification here
   const notificationTitle = payload.data.title;
   let noteOptions = {
-    body: "You did not wrote your custom notification message. "
+    body: userId
   }
+  self.registration.showNotification(notificationTitle,noteOptions);
   const user_data = JSON.parse(payload.data.user_reminders)
   const dataArray = JSON.parse(payload.data.user)
   for(let user of user_data){
@@ -69,32 +70,34 @@ const getTimeNow = () => {
 
   return formattedTime;
 }
-const fetchUserIndexDB = () => {
-  const request = indexedDB.open('user_info', 3);
+const fetchUserIndexDB = async () => {
+  return new Promise((resolve,reject) => {
+    const request = indexedDB.open('user_info', 3);
 
-  request.onsuccess = function(event) {
-      const db = event.target.result;
-      // Now you can interact with the database
-      const transaction = db.transaction("user", "readonly")
-      const objectStore = transaction.objectStore('user')
-      const getRequest = objectStore.get(1)
+    request.onsuccess = async function(event) {
+        const db = event.target.result;
+        // Now you can interact with the database
+        const transaction = db.transaction("user", "readonly")
+        const objectStore = transaction.objectStore('user')
+        const getRequest = objectStore.get(1)
+    
+        getRequest.onsuccess =  await function(event) {
+            const data = event.target.result;
+            if (data) {
+                resolve(data.user_id)
+            } 
+        };
+    
+        getRequest.onerror = function(event) {
+            reject(null)
+        };
+    };
+    
+    request.onerror = function(event) {
+        reject(null)
+    };
+  })
   
-      getRequest.onsuccess = function(event) {
-          const data = event.target.result;
-          if (!data) {
-              return null
-          } 
-          return data.user_id
-      };
-  
-      getRequest.onerror = function(event) {
-          console.error("Error retrieving data:", event.target.error);
-      };
-  };
-  
-  request.onerror = function(event) {
-      console.error("Database error:", event.target.error);
-  };
 }
 
 

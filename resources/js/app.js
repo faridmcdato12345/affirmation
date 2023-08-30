@@ -53,7 +53,8 @@ const serviceWorkerDir = '/serviceworker.js'
 onMessage(messaging, (payload) => {
   const noteTitle = payload.data.title;
   let __noteOptions = {
-    body: "You did not wrote your custom notification message. "
+    body: "You did not wrote your custom notification message. ",
+    icon: payload.data.icon
   }
   const user_data = JSON.parse(payload.data.user_reminders)
   const dataArray = JSON.parse(payload.data.user)

@@ -19,9 +19,9 @@ messaging.onBackgroundMessage(async (payload) => {
   // Customize notification here
   const notificationTitle = payload.data.title;
   let noteOptions = {
-    body: userId
+    body: "You did not wrote your custom notification message.",
+    icon: payload.data.icon
   }
-  self.registration.showNotification(notificationTitle,noteOptions);
   const user_data = JSON.parse(payload.data.user_reminders)
   const dataArray = JSON.parse(payload.data.user)
   for(let user of user_data){
@@ -74,14 +74,14 @@ const fetchUserIndexDB = async () => {
   return new Promise((resolve,reject) => {
     const request = indexedDB.open('user_info', 3);
 
-    request.onsuccess = async function(event) {
+    request.onsuccess = function(event) {
         const db = event.target.result;
         // Now you can interact with the database
         const transaction = db.transaction("user", "readonly")
         const objectStore = transaction.objectStore('user')
         const getRequest = objectStore.get(1)
     
-        getRequest.onsuccess =  await function(event) {
+        getRequest.onsuccess = function(event) {
             const data = event.target.result;
             if (data) {
                 resolve(data.user_id)

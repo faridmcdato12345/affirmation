@@ -51,7 +51,8 @@ class SendNotification extends Command
                     "data" => [
                         "title" => 'Affirm',
                         "user" => $userId,
-                        "user_reminders" => $reminders
+                        "user_reminders" => $reminders,
+                        "icon" => env('APP_URL').'images/icons/128.png'
                     ]
                 ];
                 $dataString = json_encode($data);

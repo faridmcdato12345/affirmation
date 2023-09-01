@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <p class="text-base mt-4 text-gray-700">
+      <p class="text-base mt-4 text-gray-700 dark:text-gray-200">
         On a scale of 1 to 5 (1 being the lowest) how do you feel today?
       </p>
       <rate v-model="rating.happiness_score" :length="5" />
     </div>
     <div>
-      <p class="text-base mt-4 text-gray-700">
+      <p class="text-base mt-4 text-gray-700 dark:text-gray-200">
         On a scale of 1 to 5 (1 being the lowest) how much does this affirmation fit with you?
       </p>
       <rate v-model="rating.belief_score" :length="5" />

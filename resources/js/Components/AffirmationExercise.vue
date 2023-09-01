@@ -6,10 +6,10 @@
       </p>
     </div>
     <div>
-      <h3 class="font-medium text-2xl">
+      <h3 class="font-medium text-2xl dark:text-white">
         {{ currentTitle }}
       </h3>
-      <p class="leading-5">
+      <p class="leading-5 dark:text-gray-300">
         {{ currentDescription }}
       </p>
     </div>

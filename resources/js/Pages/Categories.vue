@@ -15,7 +15,7 @@
           <div
             v-for="myCategory in myCategories"
             :key="myCategory.id"
-            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
+            class="bg-white dark:bg-dark-800 relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
               <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
@@ -25,21 +25,21 @@
             <div class="absolute top-3 right-3">
               <CheckCircleIcon v-if="myCategory.id === activeCategory && activeCategoryType === 'App\\Models\\UserCategories'" class="w-7 text-green-600 " />
             </div>
-            <h3 class="font-medium">
+            <h3 class="font-medium dark:text-white">
               {{ myCategory.text }}
             </h3>
-            <p class="text-gray-600 text-sm">
+            <p class="text-gray-600 text-sm dark:text-gray-300">
               {{ myCategory.blurb }}
             </p>
           </div>
-          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
+          <div class="bg-white dark:bg-gray-800 dark:border-gray-600 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
             <div class="absolute top-3 right-3">
               <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
             </div>
-            <h3 class="font-medium">
+            <h3 class="font-medium dark:text-white">
               Add Category
             </h3>
-            <p class="text-gray-600 text-sm">
+            <p class="text-gray-600 text-sm dark:text-gray-300">
               Add your own category for your own affirmations
             </p>
           </div>
@@ -57,7 +57,7 @@
               :key="category.id"
               class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
               :class="[
-                i == 0 || isPremium ? 'bg-white' : 'bg-gray-200'
+                i == 0 || isPremium ? 'bg-white dark:bg-gray-800 dark:border-gray-600 dark:border' : 'bg-gray-200 dark:bg-gray-800 dark:border dark:border-gray-600'
               ]"
               @click.prevent="toggleSwitchCategory(category)">
               <div v-if="category.id === activeCategory && activeCategoryType === 'App\\Models\\Category'" class="absolute right-3 top-3">
@@ -66,10 +66,10 @@
               <div v-if="!isPremium && i != 0" class="absolute right-3 top-3">
                 <LockClosedIcon class="w-6 " />
               </div>
-              <h3 class="font-medium">
+              <h3 class="font-medium dark:text-white">
                 {{ category.text }}
               </h3>
-              <p class="text-gray-600 text-sm">
+              <p class="text-gray-600 text-sm dark:text-gray-300">
                 {{ category.blurb }}
               </p>
             </div>
@@ -125,7 +125,7 @@
         </div>
       </div>
       <div class="flex items-center justify-end gap-x-2 mt-4">
-        <Button label="Cancel" color="error" component-type="link" @click.prevent="upgradeModal = false" />
+        <Button label="Cancel" color="gray" component-type="link" @click.prevent="upgradeModal = false" />
         <Button component-type="link" href="/billing" label="Subscribe for Access" color="success" />
       </div>
     </Modal>

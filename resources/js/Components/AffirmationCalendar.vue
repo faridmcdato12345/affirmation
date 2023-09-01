@@ -5,54 +5,70 @@
       <div class="text-left">
         <table>
           <tr>
-            <td><span class="font-semibold">Title: </span></td>
-            <td>{{ modalAffirmTitle }}</td>
+            <td><span class="font-semibold dark:text-gray-200">Title: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmTitle }}
+            </td>
           </tr>
           <tr>
-            <td><span class="font-semibold">Date: </span></td>
-            <td>{{ modalAffirmDate }}</td>
+            <td><span class="font-semibold dark:text-gray-200">Date: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmDate }}
+            </td>
           </tr>
           <tr>
-            <td><span class="font-semibold">Happiness Score: </span></td>
-            <td>{{ modalAffirmHappiness }}</td>
+            <td><span class="font-semibold dark:text-gray-200">Happiness Score: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmHappiness }}
+            </td>
           </tr>
           <tr>
-            <td><span class="font-semibold">Belief Score: </span></td>
-            <td>{{ modalAffirmBelief }}</td>
+            <td><span class="font-semibold dark:text-gray-200">Belief Score: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmBelief }}
+            </td>
           </tr>
           <tr>
-            <td><span class="font-semibold">First Experience: </span></td>
-            <td>{{ modalAffirmInputOne }}</td>
+            <td><span class="font-semibold dark:text-gray-200">First Experience: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmInputOne }}
+            </td>
           </tr>
           <tr>
-            <td><span class="font-semibold">Second Experience: </span></td>
-            <td>{{ modalAffirmInputTwo }}</td>
+            <td><span class="font-semibold dark:text-gray-200">Second Experience: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmInputTwo }}
+            </td>
           </tr>
           <tr>
-            <td><span class="font-semibold">Third Experience: </span></td>
-            <td>{{ modalAffirmInputThree }}</td>
+            <td><span class="font-semibold dark:text-gray-200">Third Experience: </span></td>
+            <td class="dark:text-gray-200">
+              {{ modalAffirmInputThree }}
+            </td>
           </tr>
         </table>
       </div>
       <div class="flex items-center justify-center gap-x-2 mt-4">
-        <Button label="Close" color="error" @click.prevent="modal = false" />
+        <Button label="Close" color="gray" btn-block @click.prevent="modal = false" />
       </div>
     </Modal>
   </div>
 </template>
 <script setup>
 import { isMobile } from 'mobile-device-detect'
-import { reactive,ref } from 'vue'
+import { reactive, ref } from 'vue'
 import '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/vue3'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import listGridPlugin from '@fullcalendar/list'
 import Modal from '../Components/Modal.vue'
+import Button from '../Components/Button.vue'
 
 const response = defineProps({
   result: Object
 })
+
 const viewPlugin = isMobile ? listGridPlugin : dayGridPlugin
 const listView = isMobile ? 'listMonth' : 'dayGridMonth'
 const modal = ref(false)
@@ -87,3 +103,6 @@ const options = reactive({
   }
 })
 </script>
+<style>
+
+</style>

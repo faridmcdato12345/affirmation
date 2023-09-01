@@ -20,7 +20,7 @@
             placeholder="Help us improve our app"
             class="border-2 border-hover-theme-green w-full rounded-md px-2 dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="form.errors.description" />
-          <Button label="Report Issue" class="mt-3" />
+          <Button label="Report Issue" class="mt-3" btn-block color="success" />
         </form>
         
         <hr class="mt-8 mb-4" />
@@ -43,7 +43,7 @@
             placeholder="Write your feedback"
             class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="feedbackForm.errors.description" />
-          <Button label="Send Feedback" class="mt-3" />
+          <Button label="Send Feedback" class="mt-3" btn-block color="success" />
         </form>
       </div>
     </div>
@@ -91,7 +91,7 @@ import { useForm } from '@inertiajs/vue3'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import { CheckCircleIcon } from '@heroicons/vue/24/solid'
 import Settings from '../Settings.vue'
-import Button from '../../Components/Auth/Button.vue'
+import Button from '../../Components/Button.vue'
 import Modal from '../../Components/Modal.vue'
 import InputError from '../../Components/InputError.vue'
 

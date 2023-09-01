@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4">
-    <p class="leading-4 text-gray-700">
+    <p class="leading-4 text-gray-700 dark:text-gray-300">
       Try to think of three times your actions that have been in line with this belief
     </p>
     <FormInput id="input1" v-model="experience.input1" label="First Experience" required />

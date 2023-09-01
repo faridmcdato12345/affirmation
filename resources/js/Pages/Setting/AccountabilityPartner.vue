@@ -15,7 +15,7 @@
               </div>
               <div v-if="!isMobile" class="flex gap-x-2">
                 <Button label="Invite" color="success" @click.prevent="inviteModal = true" />
-                <Button label="Show QR" color="gray" @click.prevent="qrModal = true" />
+                <!-- <Button label="Show QR" color="gray" @click.prevent="qrModal = true" /> -->
               </div>
             </div>
           </div>

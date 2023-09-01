@@ -3,7 +3,7 @@
     <Head title="Themes" />
     <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
     <div class="z-20 md:max-w-7xl w-full mx-auto relative flex flex-col h-screen px-6 pb-12 md:pb-0">
-      <h1 class="text-white text-3xl mt-24 md:mt-12 text-center">
+      <h1 class="text-white text-3xl mt-24 md:mt-12 text-center ">
         Background Image
       </h1>
       <h2 class="text-white font-medium text-2xl mt-8">
@@ -15,7 +15,7 @@
           <CheckCircleIcon v-if="bgImage === img.image" class="w-6 md:w-7 text-green-600 absolute top-2 right-3 z-20" />
           <img :src="img.image" alt="Background Image" class="object-cover w-full h-full rounded-md brightness-75 hover:brightness-100" />
         </div>
-        <div class="bg-white relative h-fit hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.stop="triggerUpload">
+        <div class="bg-white dark:bg-dark-800 dark:border dark:border-white relative h-fit hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.stop="triggerUpload">
           <div class="absolute top-3 right-3">
             <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
           </div>

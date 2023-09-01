@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LineChart :chart-data="data" class="h-full flex justify-center items-center" />
+    <BarChart :chart-data="data" class="h-full flex justify-center items-center" />
     <div v-if="!user_type.paid">
       <div class="text-center mt-2">
         <component 
@@ -13,7 +13,7 @@
 </template>
 <script setup>
 import { Chart, registerables } from 'chart.js'
-import { LineChart } from 'vue-chart-3'
+import { BarChart } from 'vue-chart-3'
 import { reactive } from 'vue'
 import { ChevronDoubleDownIcon } from '@heroicons/vue/24/solid'
 

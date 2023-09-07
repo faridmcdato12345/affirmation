@@ -2,10 +2,10 @@
   <div>
     <Modal v-model="modalShown">
       <div class="text-left">
-        <h1 v-if="isMobile" class="mt-2 mb-8">
-          Edit or Delete Personal Reminder
+        <h1 v-if="isMobile" class="mt-2 mb-8 dark:text-white">
+          Update Personal Reminder
         </h1>
-        <h1 v-else class="mt-2 mb-8">
+        <h1 v-else class="mt-2 mb-8 dark:text-white">
           Edit Personal Reminder
         </h1>
       </div>
@@ -14,10 +14,21 @@
         <div class="edit-modal-body">
           <FormInput id="input1" v-model="form.original_time" label="Time" required type="time" :error="form.errors.original_time" />
         </div>
-        <div class="flex justify-end gap-x-2 mt-4">
-          <Button label="Save" type="submit" color="success" />
-          <Button v-if="isMobile" label="Delete" type="button" color="error" @click.prevent="deleteReminder" />
-          <Button label="Cancel" color="gray" @click.prevent="modalShown = false" />
+        <div class="flex justify-end gap-x-1 mt-4">
+          <Button 
+            label="Cancel" 
+            color="gray" 
+            @click.prevent="modalShown = false" />
+          <Button 
+            v-if="isMobile" 
+            label="Delete" 
+            type="button" 
+            color="error" 
+            @click.prevent="deleteReminder" />
+          <Button 
+            label="Save Reminder" 
+            type="submit" 
+            color="success" />
         </div>
       </form>
     </Modal>

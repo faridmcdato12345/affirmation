@@ -22,7 +22,9 @@
             <br />
             <Button label="Save Changes" btn-block color="success" type="submit" />
           </form>
+
           <hr class="my-6" />
+
           <form @submit.prevent="updatePassword">
             <div class="mb-8">
               <h1 class="dark:text-white text-theme-green font-medium">
@@ -74,12 +76,46 @@
             <br />
             <Button label="Update Password" btn-block color="success" type="submit" />
           </form>
+
+          <hr class="my-6" />
+
+          <div class="mb-8 flex justify-between">
+            <div>
+              <h1 class="dark:text-white text-theme-green font-medium">
+                Dark Mode
+              </h1>
+              <p class="dark:text-gray-400">
+                Protect your eyes and enable dark mode
+              </p>
+            </div>
+            <label class="relative inline-flex items-center mb-4 cursor-pointer">
+              <input 
+                type="checkbox" 
+                class="sr-only peer" 
+                :checked="isDarkMode"
+                @click="toggleDarkMode" />
+              <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[13px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+            </label>
+          </div>
+
+          <hr class="my-6" />
+          <div class="mb-8 flex justify-between items-center">
+            <div>
+              <h1 class="dark:text-white text-theme-green font-medium">
+                Background Theme
+              </h1>
+              <p class="dark:text-gray-400">
+                Change your background to your preference
+              </p>
+            </div>
+            <Button label="Themes" color="success" component-type="link" href="/themes" />
+          </div>
         </div>
       </div>
     </component>
 
     <Modal v-model="modal">
-      <div class="text-center">
+      <div class="text-cr">
         <component
           :is="modalIcon ? CheckCircleIcon : XCircleIcon"
           class="w-14 mx-auto text-green-600 duration-200 ease-out" />
@@ -90,7 +126,7 @@
           {{ modalTextBody }}
         </p>
       </div>
-      <div class="flex items-center justify-center gap-x-2 mt-4">
+      <div clasentes="flex items-center justify-center gap-x-2 mt-4">
         <Button label="Close" color="success" btn-block @click.prevent="modal = false" />
       </div>
     </Modal>
@@ -104,6 +140,7 @@ import Settings from '../Settings.vue'
 import Modal from '../../Components/Modal.vue'
 import Button from '../../Components/Button.vue'
 import FormInput from '../../Components/FormInput.vue'
+import { useToggleDarkMode } from '../../Composables/useToggleDarkMode'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import { CheckCircleIcon, EyeIcon, EyeSlashIcon, XCircleIcon } from '@heroicons/vue/24/solid'
 
@@ -121,6 +158,8 @@ const modal = ref(false)
 const modalTextHeader = ref('')
 const modalTextBody = ref('')
 const modalIcon = ref(true)
+
+const { isDarkMode, toggleDarkMode } = useToggleDarkMode()
 
 const formPass = useForm({
   current_password: '',

@@ -1,7 +1,7 @@
 <template>
-  <label class="switch">
-    <input type="checkbox" :checked="props.notifiable == 1" @click="toggleSwitch" />
-    <span class="slider round"></span>
+  <label class="switch border rounded-full ">
+    <input type="checkbox" class="peer" :checked="props.notifiable == 1" @click="toggleSwitch" />
+    <span class="slider round dark:peer-checked:bg-green-900"></span>
   </label>
 </template>
 <script setup>
@@ -14,13 +14,17 @@ const props = defineProps({
   notifiable: Boolean,
   reminder: Object
 })
+
 let form = useForm({
   status: ''
 })
+
 const disallow = ref(props.notifiable == 1 ? true : false)
+
 watch(() => props.reminder, () => {
   form = useForm({...props.reminder})
 })
+
 const toggleSwitch = () => {
   disallow.value = !disallow.value
   form = useForm({
@@ -42,8 +46,8 @@ const toggleSwitch = () => {
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 50px;
+  height: 25px;
 }
 
 .switch input { 
@@ -59,7 +63,7 @@ const toggleSwitch = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #808080;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -67,11 +71,11 @@ const toggleSwitch = () => {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: #8ABE53;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 3px;
+  background-color: #ffffff;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -85,9 +89,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(25px);
+  -ms-transform: translateX(25px);
+  transform: translateX(25px);
 }
 
 /* Rounded sliders */
@@ -98,6 +102,7 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
 @media screen and (max-width: 480px) {
   .slider:before {
     left: 0px;

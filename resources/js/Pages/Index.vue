@@ -13,7 +13,10 @@
         @click.prevent="checkDailyExerciseStatus" />
     </div>
     <Modal v-model="modalShown">
-      <AffirmationExercise :progress-id="progressId" @close-modal="modalShown = false" />
+      <AffirmationExercise 
+        :progress-id="progressId" 
+        :affirmation="modifiedAffirmation" 
+        @close-modal="modalShown = false" />
     </Modal>
   </AuthenticatedLayout>
 </template>
@@ -32,16 +35,20 @@ const props = defineProps({
   progressId: [Number, String],
   exerciseFinished: Boolean,
   isSubscribed: Boolean,
-  isNotify: Boolean,
+  isNotify: [Boolean, Number],
   user_id: Number
 })
+
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)
+
 const { insertData } = useInsertIndexdb()
+
 localStorage.setItem('isSubcribe', props.isSubscribed)
 localStorage.setItem('isNotify', props.isNotify)
 localStorage.setItem('userId', props.user_id)
+
 const checkDailyExerciseStatus = () => {
   if(props.exerciseFinished) {
     return toast('You\'ve already completed today\'s exercise')
@@ -49,9 +56,10 @@ const checkDailyExerciseStatus = () => {
 
   modalShown.value = true
 }
+
 onMounted(() => {
-  insertData(props.user_id).then(()=>console.log('Data inserted to indexdb'))
-  console.log('onMounted')
+  insertData(props.user_id)
 })
+
 const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, user.value.name))
 </script>

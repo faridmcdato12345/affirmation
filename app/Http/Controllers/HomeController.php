@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -57,7 +58,11 @@ class HomeController extends Controller
     public function categories()
     {
         return Inertia::render('Categories', [
-            'categories'         => Category::all()->groupBy('premium'),
+            'categories'         => Category::with(['affirmations' => function($query){
+                                        $query->whereHas('progress',function(Builder $builder){
+                                            $builder->where('user_id',auth()->id())->where('status','=','1');
+                                        })->count();
+                                    }])->withCount('affirmations')->get()->groupBy('premium'),
             'myCategories'       => UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get(),
             'isPremium'          => Auth::user()->subscribed(),
             'activeCategory'     => Auth::user()->active_category_id,

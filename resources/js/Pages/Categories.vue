@@ -66,12 +66,33 @@
               <div v-if="!isPremium && i != 0" class="absolute right-3 top-3">
                 <LockClosedIcon class="w-6 " />
               </div>
-              <h3 class="font-medium dark:text-white">
-                {{ category.text }}
-              </h3>
-              <p class="text-gray-600 text-sm dark:text-gray-300">
-                {{ category.blurb }}
-              </p>
+              <div class="min-h-[100px]">
+                <h3 class="font-medium dark:text-white">
+                  {{ category.text }}
+                </h3>
+                <p class="text-gray-600 text-sm dark:text-gray-300 mb-6">
+                  {{ category.blurb }}
+                </p>
+              </div>
+              
+              <div class="absolute bottom-[0.5rem] w-full pr-8">
+                <div class="flex justify-between">
+                  <div>
+                    <p class="text-gray-600 text-sm dark:text-gray-300">
+                      <span v-if="category.affirmations.length != category.affirmations_count">Progress: </span>
+                      <span v-else>Completed: </span>
+                      <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600' : 'text-green-600'">
+                        {{ category.affirmations ? category.affirmations.length : 0 }}
+                      </span>
+                      <span>/</span>
+                      <span class="text-green-600">{{ category.affirmations_count }}</span>
+                    </p>
+                  </div>
+                  <div v-if="category.affirmations.length == category.affirmations_count" class="w-[5%]">
+                    <ArrowPathIcon @click.stop="refreshCategory(category)" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -140,10 +161,12 @@
 </template>
 <script setup>
 import { ref, watch } from 'vue'
-import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon } from '@heroicons/vue/24/solid'
+import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon,ArrowPathIcon } from '@heroicons/vue/24/solid'
 import { Head, router } from '@inertiajs/vue3'
+import { toast } from '../Composables/useToast'
 
 import AddAffirmation from '../Components/Category/Affirmation/AddAffirmation.vue'
+
 
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Affirmation from '../Components/Category/Affirmation/Affirmations.vue'
@@ -162,7 +185,7 @@ const props = defineProps({
   activeCategoryType: String,
   errors: Object
 })
-
+console.log('category props: ',props.categories)
 const selectedCategory = ref('')
 const setCategoryModal = ref(false)
 const upgradeModal = ref(false)
@@ -215,7 +238,18 @@ const switchCategory = async () => {
   }
   )
 }
-
+const refreshCategory = (category) => {
+  selectedCategory.value = category
+  router.put(route('category.refresh',selectedCategory.value.id),{
+    onSuccess: (response) => {
+      console.log('reponse: ',response)
+      toast.success('Status has been updated!')
+    },
+    onFinish: () => {
+      console.log('success aki')
+    }
+  })
+}
 /**
  *  Affirmation
  */
@@ -241,7 +275,6 @@ watch([() => addAffirmationModal.value], ([addVal]) => {
 
 watch(() => props.myCategories, () => {
   selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value?.id)[0]
-  console.log('Selected Category: ', selectedCateg)
 })
 
 </script>

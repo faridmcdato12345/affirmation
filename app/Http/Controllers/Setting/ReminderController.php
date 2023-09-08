@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UpdateUserTimeRequest;
 use App\Http\Traits\ConvertTimeZone;
+use Illuminate\Support\Facades\DB;
 use App\Models\Reminder;
 use Carbon\Carbon;
 use Inertia\Inertia;
@@ -33,10 +34,17 @@ class ReminderController extends Controller
     }
     public function update(Reminder $reminder,UpdateUserTimeRequest $request)
     {
-        $reminder->update($request->validated());
-        $reminder->update([
-            'time' => $this->convertTimeZone($reminder->timezone,Carbon::createFromFormat('H:i',$reminder->original_time)->toTimeString())
-        ]);
+        DB::beginTransaction();
+        try {
+            $reminder->update($request->validated());
+            $reminder->update([
+                'time' => $this->convertTimeZone($reminder->timezone,Carbon::createFromFormat('H:i',$reminder->original_time)->toTimeString())
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
+        }
+       
     }
     public function delete(Reminder $reminder)
     {

@@ -13,7 +13,10 @@
         @click.prevent="checkDailyExerciseStatus" />
     </div>
     <Modal v-model="modalShown">
-      <AffirmationExercise :progress-id="progressId" @close-modal="modalShown = false" />
+      <AffirmationExercise :progress-id="progressId" @close-modal="modalShown = false" @is-complete="completeModalShown = true" />
+    </Modal>
+    <Modal v-model="completeModalShown">
+      <CompleteCategory />
     </Modal>
   </AuthenticatedLayout>
 </template>
@@ -23,6 +26,7 @@ import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Button from '../Components/Button.vue'
 import Modal from '../Components/Modal.vue'
 import AffirmationExercise from '../Components/AffirmationExercise.vue'
+import CompleteCategory from '../Components/Category/CompleteCategory.vue'
 import { toast } from '../Composables/useToast'
 import { usePage } from '@inertiajs/vue3'
 import { useInsertIndexdb } from '../Composables/useInsertIndexdb'
@@ -38,6 +42,7 @@ const props = defineProps({
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)
+const completeModalShown = ref(false)
 const { insertData } = useInsertIndexdb()
 localStorage.setItem('isSubcribe', props.isSubscribed)
 localStorage.setItem('isNotify', props.isNotify)
@@ -51,7 +56,6 @@ const checkDailyExerciseStatus = () => {
 }
 onMounted(() => {
   insertData(props.user_id).then(()=>console.log('Data inserted to indexdb'))
-  console.log('onMounted')
 })
 const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, user.value.name))
 </script>

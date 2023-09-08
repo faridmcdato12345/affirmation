@@ -107,7 +107,7 @@ class RegisterController extends Controller
         }
         event(new Registered($user));
 
-        Auth::login($user);
+        Auth::login($user, $remember = true);
 
         if($request->redirectTo === '/billing') {
             return redirect(RouteServiceProvider::BILLING);

@@ -5,11 +5,15 @@ use App\Http\Controllers\{
   HomeController, 
   UserController, 
   ChartController, 
-  CalendarController, 
-  UserCategoryController, 
+  CalendarController,
+    CategoryController,
+    UserCategoryController, 
   UserAffirmationController
 };
-
+use App\Models\Affirmation;
+use App\Models\Category;
+use App\Models\Progress;
+use Illuminate\Database\Eloquent\Builder;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +48,84 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
 
   Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
+
+  Route::put('/category/{id}',[CategoryController::class,'refresh'])->name('category.refresh');
   
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 require __DIR__.'/auth.php';
+
+Route::get('/count/progress',function(){
+  // $x = Category::with(['affirmations' => function($q){
+  //   $q->whereHas('progress',function(Builder $query){
+  //     $query->where('status','=','1')->where('user_id',3);
+  //   });
+  // }])
+  // ->withCount('affirmations')
+  // ->get();
+  // dd($x);
+  // $x = Category::with(['affirmations' => function($q){
+  //   $q->whereDoesntHave('progress');
+  // }])->first();
+  // $y = collect($x->affirmations)->random(1)->first();
+  // dd($y->id);
+  //$x = Category::with('affirmations')->find(1);
+  // $d = Category::with(['affirmations' => function ($query){
+  //   $query->select()
+  // }])->get();
+  // dd($d);
+    // $__dd = true;
+    // $x = Affirmation::with('category')->where('id',242)->first();
+    // //dd($x->category->id);
+    // $y = Category::with(['affirmations' => function($q){
+    //     $q->whereHas('progress',function(Builder $query){
+    //       $query->where('status','=','1')->where('user_id',1);
+    //     });
+    //   }])
+    //   ->withCount('affirmations')
+    //   ->find($x->category->id);
+    //   // dd(count($y->affirmations));
+    // if($y->affirmations_count != count($y->affirmations)){
+    //   $__dd = false;
+    // }
+    $message = [
+        'success' => 'Exercise results saved',
+        'is_complete' => false
+    ];
+    // $m = [
+    //   'is_complete' => true
+    // ];
+    //dd($message);
+    // $message['is_complete'] = true;
+    // dd($message);
+    // $x = Progress::with(['affirmation.category' => function($query){
+    //   $query->select('id');
+    // }])
+    // ->where('status','1')
+    // ->where('id',4)
+    // ->first();
+    // //dd($x->affirmation->category->id);
+    // $y = Category::with(['affirmations' => function($q){
+    //       $q->whereHas('progress',function(Builder $query){
+    //         $query->where('status','=','1')->where('user_id',3);
+    //       });
+    //     }])
+    //     ->withCount('affirmations')
+    //     ->find($x->affirmation->category->id);
+    // if(count($y->affirmations) != $y->affirmations_count){
+    //   dd('not equal');
+    // }
+    $y = Category::find(1);
+    //dd($y->affirmations[0]->progress->where('user_id', 3)->update(['status' => '0']));
+    if($y){
+      $y->affirmations->each(function ($affirmation) {
+          //dd($affirmation->progress);
+          $affirmation->progress->where('user_id', 3)->each(function ($progress) {
+              $progress->update(['status' => '1']);
+          });
+      });
+      
+    }
+    //dd($y);
+});
 

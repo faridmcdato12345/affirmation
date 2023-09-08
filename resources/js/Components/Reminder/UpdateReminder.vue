@@ -13,6 +13,15 @@
       <form class="mt-8" @submit.prevent="updateTime">
         <div class="edit-modal-body">
           <FormInput id="input1" v-model="form.original_time" label="Time" required type="time" :error="form.errors.original_time" />
+          <textarea
+            id="custom_message"
+            v-model="form.custom_message"
+            name=""
+            cols="10"
+            rows="4"
+            placeholder="Write your custom message here"
+            class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800 mt-4">
+          </textarea>
         </div>
         <div class="flex justify-end gap-x-2 mt-4">
           <Button label="Save" type="submit" color="success" />
@@ -50,7 +59,8 @@ const modalShown = computed({
   }
 })
 let form = useForm({
-  original_time: ''
+  original_time: '',
+  custom_message: ''
 })
 watch(() => props.reminder, () => {
   form = useForm({...props.reminder})

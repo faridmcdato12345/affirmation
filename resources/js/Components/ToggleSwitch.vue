@@ -1,6 +1,10 @@
 <template>
   <label class="switch">
-    <input type="checkbox" :checked="props.notifiable == 1" @click="toggleSwitch" />
+    <input 
+      type="checkbox" 
+      :checked="props.notifiable == 1" 
+      class="peer"
+      @click="toggleSwitch" />
     <span class="slider round"></span>
   </label>
 </template>
@@ -11,7 +15,8 @@ const emit = defineEmits(['toggleCheckbox'])
 const props = defineProps({
   notifiable: Boolean
 })
-const disallow = ref(props.notifiable == 1 ? true : false)
+
+const disallow = ref(props.notifiable == 1)
 const toggleSwitch = () => {
   disallow.value = !disallow.value
   emit('toggleCheckbox',disallow.value)

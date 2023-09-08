@@ -12,6 +12,9 @@
       <p class="leading-5 dark:text-gray-300">
         {{ currentDescription }}
       </p>
+      <p v-if="step == 2" class="font-medium text-lg mt-3 dark:text-gray-200 text-gray-700">
+        {{ affirmation }}
+      </p>
     </div>
     <Transition appear>
       <div>
@@ -44,6 +47,10 @@ import AffirmationFinish from './Affirmation/AffirmationFinish.vue'
 const props = defineProps({
   progressId: {
     type: [Number, String],
+    required: true
+  },
+  affirmation: {
+    type: String,
     required: true
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <Modal v-model="modalShown">
     <div class="text-left">
-      <h1 class="mt-2 mb-8">
+      <h1 class="mt-2 mb-8 dark:text-white">
         Add Personal Reminder
       </h1>
     </div>

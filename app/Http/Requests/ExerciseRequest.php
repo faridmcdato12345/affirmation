@@ -27,9 +27,9 @@ class ExerciseRequest extends FormRequest
             'progress_id'       => 'required|exists:progress,id',
             'happiness_score'   => 'required|integer',
             'belief_score'      => 'required|integer',
-            'input1'            => 'required|max:500',
-            'input2'            => 'required|max:500',
-            'input3'            => 'required|max:500',
+            'input1'            => 'nullable|max:500',
+            'input2'            => 'nullable|max:500',
+            'input3'            => 'nullable|max:500',
         ];
     }
 }

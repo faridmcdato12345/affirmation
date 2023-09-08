@@ -1,15 +1,22 @@
 <template>
   <Modal v-model="modalShown">
     <div class="py-2">
-      <h1 class="">
+      <h1 class="dark:text-white">
         Delete Reminder
       </h1>
-      <p class="text-base mt-2 font-light">
+      <p class="text-base mt-2 font-light dark:text-gray-300">
         Are you sure you want to delete this reminder?
       </p>
-      <div class="flex justify-end gap-x-2 mt-3">
-        <Button label="Cancel" color="gray" @click.prevent="modalShown = false" />
-        <Button label="Delete" color="error" :loading="loading" @click.prevent="deleteReminder" />
+      <div class="flex justify-end gap-x-2 mt-5">
+        <Button 
+          label="Cancel" 
+          color="gray" 
+          @click.prevent="modalShown = false" />
+        <Button 
+          label="Delete Reminder" 
+          color="error" 
+          :loading="loading"
+          @click.prevent="deleteReminder" />
       </div>
     </div>
   </Modal>

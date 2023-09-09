@@ -37,7 +37,7 @@ class Category extends Model
     public function getRandomAffirmation()
     {
         return (new CacheAffirmationService())
-                ->getData()
+                ->getAffirmations()
                 ->where('category_id',Auth::user()->active_category_id)
                 ->random(1)
                 ->first();

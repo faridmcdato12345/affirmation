@@ -70,18 +70,21 @@ const formData = useForm({
 const nextStep = () => {
   if(step.value == 3) {
     formData.post(route('exercise.store'), { // eslint-disable-line no-undef
-      onSuccess: () => {
+      onSuccess: (response) => {
         toast.success('Today\'s exercise has been completed successfuly!')
         formData.reset()
         emit('close-modal')
+        if(response.props.flash.info){
+          emit('is-complete')
+        }
       }   
-    })  
+    })
   }
 
   if(step.value < 3) step.value++ 
 } 
 
-const emit = defineEmits(['close-modal'])
+const emit = defineEmits(['close-modal','is-complete'])
 const currentTitle = computed(() => stepsTitle[step.value] ?? '')
 const currentDescription = computed(() => stepsDescription[step.value] ?? '')
 </script>

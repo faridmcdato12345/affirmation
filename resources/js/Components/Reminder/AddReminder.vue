@@ -16,7 +16,7 @@
           name=""
           cols="10"
           rows="4"
-          placeholder="Write your customer message here"
+          placeholder="Write your custom message here"
           class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800 mt-4"></textarea>
       </div>
       <div class="flex justify-end gap-x-2 mt-4">

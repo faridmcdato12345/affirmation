@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +28,8 @@ class Progress extends Model
     protected $fillable = [
         'user_id',
         'affirmation_id',
-        'affirmation_type'
+        'affirmation_type',
+        'status'
     ];
 
     /**
@@ -49,14 +51,46 @@ class Progress extends Model
     {
         return $this->morphTo();
     }
-
     /**
-     * Get the category that owns the progress
+     * Get the affirmation that own this progress
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function affirmations(): BelongsTo
+    {
+        return $this->belongsTo(Affirmation::class);
+    }
+    /**
+     * Get the user that own this progress
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function users(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+    /**
+     * 
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function ExerciseResult(): HasMany
     {
         return $this->hasMany(ExerciseResult::class);
+    }
+
+    /**
+     * 
+     * Return the Category ID
+     */
+    public function getCategory($userId)
+    {
+        $query = $this->with(['affirmation.category' => function($query){
+            $query->select('id');
+        }])
+        ->where('status','1')
+        ->where('user_id',$userId)
+        ->first();
+        return $query->affirmation->category->id;
     }
 }

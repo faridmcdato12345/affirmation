@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Auth;
 use function PHPUnit\Framework\isEmpty;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
@@ -31,12 +32,23 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $affirmation = Auth::user()->getAffirmation();
-        $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
-        
+        $progressId = !is_null($affirmation) 
+                        ? Auth::user()->progress()->where('affirmation_id',$affirmation['affirm']->id)
+                        ->where('status','0')
+                        ->first()
+                        ->id
+                        : null;
+        $checkExerciseToday = ExerciseResult::with(['progress' => function($query){
+            $query->where('user_id',auth()->user()->id);
+        }])
+        ->where('created_at','>',today())
+        ->first();
         return Inertia::render('Index', [
-            'affirmation'      => $affirmation,
+            'affirmation'      => !is_null($affirmation) ? $affirmation['affirm'] : null,
             'progressId'       => $progressId,
-            'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
+            'exerciseFinished' => !is_null($affirmation) && count(collect($checkExerciseToday))
+                                    ? true
+                                    : false,
             'isSubscribed'     => Auth::user()->subscribedToPremium(),
             'isNotify'         => Auth::user()->isNotify,
             'user_id'          => Auth::user()->id
@@ -57,7 +69,11 @@ class HomeController extends Controller
     public function categories()
     {
         return Inertia::render('Categories', [
-            'categories'         => Category::all()->groupBy('premium'),
+            'categories'         => Category::with(['affirmations' => function($query){
+                                        $query->whereHas('progress',function(Builder $builder){
+                                            $builder->where('user_id',auth()->id())->where('status','=','1');
+                                        })->count();
+                                    }])->withCount('affirmations')->get()->groupBy('premium'),
             'myCategories'       => UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get(),
             'isPremium'          => Auth::user()->subscribed(),
             'activeCategory'     => Auth::user()->active_category_id,

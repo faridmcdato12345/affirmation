@@ -5,11 +5,16 @@ use App\Http\Controllers\{
   HomeController, 
   UserController, 
   ChartController, 
-  CalendarController, 
-  UserCategoryController, 
+  CalendarController,
+    CategoryController,
+    UserCategoryController, 
   UserAffirmationController
 };
-
+use App\Models\Affirmation;
+use App\Models\Category;
+use App\Models\ExerciseResult;
+use App\Models\Progress;
+use Illuminate\Database\Eloquent\Builder;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +49,11 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
 
   Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
+
+  Route::put('/category/{id}',[CategoryController::class,'refresh'])->name('category.refresh');
   
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 require __DIR__.'/auth.php';
+
 

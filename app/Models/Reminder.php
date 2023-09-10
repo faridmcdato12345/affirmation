@@ -24,18 +24,4 @@ class Reminder extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    // protected function originalTime(): Attribute
-    // {
-        
-    //     return Attribute::make(
-    //         get: fn ($value) => $this->reformatTime($value)
-    //     );
-    // }
-
-    // public function reformatTime($time)
-    // {
-    //     $dateTime = new DateTime($time);
-    //     return $dateTime->format("h:i A");
-    // }
 }

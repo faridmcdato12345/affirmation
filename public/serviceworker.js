@@ -9,7 +9,8 @@ var filesToCache = [
     'images/icons/152.png',
     'images/icons/android-launchericon-192-192.png',
     'images/icons/256.png',
-    'images/icons/android-launchericon-512-512.png'
+    'images/icons/android-launchericon-512-512.png',
+    'images/tutorial/mobile-edit-tutorial.gif'
 ];
 // Cache on install
 self.addEventListener("install", event => {

@@ -83,7 +83,7 @@
       <h1 class="mt-2 dark:text-white ">
         How to Edit or Delete reminder?
       </h1>
-      <p class="text-md max-w-md mx-auto leading-6 mt-2 font-light ">
+      <p class="text-md max-w-md mx-auto leading-6 mt-2 font-light dark:text-gray-300">
         To edit or delete a reminder please click the reminder time and a pop box will appear.
       </p>
       <MobileEditTutorial class="mt-4" />

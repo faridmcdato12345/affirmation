@@ -132,7 +132,7 @@ class User extends Authenticatable
                 if($todaysAffirmation['new']){
                     Progress::create([
                         'user_id'            => $this->id,
-                        'affirmation_id'     => $todaysAffirmation->id,
+                        'affirmation_id'     => $todaysAffirmation['affirm']->id,
                         'affirmation_type'   => $this->active_category_type == 'App\Models\Category' ? Affirmation::class : UserAffirmation::class,
                     ]);
                 }

@@ -68,7 +68,7 @@ self.addEventListener('fetch', (event) => {
                 const responseToCache = response.clone();
 
                 // Open the cache and store the response for future use.
-                caches.open(cacheName).then((cache) => {
+                caches.open(staticCacheName).then((cache) => {
                 cache.put(event.request, responseToCache);
                 });
 

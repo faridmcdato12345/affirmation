@@ -1127,9 +1127,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         registration.addEventListener('updatefound', () => {
                             const newWorker = registration.installing
                             newWorker.addEventListener('statechange', () => {
-                                if(newWorker.state === 'installed') {
-                                    navigator.serviceWorker.controller.postMessage('skipWaiting')
-                                }
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // A new service worker is waiting to activate, and there is an existing controller.
+                                    // Send a message to the service worker to skip waiting and activate the new one.
+                                    navigator.serviceWorker.controller.postMessage('skipWaiting');
+                                  }
                             })
                         })
                     })

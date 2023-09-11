@@ -1,6 +1,6 @@
 var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
-    'build/app.css',
+    // 'build/app.css',
     'build/app.js',
     'images/icons/android-launchericon-72-72.png',
     'images/icons/android-launchericon-96-96.png',
@@ -23,58 +23,58 @@ self.addEventListener("install", event => {
     )
 });
 // Clear cache on activate
-// self.addEventListener('activate', event => {
-//     event.waitUntil(
-//         caches.keys().then(cacheNames => {
-//             return Promise.all(
-//                 cacheNames
-//                     .filter(cacheName => (cacheName.startsWith("pwa-")))
-//                     .filter(cacheName => (cacheName !== staticCacheName))
-//                     .map(cacheName => {
-//                         caches.delete(cacheName)
-//                     })
-//             );
-//         })
-//     );
-// });
-// Listen for the 'activate' event.
-self.addEventListener('activate', (event) => {
-    // Clean up old caches if necessary.
+self.addEventListener('activate', event => {
     event.waitUntil(
-        caches.keys().then((cacheNames) => {
-        return Promise.all(
-            cacheNames.map((name) => {
-            if (name !== staticCacheName) {
-                return caches.delete(name);
-            }
-            })
-        );
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames
+                    .filter(cacheName => (cacheName.startsWith("pwa-")))
+                    .filter(cacheName => (cacheName !== staticCacheName))
+                    .map(cacheName => {
+                        caches.delete(cacheName)
+                    })
+            );
         })
     );
 });
+// Listen for the 'activate' event.
+// self.addEventListener('activate', (event) => {
+//     // Clean up old caches if necessary.
+//     event.waitUntil(
+//         caches.keys().then((cacheNames) => {
+//         return Promise.all(
+//             cacheNames.map((name) => {
+//             if (name !== staticCacheName) {
+//                 return caches.delete(name);
+//             }
+//             })
+//         );
+//         })
+//     );
+// });
 // Listen for the 'fetch' event.
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         // Try to fetch the resource from the cache.
         caches.match(event.request).then((response) => {
-        // If found in cache, return the cached response.
-        if (response) {
-            return response;
-        }
+            // If found in cache, return the cached response.
+            if (response) {
+                return response;
+            }
 
-        // If not found in cache, fetch the resource from the network.
-        return fetch(event.request).then((response) => {
-            // Clone the response to store it in the cache.
-            const responseToCache = response.clone();
+            // If not found in cache, fetch the resource from the network.
+            return fetch(event.request).then((response) => {
+                // Clone the response to store it in the cache.
+                const responseToCache = response.clone();
 
-            // Open the cache and store the response for future use.
-            caches.open(cacheName).then((cache) => {
-            cache.put(event.request, responseToCache);
+                // Open the cache and store the response for future use.
+                caches.open(cacheName).then((cache) => {
+                cache.put(event.request, responseToCache);
+                });
+
+                // Return the network response to the page.
+                return response;
             });
-
-            // Return the network response to the page.
-            return response;
-        });
         })
     );
 });

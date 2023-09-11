@@ -1128,7 +1128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             const newWorker = registration.installing
                             newWorker.addEventListener('statechange', () => {
                                 if(newWorker.state === 'installed') {
-                                    this.navigator.serviceWorker.controller.postMessage('skipWaiting')
+                                    navigator.serviceWorker.controller.postMessage('skipWaiting')
                                 }
                             })
                         })

@@ -16,7 +16,9 @@ import { isMobile } from 'mobile-device-detect'
 import NavigationBar from '../Components/NavigationBar.vue'
 import { usePage } from '@inertiajs/vue3'
 import { ref, computed } from 'vue'
+import { useToggleDarkMode } from '../Composables/useToggleDarkMode'
 
+const darkMode = useToggleDarkMode()  // eslint-disable-line 
 const page = usePage()
 const checkRoute = ref(true)
 const bgImage = computed(() => page.props.auth.user.background_image ?? '/images/bg1.jpg')

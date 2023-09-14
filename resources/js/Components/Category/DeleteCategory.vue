@@ -2,10 +2,10 @@
   <div>
     <Modal v-model="modalShown">
       <div class="py-2">
-        <h1 class="">
+        <h1 class="dark:text-white">
           Delete Category
         </h1>
-        <p class="text-base mt-2 font-light">
+        <p class="dark:text-gray-300 text-base mt-2 font-light">
           Are you sure you want to delete this category? This will also delete its affirmation
         </p>
         <div class="flex justify-end gap-x-2 mt-3">

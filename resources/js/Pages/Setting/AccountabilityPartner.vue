@@ -23,7 +23,7 @@
             <Button label="Invite" color="success" @click.prevent="inviteModal = true" />
             <Button label="Show QR" color="gray" @click.prevent="qrModal = true" />
           </div>
-          <p v-if="accountabilityPartner.length === 0 && accountabilityRequest.length === 0">
+          <p v-if="accountabilityPartner.length === 0 && accountabilityRequest.length === 0" class="dark:text-gray-400">
             Get additional support by sending an invite to your friend. Click the invite button to send an invite to your friend by email. Be positive in every possible ways :)
           </p>
           <div v-if="accountabilityPartner.length !== 0" class="flex flex-wrap">
@@ -372,7 +372,7 @@ const sendInvite = () => {
       inviteModal.value = false
     },
     onError: () => {
-      toast.error(errorMessage.value)
+      toast.error(errorMessage.value ?? 'Invite is invalid. Please try again')
       inviteModal.value = false
     }
   })

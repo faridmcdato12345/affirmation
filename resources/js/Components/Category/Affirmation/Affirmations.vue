@@ -2,20 +2,27 @@
   <div>
     <Modal v-model="modalShown">
       <div class="py-2">
-        <h1 class="">
+        <h1 class="dark:text-white">
           Affirmations
         </h1>
-        <p class="text-base mt-2 font-light">
+        <p class="dark:text-gray-300 text-base mt-2 font-light">
           Here are your custom affirmations for the selected category.
         </p>
         <div class="max-h-[300px] overflow-y-auto mt-2 py-1">
-          <AffirmationCard v-for="affirm in affirmations" :id="affirm.id" :key="affirm.id" :affirmation="affirm.text" :date="affirm.created_at" @delete="destroy(affirm.id)" @update="update" />
-          <p v-if="affirmations.length == 0" class="text-base mt-2 mb-3">
+          <AffirmationCard 
+            v-for="affirm in affirmations" 
+            :id="affirm.id" 
+            :key="affirm.id" 
+            :affirmation="affirm.text" 
+            :date="affirm.created_at" 
+            @delete="destroy(affirm.id)" 
+            @update="update" />
+          <p v-if="affirmations.length == 0" class="dark:text-gray-300 text-base mt-2 mb-3">
             There are no affirmations added to this category.
           </p>
         </div>
-        <p v-if="affirmations.length != 0" class="text-sm">
-          Click on an affirmation text to edit and press <span class="font-medium text-black">enter</span> to save update.
+        <p v-if="affirmations.length != 0" class="dark:text-gray-300 text-sm">
+          Click on an affirmation text to edit and press <span class="font-medium text-black dark:text-green-600">enter</span> to save update.
         </p>
         <div class="flex justify-end mt-4 gap-x-2">
           <Button label="Close" color="gray" @click.prevent="emit('update:modelValue')" />

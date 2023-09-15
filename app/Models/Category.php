@@ -45,16 +45,34 @@ class Category extends Model
      */
     public function getRandomAffirmation()
     {
+        //fetch all affirmation that`s not in the progress table
         $filteredProgress = Category::with(['affirmations' => function($q){
             $q->whereDoesntHave('progress');
           }])->find(Auth::user()->active_category_id);
-        $affirmationCollection = collect($filteredProgress->affirmations)->random(1)->first();
+        // count affirmation that is not in the progress table
+        if(count(collect($filteredProgress->affirmations)) == 0 || collect($filteredProgress->affirmations)->isEmpty()){
+            
+            //fetch all affirmation thats in the progress table that is not processed
+            $query = Category::with(['affirmations' => function($q){
+                $q->whereHas('progress', function(Builder $builder){
+                    $builder->where('status','=','0')->where('user_id',auth()->user()->id);
+                });
+              }])->find(Auth::user()->active_category_id);
+            return count(collect($query->affirmations)) ? [
+                'affirm' => collect($query->affirmations)->random(1)->first(),
+                'new' => false
+            ] : null;
+        }
+        return [
+            'affirm' => collect($filteredProgress->affirmations)->random(1)->first(),
+            'new' => true
+        ];
+        //$affirmationCollection = count(collect($filteredProgress->affirmations)) ? collect($filteredProgress->affirmations)->random(1)->first() : null;
         // $dd =  (new CacheAffirmationService())
         //         ->getData()
         //         ->where('category_id',Auth::user()->active_category_id)
         //         ->where('id',$affirmationCollection->id)
         //         ->first();
-        return $affirmationCollection;
     }
     /**
      * Return the all the progress that belongs to this category

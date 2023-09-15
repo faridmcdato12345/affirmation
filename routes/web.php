@@ -56,9 +56,12 @@ Route::middleware(['auth','verified'])->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/count/progress',function(){
+  $date = Progress::latest('id')->first();
+  $dd = $date->created_at;
+  dd($dd->subDay());
   // $x = Category::with(['affirmations' => function($q){
   //   $q->whereHas('progress',function(Builder $query){
-  //     $query->where('status','=','1')->where('user_id',3);
+  //     $query->where('status','=','0')->where('user_id',3);
   //   });
   // }])
   // ->withCount('affirmations')

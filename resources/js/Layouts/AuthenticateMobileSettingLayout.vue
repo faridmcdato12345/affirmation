@@ -9,6 +9,11 @@
           <h1 class="text-[20px] font-medium mb-0 dark:text-white">
             {{ routeName.routeName }}
           </h1>
+          <div v-if="routeName.routeName === 'Reminder'" class="grid justify-items-end w-full">
+            <div>
+              <QuestionMarkCircleIcon class="w-full h-8" @click="showTutorial" />
+            </div>
+          </div>
         </div>
       </template>
     </div>
@@ -16,11 +21,16 @@
   </div>
 </template>
 <script setup>
-import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
+import { ArrowLeftIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/solid'
 import { Link } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
+
 
 const routeName = defineProps({
   routeName: String,
 })
+const emit = defineEmits(['show-tutorial'])
+const showTutorial = () => {
+  emit('show-tutorial')
+}
 </script>

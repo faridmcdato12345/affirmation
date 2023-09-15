@@ -1,5 +1,5 @@
 <template>
-  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName" :is-button-header="true">
+  <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName" :is-button-header="true" @show-tutorial="tutorial = true">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
         <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-5" :class="isMobile ?? 'flex justify-between'">
@@ -79,12 +79,25 @@
         <Button label="Cancel" color="error" @click.prevent="modal = false" />
       </div>
     </Modal>
+    <Modal v-model="tutorial">
+      <h1 class="mt-2">
+        How to Edit or Delete reminder?
+      </h1>
+      <p class="text-md max-w-md mx-auto leading-6 mt-2 font-light">
+        To edit or delete a reminder please click the reminder time and a pop box will appear.
+      </p>
+      <MobileEditTutorial class="mt-4" />
+      <div class="flex items-center justify-center gap-x-2 mt-4">
+        <Button label="Got It!" color="success" @click.prevent="tutorial = false" />
+      </div>
+    </Modal>
     <UpdateReminder v-model="updateTimeModal" :reminder="selectedReminder" />
     <AddReminderModal v-model="addTimeModal" :is-subscribed="isSubscribed" />
     <DeleteReminderModal v-model="deleteTimeModal" :reminder="selectedReminder" />
   </component>
 </template>
 <script setup>
+import MobileEditTutorial from '../../Components/MobileEditTutorial.vue'
 import ToggleStatusSwitch from '../../Components/ToggleStatusSwitch.vue'
 import UpdateReminder from '../../Components/Reminder/UpdateReminder.vue'
 import AddReminderModal from '../../Components/Reminder/AddReminder.vue'
@@ -105,6 +118,7 @@ import {  router } from '@inertiajs/vue3'
 
 const routeName = ref('Reminder')
 const modal = ref(false)
+const tutorial = ref(false)
 const modalTextBody = ref('')
 const addTimeModal = ref(false)
 const updateTimeModal = ref(false)

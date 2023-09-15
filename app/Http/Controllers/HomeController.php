@@ -32,12 +32,19 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $affirmation = Auth::user()->getAffirmation();
-        $progressId = Auth::user()->progress()->where('created_at', '>', today())->first()->id;
-        
+        //dd($affirmation);
+        $progressId = !is_null($affirmation) 
+                        ? Auth::user()->progress()->where('affirmation_id',$affirmation['affirm']->id)
+                        ->where('status','0')
+                        ->first()
+                        ->id
+                        : null;
         return Inertia::render('Index', [
-            'affirmation'      => $affirmation,
+            'affirmation'      => !is_null($affirmation) ? $affirmation['affirm'] : null,
             'progressId'       => $progressId,
-            'exerciseFinished' => ExerciseResult::where('progress_id', $progressId)->exists(),
+            'exerciseFinished' => !is_null($affirmation) 
+                                    ? ExerciseResult::where('progress_id', $progressId)->exists()
+                                    : false,
             'isSubscribed'     => Auth::user()->subscribedToPremium(),
             'isNotify'         => Auth::user()->isNotify,
             'user_id'          => Auth::user()->id

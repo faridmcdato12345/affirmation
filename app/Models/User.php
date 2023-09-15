@@ -104,8 +104,9 @@ class User extends Authenticatable
     public function getAffirmation()
     {
         $todaysAffirmation = null;
-        $progress = $this->progress->where('created_at','=', today())->where('status','=','0')->first();
+        $progress = $this->progress->where('created_at','>', today())->where('status','=','0')->first();
         if ($progress) {
+            
             // return today's previously generated affirmation
             if ($progress->affirmation_type === Affirmation::class) {
                 $todaysAffirmation = (new CacheAffirmationService())

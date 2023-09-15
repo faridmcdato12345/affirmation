@@ -12,6 +12,7 @@ use App\Http\Controllers\{
 };
 use App\Models\Affirmation;
 use App\Models\Category;
+use App\Models\ExerciseResult;
 use App\Models\Progress;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -56,9 +57,19 @@ Route::middleware(['auth','verified'])->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/count/progress',function(){
-  $date = Progress::latest('id')->first();
-  $dd = $date->created_at;
-  dd($dd->subDay());
+  //dd(today());
+  // $e = ExerciseResult::with(['progress' => function($query){
+  //   $query->where('user_id',3);
+  // }])
+  // ->where('created_at','>',today())
+  // ->first();
+  // if(count(collect($e->progress))){
+  //   dd("wtf");
+  // }
+  
+  // $date = Progress::latest('id')->first();
+  // $dd = $date->created_at;
+  // dd($dd->subDay());
   // $x = Category::with(['affirmations' => function($q){
   //   $q->whereHas('progress',function(Builder $query){
   //     $query->where('status','=','0')->where('user_id',3);
@@ -127,7 +138,6 @@ Route::get('/count/progress',function(){
               $progress->update(['status' => '1']);
           });
       });
-      
     }
     //dd($y);
 });

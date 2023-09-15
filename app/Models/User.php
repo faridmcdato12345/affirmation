@@ -107,10 +107,19 @@ class User extends Authenticatable
         $progress = $this->progress->where('created_at','=', today())->where('status','=','0')->first();
         if ($progress) {
             // return today's previously generated affirmation
-            $todaysAffirmation = (new CacheAffirmationService())
-                                ->getData()
-                                ->where('id',$progress->affirmation_id)
-                                ->first();
+            if ($progress->affirmation_type === Affirmation::class) {
+                $todaysAffirmation = (new CacheAffirmationService())
+                                    ->getAffirmations()
+                                    ->where('id',$progress->affirmation_id)
+                                    ->first();
+            }
+
+            if ($progress->affirmation_type === UserAffirmation::class) {
+                $todaysAffirmation = (new CacheAffirmationService())
+                                    ->getUserAffirmations()
+                                    ->where('id',$progress->affirmation_id)
+                                    ->first();
+            }
         } else {
             // generate and store a new daily affirmation
             $todaysAffirmation = $this->activeCategory->getRandomAffirmation();

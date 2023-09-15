@@ -67,12 +67,6 @@ class Category extends Model
             'affirm' => collect($filteredProgress->affirmations)->random(1)->first(),
             'new' => true
         ];
-        //$affirmationCollection = count(collect($filteredProgress->affirmations)) ? collect($filteredProgress->affirmations)->random(1)->first() : null;
-        // $dd =  (new CacheAffirmationService())
-        //         ->getData()
-        //         ->where('category_id',Auth::user()->active_category_id)
-        //         ->where('id',$affirmationCollection->id)
-        //         ->first();
     }
     /**
      * Return the all the progress that belongs to this category

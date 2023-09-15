@@ -16,7 +16,7 @@
   </Teleport>
 </template>
 <script setup>
-import { watch, ref, computed } from 'vue'
+import { watch, ref, computed, onMounted } from 'vue'
 
 const props = defineProps({
   modelValue: Boolean,
@@ -60,4 +60,13 @@ const route = window.location.pathname
 if(route.includes('calendar')){
   checkRoute.value = false
 }
+
+onMounted(() => {
+  document.addEventListener('keyup', (evt) => {
+    if (evt.keyCode === 27) {
+      emit('update:modelValue', false)
+    }
+  })
+})
+
 </script>

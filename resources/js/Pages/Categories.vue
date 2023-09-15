@@ -15,7 +15,7 @@
           <div
             v-for="myCategory in myCategories"
             :key="myCategory.id"
-            class="bg-white dark:bg-dark-800 relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
+            class="bg-white dark:bg-gray-800 dark:border-gray-600 relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
               <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
@@ -103,10 +103,10 @@
     <Modal v-model="infoSwitchModal">
       <div class="text-center">
         <XCircleIcon class="w-14 mx-auto text-red-600" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white">
           No Affirmations Found
         </h1>
-        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
+        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light dark:text-gray-300">
           Please add atleast one affirmation to your category before switching it as active.
         </p>
       </div>

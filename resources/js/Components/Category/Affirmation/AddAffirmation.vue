@@ -2,10 +2,10 @@
   <div>
     <Modal v-model="modalShown">
       <div class="py-2">
-        <h1 class="">
+        <h1 class="dark:text-white">
           Custom Affirmation
         </h1>
-        <p class="text-base mt-2 font-light">
+        <p class="dark:text-gray-300 text-base mt-2 font-light">
           Add your own custom affirmation for your selected category.
         </p>
         <form class="mt-3" @submit.prevent="saveAffirmation">

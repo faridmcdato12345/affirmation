@@ -1,11 +1,11 @@
 <template>
-  <div tabindex="0" class="relative flex justify-between px-3 py-3 border rounded-sm my-2">
+  <div tabindex="0" class="relative flex justify-between px-3 py-3 border dark:border-gray-500 rounded-sm my-2">
     <div>
-      <h2 v-if="!isEdit" class="font-medium max-w-[45ch]" @click.prevent="isEdit = true">
+      <h2 v-if="!isEdit" class="dark:text-white font-medium max-w-[45ch]" @click.prevent="isEdit = true">
         {{ affirmation }}
       </h2>
       <FormInput v-else :id="id" autofocus label="Update affirmation" :model-value="affirmation" class="w-[400px]" @update:model-value="logUpdate" @keyup-enter="updateAffirmation" @blur="isEdit = false" />
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-gray-500 dark:text-gray-300">
         {{ date }}
       </p>
     </div>

@@ -34,8 +34,9 @@
             <div 
               v-for="reminder in response.reminders" 
               :key="reminder.id" 
-              class="flex justify-between bg-green-800 p-4 text-white rounded items-center mb-4">
-              <div :class="!isMobile ? 'w-60' : ''" @click="isMobile ? toggleModal('edit', reminder): ''">
+              class="flex justify-between bg-green-800 p-4 text-white rounded items-center mb-4"
+              @click="isMobile ? toggleModal('edit', reminder): ''">
+              <div :class="!isMobile ? 'w-60' : ''">
                 <p class="text-white text-base font-semibold">
                   {{ convertToAMPPM(reminder.original_time) }}
                 </p>
@@ -43,8 +44,8 @@
                   "{{ reminder.custom_message ? reminder.custom_message : 'You can add your custom message' }}"
                 </p>
               </div>
-              <div :class="!isMobile ? 'w-52' : ''">
-                <ToggleStatusSwitch :notifiable="reminder.status" :reminder="reminder" />
+              <div :class="!isMobile ? 'w-52' : ''" @click.stop="toggleData(reminder.status)">
+                <ToggleStatusSwitch :notifiable="statusData.value" :reminder="reminder" />
               </div>
               <div v-if="!isMobile" class="flex justify-between gap-x-2">
                 <component 
@@ -120,6 +121,7 @@ const routeName = ref('Reminder')
 const modal = ref(false)
 const tutorial = ref(false)
 const modalTextBody = ref('')
+const statusData = ref('')
 const addTimeModal = ref(false)
 const updateTimeModal = ref(false)
 const deleteTimeModal = ref(false)
@@ -136,8 +138,6 @@ const response = defineProps({
 
 isSubscribed.value = localStorage.getItem('isSubcribe')
 isNotify.value = localStorage.getItem('isNotify')
-
-
 
 const toggleSwitch = reactive({
   value: isNotify.value == 1 ? true : false
@@ -182,6 +182,10 @@ const updateNotifs = (data) => {
     localStorage.setItem('isNotify',0)
   }
   
+}
+const toggleData = (status) => {
+  let x = status == 0 ? false : true
+  statusData.value = !x
 }
 
 const toggleModal = (type,reminder) => {

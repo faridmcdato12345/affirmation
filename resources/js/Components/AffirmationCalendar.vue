@@ -1,11 +1,11 @@
 <template>
   <div class="h-full">
     <FullCalendar :options="options" class="h-full" />
-    <Modal v-model="modal">
-      <div class="text-left">
+    <Modal v-model="modal" class="w-11/12">
+      <div class="text-left dark:bg-gray-800">
         <table>
           <tr>
-            <td><span class="font-semibold dark:text-gray-200">Title: </span></td>
+            <td><span class="font-semibold dark:text-gray-200">Affirmation: </span></td>
             <td class="dark:text-gray-200">
               {{ modalAffirmTitle }}
             </td>
@@ -56,12 +56,11 @@
 </template>
 <script setup>
 import { isMobile } from 'mobile-device-detect'
-import { reactive, ref } from 'vue'
+import { reactive, ref,onMounted  } from 'vue'
 import '@fullcalendar/core'
 import FullCalendar from '@fullcalendar/vue3'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import listGridPlugin from '@fullcalendar/list'
 import Modal from '../Components/Modal.vue'
 import Button from '../Components/Button.vue'
 
@@ -69,8 +68,8 @@ const response = defineProps({
   result: Object
 })
 
-const viewPlugin = isMobile ? listGridPlugin : dayGridPlugin
-const listView = isMobile ? 'listMonth' : 'dayGridMonth'
+const viewPlugin = isMobile ? dayGridPlugin : dayGridPlugin
+const listView = isMobile ? 'dayGridMonth' : 'dayGridMonth'
 const modal = ref(false)
 const modalAffirmTitle = ref('')
 const modalAffirmDate = ref('')
@@ -84,6 +83,11 @@ const dateFormatter = new Intl.DateTimeFormat('en-us',{
 })
 const options = reactive({
   plugins: [interactionPlugin, viewPlugin],
+  headerToolbar: {
+    start: 'title',
+    center: '',
+    end: 'today,prev,next'
+  },
   initialView: listView,
   selectable: true,
   editable: false,
@@ -91,6 +95,7 @@ const options = reactive({
     console.log(arg)
   },
   events: response.result,
+  
   eventClick: function(info){
     modal.value = true,
     modalAffirmTitle.value = JSON.stringify(info.event.title),
@@ -102,6 +107,14 @@ const options = reactive({
     modalAffirmInputThree.value = JSON.stringify(info.event.extendedProps.input_3)
   }
 })
+onMounted(() => {
+  let xx = document.querySelector('.fc-toolbar-title')
+  xx.classList.add('dark:text-gray-200')
+})
+//document.getElementsByClassName('fc-toolbar-title').addClass('dark:text-gray-200')
+
+
+
 </script>
 <style>
 

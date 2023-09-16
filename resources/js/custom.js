@@ -1120,8 +1120,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if(!checkPWA.classList.contains('isPWA')){
                 if ('serviceWorker' in navigator) {
                   window.addEventListener('load', function() {
-                    navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
-                    console.log('Service Worker successfully registered')
+                    navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then((registration) => {
+
+                        console.log('Service Worker successfully registered')
+
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing
+                            newWorker.addEventListener('statechange', () => {
+                                if(newWorker.state === 'installed') {
+                                    this.navigator.serviceWorker.controller.postMessage('skipWaiting')
+                                }
+                            })
+                        })
+                    })
+                    
                     });
                     navigator.serviceWorker.register(firebaseLocation)
                     .then(reg => {

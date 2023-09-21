@@ -92,7 +92,6 @@ const options = reactive({
   selectable: true,
   editable: false,
   select: (arg) => {
-    console.log(arg)
   },
   events: response.result,
   

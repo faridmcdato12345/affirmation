@@ -75,7 +75,6 @@ let form = useForm({
 })
 watch(() => props.reminder, () => {
   form = useForm({...props.reminder})
-  console.log('Forms: ', form)
 })
 const updateTime = () => {
   form.patch(route('setting.reminder.update',form.id),{

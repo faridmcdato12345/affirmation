@@ -56,11 +56,9 @@ const closeModal = () => {
 }
 
 const route = window.location.pathname
-console.log('route: ',route)
 
 if(route.includes('calendar')){
   checkRoute.value = false
-  console.log('checkRoute: ',checkRoute.value)
 }
 
 onMounted(() => {

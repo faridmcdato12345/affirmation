@@ -1364,5 +1364,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     init_template();
-    console.log('custom.js')
 });

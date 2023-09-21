@@ -74,7 +74,6 @@ const addInput = () => {
   inputs.value.push(newIndex + 1)
   formValues[newIndex + 1] = ''
 }
-console.log(formValues)
 const form = useForm({
   affirmation: [],
 })

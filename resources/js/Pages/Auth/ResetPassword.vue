@@ -55,11 +55,11 @@
   </GuestLayout>
 </template>
 <script setup>
-import GuestLayout from '@/Layouts/AuthenticatedLayout.vue'
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import TextInput from '@/Components/TextInput.vue'
+import GuestLayout from '../../Layouts/AuthenticatedLayout.vue'
+import InputError from '../../Components/InputError.vue'
+import InputLabel from '../../Components/InputLabel.vue'
+import PrimaryButton from '../../Components/PrimaryButton.vue'
+import TextInput from '../../Components/TextInput.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import route from 'ziggy-js'
 

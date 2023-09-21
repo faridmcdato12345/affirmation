@@ -47,7 +47,6 @@ const props = defineProps({
   isNotify: [Boolean, Number],
   user_id: Number
 })
-console.log('props.affirmation: ',props.affirmation)
 const page = usePage()
 const user = computed(() => page.props.auth.user)
 const modalShown = ref(false)

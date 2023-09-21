@@ -91,9 +91,6 @@ const options = reactive({
   initialView: listView,
   selectable: true,
   editable: false,
-  select: (arg) => {
-    console.log(arg)
-  },
   events: response.result,
   
   eventClick: function(info){

@@ -8,7 +8,7 @@
       <Transition name="slide-fade" appear>
         <div
           class="bg-white dark:bg-gray-800 dark:shadow-white/20 dark:border-gray-700 shadow-md border p-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm"
-          :class="!checkRoute ? `w-[96%] md:max-w-[${modalWidth}]` : 'w-[96%]'">
+          :class="!checkRoute ? `w-[96%] md:max-w-[${modalWidth}]` : 'w-[96%] md:w-auto'">
           <slot></slot>
         </div>
       </Transition>

@@ -66,6 +66,7 @@ self.addEventListener('fetch', (event) => {
 
             // If not found in cache, fetch the resource from the network.
             return fetch(event.request).then((networkResponse) => {
+                console.log('netwokResponse: ', networkResponse)
                 // Clone the response to store it in the cache.
                 const responseToCache = networkResponse.clone();
 

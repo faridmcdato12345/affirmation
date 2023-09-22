@@ -15,27 +15,31 @@
               </div>
               <div v-if="!isMobile" class="flex gap-x-2">
                 <Button label="Invite" color="success" @click.prevent="inviteModal = true" />
-                <!-- <Button label="Show QR" color="gray" @click.prevent="qrModal = true" /> -->
+                <Button label="Show QR" color="gray" @click.prevent="qrModal = true" />                
               </div>
             </div>
           </div>
           <div v-if="isMobile" class="flex justify-end gap-x-2">
             <Button label="Invite" color="success" @click.prevent="inviteModal = true" />
             <Button label="Show QR" color="gray" @click.prevent="qrModal = true" />
+            <Button label="Scan QR" color="gray" @click.prevent="showQRScanner = !showQRScanner" />
+          </div>
+          <div v-if="!isMobile" class="flex justify-end">
+            <Button label="Scan QR" color="gray" @click.prevent="showQRScanner = !showQRScanner" />
           </div>
           <p v-if="accountabilityPartner.length === 0 && accountabilityRequest.length === 0" class="dark:text-gray-400">
             Get additional support by sending an invite to your friend. Click the invite button to send an invite to your friend by email. Be positive in every possible ways :)
           </p>
           <div v-if="accountabilityPartner.length !== 0" class="flex flex-wrap">
             <div class="mb-4">
-              <p class="font-medium text-base text-black dark:text-white">
+              <p class="mt-4 font-medium text-base text-black dark:text-white">
                 Personal Partners
               </p>
               <p class="dark:text-gray-300 text-sm">
                 Here are the list of users that you've sent request with to be your partner
               </p>
             </div>
-            <div v-for="(invite, i) in accountabilityPartner" :key="i" class="flex w-1/2 gap-x-2 items-center justify-between border-t border-b dark:border-gray-600 p-3 md:w-full">
+            <div v-for="(invite, i) in accountabilityPartner" :key="i" class="flex w-full gap-x-2 items-center justify-between border-t border-b dark:border-gray-600 p-3 md:w-full">
               <div class="flex items-center gap-x-3">
                 <div class="h-12 w-12 bg-gray-300 rounded-full"></div>
                 <div class="leading-3">
@@ -220,7 +224,6 @@
       </form>
     </Modal>
 
-
     <Modal v-model="reminderModal" max-width="default">
       <div class="mb-4">
         <h1 class="mt-2 dark:text-white">
@@ -312,20 +315,23 @@
           @click.prevent="qrModal = !qrModal" />
       </div>
     </Modal>
+
+    <QRScanner v-model="showQRScanner" @send-invite="initiateSendInvite" />
   </div>
 </template> 
 <script setup>
 import { ref, computed } from 'vue'
 import { useForm, usePage } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
-import { toast } from '../../Composables/useToast'
+import QrcodeVue from 'qrcode.vue'
 
 import AuthenticateMobileSettingLayoutVue from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import Settings from '../Settings.vue'
 import Button from '../../Components/Button.vue'
 import FormInput from '../../Components/FormInput.vue'
 import Modal from '../../Components/Modal.vue'
-import QrcodeVue from 'qrcode.vue'
+import QRScanner from '../../Components/Accountability/QRScanner.vue'
+import { toast } from '../../Composables/useToast'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
 
 defineProps({
@@ -361,9 +367,16 @@ const affirmationStatusModal = ref(false)
 const affirmationStatus = ref(null)
 const reminder = ref(null)
 
+const showQRScanner = ref(false)
+
 const userInviteId = ref(null)
 
 const user = computed(() => page.props.auth.user)
+
+const initiateSendInvite = (email) => {
+  form.email = email
+  sendInvite()
+}
 
 const sendInvite = () => {
   form.post(route('setting.accountability.invite'), {

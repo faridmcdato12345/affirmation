@@ -16,7 +16,7 @@ var filesToCache = [
 ];
 // Cache on install
 self.addEventListener("install", event => {
-    this.skipWaiting();
+    self.skipWaiting();
     event.waitUntil(
         caches.open(staticCacheName)
             .then(cache => {
@@ -65,9 +65,10 @@ self.addEventListener('fetch', (event) => {
             }
 
             // If not found in cache, fetch the resource from the network.
-            return fetch(event.request).then((response) => {
+            return fetch(event.request).then((networkResponse) => {
+                console.log('netwokResponse: ', networkResponse)
                 // Clone the response to store it in the cache.
-                const responseToCache = response.clone();
+                const responseToCache = networkResponse.clone();
 
                 // Open the cache and store the response for future use.
                 caches.open(staticCacheName).then((cache) => {

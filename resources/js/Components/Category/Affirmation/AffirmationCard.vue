@@ -45,7 +45,6 @@ const updateAffirmation = () => {
   router.put(route('user-affirmation.update', props.id), {
     text: updatedText.value
   })
-  console.log('Updating affirmation ...')
 }
 
 const logUpdate = (data) => {

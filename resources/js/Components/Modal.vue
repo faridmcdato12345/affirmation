@@ -12,7 +12,7 @@
           <slot></slot>
         </div>
       </Transition>
-    </div>1
+    </div>
   </Teleport>
 </template>
 <script setup>

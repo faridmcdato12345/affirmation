@@ -4,6 +4,8 @@ import "./custom"
 import { initializeApp } from "@firebase/app";
 import { getMessaging, getToken, onMessage  } from "@firebase/messaging";
 
+import { VueQrcodeReader } from "vue-qrcode-reader";
+
 //Inertia Vue
 import { createApp, h } from "vue"
 import { createInertiaApp } from "@inertiajs/vue3"
@@ -31,12 +33,14 @@ import "../css/style.css"
 import "../sass/star_rating.scss"
 
 window.LazyLoad = LazyLoad
+
 library.add([
   faEyeSlash,
   faEye,
   faAngleLeft,
   faLightbulb
 ])
+
 const firebaseConfig = {
   apiKey: 'AIzaSyCDL5jn4IThej6gpOILzj8XmrzOFMRn0H0',
   authDomain: 'affirm-7b375.firebaseapp.com',
@@ -50,12 +54,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 const serviceWorkerDir = '/serviceworker.js'
+
 onMessage(messaging, (payload) => {
   const noteTitle = payload.data.title;
   let __noteOptions = {
     body: "You did not wrote your custom notification message. ",
     icon: payload.data.icon
   }
+
   const user_data = JSON.parse(payload.data.user_reminders)
   const dataArray = JSON.parse(payload.data.user)
   let userId = localStorage.getItem('userId')
@@ -65,7 +71,9 @@ onMessage(messaging, (payload) => {
       __noteOptions["body"] = user.custom_message
     }
   }
+
   navigator.serviceWorker.register(serviceWorkerDir)
+
   Notification.requestPermission(function(result){
     if(result === 'granted'){
       if(dataArray.includes(parseInt(userId))){
@@ -73,7 +81,9 @@ onMessage(messaging, (payload) => {
           registration.showNotification(noteTitle, __noteOptions);
         });
       }
-    }else{console.log("not included")}
+    } else {
+      console.log("not included")
+    }
   })
 });
 
@@ -103,6 +113,7 @@ createInertiaApp({
       .use(rate)
       .use(Toast, options)
       .use(ZiggyVue,Ziggy)
+      .use(VueQrcodeReader)
       .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)
   },

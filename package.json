@@ -48,6 +48,7 @@
         "qrcode.vue": "^3.4.1",
         "vanilla-lazyload": "^17.8.3",
         "vue-chart-3": "^3.1.8",
+        "vue-qrcode-reader": "^5.3.6",
         "vue-rate": "^3.1.1",
         "vue-toastification": "^2.0.0-rc.5",
         "ziggy-js": "^1.6.0"

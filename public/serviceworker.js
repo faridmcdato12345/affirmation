@@ -55,31 +55,23 @@ self.addEventListener('activate', event => {
 //     );
 // });
 // Listen for the 'fetch' event.
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        // Try to fetch the resource from the cache.
-        caches.match(event.request).then((response) => {
-            // If found in cache, return the cached response.
-            if (response) {
-                return response;
-            }
+// Fetching content using Service Worker
+self.addEventListener('fetch', (e) => {
+    // Cache http and https only, skip unsupported chrome-extension:// and file://...
+    if (!(
+       e.request.url.startsWith('http:') || e.request.url.startsWith('https:')
+    )) {
+        return; 
+    }
 
-            // If not found in cache, fetch the resource from the network.
-            return fetch(event.request).then((networkResponse) => {
-                console.log('netwokResponse: ', networkResponse)
-                // Clone the response to store it in the cache.
-                const responseToCache = networkResponse.clone();
-
-                // Open the cache and store the response for future use.
-                caches.open(staticCacheName).then((cache) => {
-                cache.put(event.request, responseToCache);
-                });
-
-                // Return the network response to the page.
-                return response;
-            });
-        })
-    );
+  e.respondWith((async () => {
+    const r = await caches.match(e.request);
+    if (r) return r;
+    const response = await fetch(e.request);
+    const cache = await caches.open(cacheName);
+    cache.put(e.request, response.clone());
+    return response;
+  })());
 });
 // Listen for a message from the main application.
 self.addEventListener('message', (event) => {

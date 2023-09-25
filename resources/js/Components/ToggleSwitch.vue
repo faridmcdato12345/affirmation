@@ -16,7 +16,7 @@ const props = defineProps({
   notifiable: Boolean
 })
 
-const disallow = ref(props.notifiable == 1)
+const disallow = ref(props.notifiable == 1 ? true : false)
 const toggleSwitch = () => {
   disallow.value = !disallow.value
   emit('toggleCheckbox',disallow.value)

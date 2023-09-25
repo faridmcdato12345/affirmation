@@ -54,24 +54,17 @@ self.addEventListener('activate', event => {
 //         })
 //     );
 // });
-// Listen for the 'fetch' event.
-// Fetching content using Service Worker
-self.addEventListener('fetch', (e) => {
-    // Cache http and https only, skip unsupported chrome-extension:// and file://...
-    if (!(
-       e.request.url.startsWith('http:') || e.request.url.startsWith('https:')
-    )) {
-        return; 
-    }
-
-  e.respondWith((async () => {
-    const r = await caches.match(e.request);
-    if (r) return r;
-    const response = await fetch(e.request);
-    const cache = await caches.open(cacheName);
-    cache.put(e.request, response.clone());
-    return response;
-  })());
+// Serve from Cache
+self.addEventListener("fetch", event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                return response || fetch(event.request);
+            })
+            .catch(() => {
+                return caches.match('offline');
+            })
+    )
 });
 // Listen for a message from the main application.
 self.addEventListener('message', (event) => {

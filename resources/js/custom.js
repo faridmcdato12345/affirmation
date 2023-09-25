@@ -1119,34 +1119,19 @@ document.addEventListener('DOMContentLoaded', () => {
             var checkPWA = document.getElementsByTagName('html')[0];
             if(!checkPWA.classList.contains('isPWA')){
                 if ('serviceWorker' in navigator) {
-                  window.addEventListener('load', function() {
-                    navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then((registration) => {
-
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
                         console.log('Service Worker successfully registered')
-
-                        registration.addEventListener('updatefound', () => {
-                            console.log('updateFound')
-                            const newWorker = registration.installing
-                            newWorker.addEventListener('statechange', () => {
-                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    console.log('SkipWaiting')
-                                    // A new service worker is waiting to activate, and there is an existing controller.
-                                    // Send a message to the service worker to skip waiting and activate the new one.
-                                    navigator.serviceWorker.controller.postMessage('skipWaiting');
-                                  }
-                            })
+                        navigator.serviceWorker.register(firebaseLocation)
+                        .then(reg => {
+                            console.log(`firebase service worker registration (Scope: ${reg.scope}`);
                         })
-                    })
-                    
+                        .catch(error => {
+                            const msg = `firebase service worker error (${error})`;
+                            console.error(msg);
+                        })
                     });
-                    navigator.serviceWorker.register(firebaseLocation)
-                    .then(reg => {
-                        console.log(`firebase service worker registration (Scope: ${reg.scope}`);
-                    })
-                    .catch(error => {
-                        const msg = `firebase service worker error (${error})`;
-                        console.error(msg);
-                    })
+                    
                 }
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours

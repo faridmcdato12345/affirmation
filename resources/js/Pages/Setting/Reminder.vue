@@ -139,11 +139,13 @@ const response = defineProps({
 isSubscribed.value = localStorage.getItem('isSubcribe')
 isNotify.value = localStorage.getItem('isNotify')
 
+const permissionStatus = ref(false)
+
 const toggleSwitch = reactive({
   value: isNotify.value == 1 ? true : false
 })
 const updateNotifs = (data) => {
-
+  console.log('emited value: ', data)
   toggleSwitch.value = data
   if(data){
     const firebaseConfig = {
@@ -160,19 +162,37 @@ const updateNotifs = (data) => {
     
     const messaging = getMessaging(app)
     if(Notification.permission !== 'denied'){
-      Notification.requestPermission().then((permission) => {
-      // If the user accepts, let's create a notification
-        if (permission === 'granted') {
-          getToken(messaging, {vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'}).then(result => {
-            const token = reactive({
-              fcm_token: result,
-              isNotify: true,
+      console.log('initial permissionStatus: ',permissionStatus.value) // true
+      if(!permissionStatus.value){
+        Notification.requestPermission().then((permission) => {
+          // If the user accepts, let's create a notification
+          if (permission === 'granted') {
+            getToken(messaging, {
+              vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
+            }).then(result => {
+              const token = reactive({
+                fcm_token: result,
+                isNotify: true,
+              })
+              router.post(route('fcmToken'), token)
+              localStorage.setItem('isNotify',1)
             })
-            router.post(route('fcmToken'), token)
-            localStorage.setItem('isNotify',1)
+          }
+        })
+        permissionStatus.value = true
+        console.log('permissionStatus: ', permissionStatus.value)
+      }else{
+        getToken(messaging, {
+          vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
+        }).then(result => {
+          const token = reactive({
+            fcm_token: result,
+            isNotify: true,
           })
-        }
-      })
+          router.post(route('fcmToken'), token)
+          localStorage.setItem('isNotify',1)
+        })
+      }
     }
   }else{
     const token = reactive({
@@ -181,7 +201,7 @@ const updateNotifs = (data) => {
     router.post(route('fcmToken'), token)
     localStorage.setItem('isNotify',0)
   }
-  
+  console.log('permissionStatus: ', permissionStatus.value)
 }
 const toggleData = (status) => {
   let x = status == 0 ? false : true

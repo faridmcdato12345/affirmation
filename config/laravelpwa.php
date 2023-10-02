@@ -5,6 +5,7 @@ return [
     'manifest' => [
         'name' => env('APP_NAME', 'Affirm'),
         'short_name' => 'Affirm',
+        'permissions' => ["notifications"],
         'start_url' => '/',
         'background_color' => '#729343',
         'theme_color' => '#096A2E',

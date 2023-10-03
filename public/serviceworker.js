@@ -62,17 +62,30 @@ self.addEventListener('notificationclick', function (event)
     );
 });
 // Serve from Cache
-self.addEventListener("fetch", event => {
+self.addEventListener("fetch", (event) => {
     event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
+        caches.match(event.request).then((response) => {
+            if(response){
+                return response
+            }
+
+            return fetch(event.request).then((networkResponse) => {
+                const responseToCache = networkResponse.clone()
+
+                caches.open(staticCacheName).then((cache) => {
+                    cache.put(event.request, responseToCache)
+                })
+
+                return networkResponse
             })
-            .catch(() => {
-                return caches.match('offline');
-            })
+        })
     )
 });
+self.addEventListener('message', (event) => {
+    if(event.data === 'skipWaiting'){
+        self.skipWaiting()
+    }
+})
 // Fetching content using Service Worker
 self.addEventListener('fetch', (e) => {
     // Cache http and https only, skip unsupported chrome-extension:// and file://...

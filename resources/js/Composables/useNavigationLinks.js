@@ -48,7 +48,7 @@ export function useNavigationLinks() {
     {
       icon: UserIcon,
       link: 'setting.user.index',
-      label: 'Account Settings',
+      label: 'Account Setting',
       description: 'Personal Infomation, Email',
       leftIcon: ChevronRightIcon
     },

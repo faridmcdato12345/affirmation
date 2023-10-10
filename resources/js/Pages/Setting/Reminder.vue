@@ -45,7 +45,7 @@
                 </p>
               </div>
               <div :class="!isMobile ? 'w-52' : ''" @click.stop="toggleData(reminder.status)">
-                <ToggleStatusSwitch :notifiable="statusData.value" :reminder="reminder" />
+                <ToggleStatusSwitch :notifiable="reminder.status" :reminder="reminder" />
               </div>
               <div v-if="!isMobile" class="flex justify-between gap-x-2">
                 <component 
@@ -178,7 +178,7 @@ const updateNotifs = (data) => {
               localStorage.setItem('isNotify',1)
             })
           }
-        })
+        }).catch((error) => console.log('error request permission: ', error))
         permissionStatus.value = true
         console.log('permissionStatus: ', permissionStatus.value)
       }else{
@@ -193,6 +193,17 @@ const updateNotifs = (data) => {
           localStorage.setItem('isNotify',1)
         })
       }
+    }else if(Notification.permission === 'granted'){
+      getToken(messaging, {
+        vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
+      }).then(result => {
+        const token = reactive({
+          fcm_token: result,
+          isNotify: true,
+        })
+        router.post(route('fcmToken'), token)
+        localStorage.setItem('isNotify',1)
+      })
     }
   }else{
     const token = reactive({

@@ -62,23 +62,16 @@ self.addEventListener('notificationclick', function (event)
     );
 });
 // Serve from Cache
-self.addEventListener("fetch", (event) => {
+// Serve from Cache
+self.addEventListener("fetch", event => {
     event.respondWith(
-        caches.match(event.request).then((response) => {
-            if(response){
-                return response
-            }
-
-            return fetch(event.request).then((networkResponse) => {
-                const responseToCache = networkResponse.clone()
-
-                caches.open(staticCacheName).then((cache) => {
-                    cache.put(event.request, responseToCache)
-                })
-
-                return networkResponse
+        caches.match(event.request)
+            .then(response => {
+                return response || fetch(event.request);
             })
-        })
+            .catch(() => {
+                return caches.match('offline');
+            })
     )
 });
 self.addEventListener('message', (event) => {

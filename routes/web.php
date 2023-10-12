@@ -8,13 +8,15 @@ use App\Http\Controllers\{
   CalendarController,
     CategoryController,
     UserCategoryController, 
-  UserAffirmationController
+  UserAffirmationController,
+  ComingSoonController
 };
 use App\Models\Affirmation;
 use App\Models\Category;
 use App\Models\ExerciseResult;
 use App\Models\Progress;
 use Illuminate\Database\Eloquent\Builder;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,8 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
 
   Route::put('/category/{id}',[CategoryController::class,'refresh'])->name('category.refresh');
+
+  Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
   
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');

@@ -54,14 +54,14 @@ export function useNavigationLinks() {
     },
     {
       icon: UsersIcon,
-      link: 'setting.user.accountability',
+      link: 'coming-soon',
       label: 'Accountability Partner',
       description: 'Get additional support from other people',
       leftIcon: ChevronRightIcon
     },
     {
       icon: ClockIcon,
-      link: 'setting.reminder.index',
+      link: 'coming-soon',
       label: 'Reminder',
       description: 'Schedule your personal reminder',
       leftIcon: ChevronRightIcon

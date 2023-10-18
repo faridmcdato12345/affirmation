@@ -34,6 +34,9 @@ module.exports = {
     'border-2',
     'border-solid',
     'focus:ring',
+    'md:max-w-[400px]',
+    'md:max-w-[500px]',
+    'md:max-w-[640px]',
     {
       pattern: /bg-(red|green|blue|orange|gray)-(100|200|300|400|500|600|700)/,
       variants: ['hover', 'focus', 'lg:hover', 'active', 'disabled:hover'],

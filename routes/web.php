@@ -1,14 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ChartController;
-use App\Http\Controllers\CalendarController;
-use App\Http\Controllers\UserCategoryController;
-use App\Http\Controllers\UserAffirmationController;
-
+use App\Http\Controllers\{
+  HomeController, 
+  UserController, 
+  ChartController, 
+  CalendarController,
+    CategoryController,
+    UserCategoryController, 
+  UserAffirmationController,
+  ComingSoonController
+};
+use App\Models\Affirmation;
+use App\Models\Category;
+use App\Models\ExerciseResult;
+use App\Models\Progress;
+use Illuminate\Database\Eloquent\Builder;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,19 +43,21 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/chart',[ChartController::class,'index'])->name('chart.index');
   });
 
-  Route::post('/themes/upload-image', [App\Http\Controllers\UserController::class, 'uploadUserImage'])->name('themes.image-upload');
+  Route::post('/themes/upload-image', [UserController::class, 'uploadUserImage'])->name('themes.image-upload');
 
   Route::put('user/{user}/switch-background', [UserController::class, 'switchBackground']);
-  Route::post('/users/delete', [App\Http\Controllers\UserController::class, 'delete'])->name('deleteUser');
+  Route::post('/users/delete', [UserController::class, 'delete'])->name('deleteUser');
   Route::apiResource('/user-category', UserCategoryController::class)->only(['store', 'update', 'destroy']);
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
 
-  Route::get('cache/affirmation',function(){
-    dd(Auth::user()->getAffirmation());
-  });
+  Route::post('/fcm-token', [HomeController::class, 'updateToken'])->name('fcmToken');
+
+  Route::put('/category/{id}',[CategoryController::class,'refresh'])->name('category.refresh');
+
+  Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
+  
 });
-
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
-
 require __DIR__.'/auth.php';
-require __DIR__.'/setting.php';
+
+

@@ -6,11 +6,14 @@
       </p>
     </div>
     <div>
-      <h3 class="font-medium text-2xl">
+      <h3 class="font-medium text-2xl dark:text-white">
         {{ currentTitle }}
       </h3>
-      <p class="leading-5">
+      <p class="leading-5 dark:text-gray-300">
         {{ currentDescription }}
+      </p>
+      <p v-if="step == 2" class="font-medium text-lg mt-3 dark:text-gray-200 text-gray-700">
+        {{ affirmation }}
       </p>
     </div>
     <Transition appear>
@@ -45,6 +48,10 @@ const props = defineProps({
   progressId: {
     type: [Number, String],
     required: true
+  },
+  affirmation: {
+    type: String,
+    required: true
   }
 })
 
@@ -63,18 +70,21 @@ const formData = useForm({
 const nextStep = () => {
   if(step.value == 3) {
     formData.post(route('exercise.store'), { // eslint-disable-line no-undef
-      onSuccess: () => {
+      onSuccess: (response) => {
         toast.success('Today\'s exercise has been completed successfuly!')
         formData.reset()
         emit('close-modal')
+        if(response.props.flash.info){
+          emit('is-complete')
+        }
       }   
-    })  
+    })
   }
 
   if(step.value < 3) step.value++ 
 } 
 
-const emit = defineEmits(['close-modal'])
+const emit = defineEmits(['close-modal','is-complete'])
 const currentTitle = computed(() => stepsTitle[step.value] ?? '')
 const currentDescription = computed(() => stepsDescription[step.value] ?? '')
 </script>

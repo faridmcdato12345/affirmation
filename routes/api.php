@@ -28,5 +28,4 @@ Route::apiResource('categories.affirmations', AffirmationController::class)->sha
 Route::get('affirmation', [UserController::class, 'getAffirmation']);
 Route::apiResource('affirmations', AffirmationController::class)->only(['index', 'show']);
 
-// TODO: make this more secure
 Route::post('exercise', [ExerciseResultController::class, 'store'])->name('exercise.store');

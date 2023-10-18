@@ -61,4 +61,18 @@ class CategoryController extends Controller
     {
         //TODO admin update
     }
+    /**
+     * refresh the completed category
+     */
+    public function refresh($id)
+    {
+            $category = Category::findOrFail($id);
+            $category->affirmations->each(function ($affirmation) {
+                $affirmation->progress->where('user_id', auth()->user()->id)->each(function ($progress) {
+                    $progress->update(['status' => '0']);
+                });
+            });
+            return back()->with('success', 'Successfully refreshed the category');
+        
+    }
 }

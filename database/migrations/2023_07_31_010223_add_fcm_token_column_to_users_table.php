@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('login_histories', function (Blueprint $table) {
-            $table->dropColumn('login_at');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('fcm_token')->nullable();
         });
     }
 
@@ -25,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('fcm_token');
+        });
     }
 };

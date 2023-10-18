@@ -15,7 +15,7 @@
           <div
             v-for="myCategory in myCategories"
             :key="myCategory.id"
-            class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
+            class="bg-white dark:bg-gray-800 dark:border-gray-600 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
               <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
@@ -25,21 +25,21 @@
             <div class="absolute top-3 right-3">
               <CheckCircleIcon v-if="myCategory.id === activeCategory && activeCategoryType === 'App\\Models\\UserCategories'" class="w-7 text-green-600 " />
             </div>
-            <h3 class="font-medium">
+            <h3 class="font-medium dark:text-white">
               {{ myCategory.text }}
             </h3>
-            <p class="text-gray-600 text-sm">
+            <p class="text-gray-600 text-sm dark:text-gray-300">
               {{ myCategory.blurb }}
             </p>
           </div>
-          <div class="bg-white relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
+          <div class="bg-white dark:bg-gray-800 dark:border-gray-600 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
             <div class="absolute top-3 right-3">
               <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
             </div>
-            <h3 class="font-medium">
+            <h3 class="font-medium dark:text-white">
               Add Category
             </h3>
-            <p class="text-gray-600 text-sm">
+            <p class="text-gray-600 text-sm dark:text-gray-300">
               Add your own category for your own affirmations
             </p>
           </div>
@@ -57,7 +57,7 @@
               :key="category.id"
               class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
               :class="[
-                i == 0 || isPremium ? 'bg-white' : 'bg-gray-200'
+                i == 0 || isPremium ? 'bg-white dark:bg-gray-800 dark:border-gray-600 dark:border' : 'bg-gray-200 dark:bg-gray-800 dark:border dark:border-gray-600'
               ]"
               @click.prevent="toggleSwitchCategory(category)">
               <div v-if="category.id === activeCategory && activeCategoryType === 'App\\Models\\Category'" class="absolute right-3 top-3">
@@ -66,12 +66,33 @@
               <div v-if="!isPremium && i != 0" class="absolute right-3 top-3">
                 <LockClosedIcon class="w-6 " />
               </div>
-              <h3 class="font-medium">
-                {{ category.text }}
-              </h3>
-              <p class="text-gray-600 text-sm">
-                {{ category.blurb }}
-              </p>
+              <div class="min-h-[100px]">
+                <h3 class="font-medium dark:text-white">
+                  {{ category.text }}
+                </h3>
+                <p class="text-gray-600 text-sm dark:text-gray-300 mb-6">
+                  {{ category.blurb }}
+                </p>
+              </div>
+              
+              <div class="absolute bottom-[0.5rem] w-full pr-8">
+                <div class="flex justify-between">
+                  <div>
+                    <p class="text-gray-600 text-sm dark:text-gray-300">
+                      <span v-if="category.affirmations.length != category.affirmations_count">Progress: </span>
+                      <span v-else>Completed: </span>
+                      <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600' : 'text-green-600'">
+                        {{ category.affirmations ? category.affirmations.length : 0 }}
+                      </span>
+                      <span>/</span>
+                      <span class="text-green-600">{{ category.affirmations_count }}</span>
+                    </p>
+                  </div>
+                  <div v-if="category.affirmations.length == category.affirmations_count" class="w-[5%]">
+                    <ArrowPathIcon @click.stop="refreshCategory(category)" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -82,10 +103,10 @@
     <Modal v-model="infoSwitchModal">
       <div class="text-center">
         <XCircleIcon class="w-14 mx-auto text-red-600" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white">
           No Affirmations Found
         </h1>
-        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
+        <p class="dark:text-gray-300 text-lg max-w-md mx-auto leading-6 mt-2 font-light">
           Please add atleast one affirmation to your category before switching it as active.
         </p>
       </div>
@@ -98,10 +119,10 @@
     <Modal v-model="setCategoryModal">
       <div class="text-center">
         <CheckCircleIcon class="w-14 mx-auto text-green-600" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white">
           {{ selectedCategory.text }}
         </h1>
-        <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
+        <p class="dark:text-gray-300 text-lg max-w-md mx-auto leading-6 mt-2 font-light">
           {{ selectedCategory.blurb }}
         </p>
       </div>
@@ -116,16 +137,16 @@
       <div class="py-2 flex">
         <LockClosedIcon class="w-14 mx-auto text-gray-400" />
         <div>
-          <h1 class="mt-2">
+          <h1 class="mt-2 dark:text-white">
             Subscribe to Premium
           </h1>
-          <p class="text-base max-w-md mx-auto leading-6 mt-2 font-light">
+          <p class="dark:text-gray-400 text-base max-w-md mx-auto leading-6 mt-2 font-light">
             Gain access to our premium categories, exclusive contents and exciting features within our app.
           </p>
         </div>
       </div>
       <div class="flex items-center justify-end gap-x-2 mt-4">
-        <Button label="Cancel" color="error" component-type="link" @click.prevent="upgradeModal = false" />
+        <Button label="Cancel" color="gray" component-type="link" @click.prevent="upgradeModal = false" />
         <Button component-type="link" href="/billing" label="Subscribe for Access" color="success" />
       </div>
     </Modal>
@@ -140,10 +161,12 @@
 </template>
 <script setup>
 import { ref, watch } from 'vue'
-import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon } from '@heroicons/vue/24/solid'
+import { CheckCircleIcon, EyeIcon, LockClosedIcon, PencilSquareIcon, PlusCircleIcon, TrashIcon, XCircleIcon,ArrowPathIcon } from '@heroicons/vue/24/solid'
 import { Head, router } from '@inertiajs/vue3'
+import { toast } from '../Composables/useToast'
 
 import AddAffirmation from '../Components/Category/Affirmation/AddAffirmation.vue'
+
 
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Affirmation from '../Components/Category/Affirmation/Affirmations.vue'
@@ -162,7 +185,7 @@ const props = defineProps({
   activeCategoryType: String,
   errors: Object
 })
-
+console.log('category props: ',props.categories)
 const selectedCategory = ref('')
 const setCategoryModal = ref(false)
 const upgradeModal = ref(false)
@@ -215,7 +238,18 @@ const switchCategory = async () => {
   }
   )
 }
-
+const refreshCategory = (category) => {
+  selectedCategory.value = category
+  router.put(route('category.refresh',selectedCategory.value.id),{
+    onSuccess: (response) => {
+      console.log('reponse: ',response)
+      toast.success('Status has been updated!')
+    },
+    onFinish: () => {
+      console.log('success aki')
+    }
+  })
+}
 /**
  *  Affirmation
  */
@@ -241,7 +275,6 @@ watch([() => addAffirmationModal.value], ([addVal]) => {
 
 watch(() => props.myCategories, () => {
   selectedCateg.value = props.myCategories.filter(category => category.id === selectedCateg.value?.id)[0]
-  console.log('Selected Category: ', selectedCateg)
 })
 
 </script>

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Setting Service Worker Locations scope = folder | location = service worker js location
     var pwaScope = ".";
     var pwaLocation = "/serviceworker.js";
+    var firebaseLocation = "/firebase-messaging-sw.js";
 
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
@@ -638,7 +639,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById(timedAdData).querySelectorAll('.close-menu')[0].classList.remove('no-click');
                         document.getElementById(timedAdData).querySelectorAll('span')[0].style.display ="none";
                   } else {
-                      //console.log(timedAdTimer);
                   }
                   document.getElementById(timedAdData).querySelectorAll('span')[0].innerHTML = timedAdTimer -= 1;
                 }, 1000);
@@ -976,12 +976,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 var menuAge = document.querySelectorAll('#menu-age');
                 var menuAgeFail = document.querySelectorAll('#menu-age-fail');
                 var menuAgeOkay = document.querySelectorAll('#menu-age-okay');
-
-                console.log(currdate);
-                console.log(setDate);
-                console.log(dateBirthMonth);
                 if ((currdate - setDate) > 0){
-                    console.log("above 18");
                     menuAge[0].classList.remove('menu-active')
                     menuAgeOkay[0].classList.add('menu-active');
                 }else{
@@ -1123,13 +1118,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isPWA === true){
             var checkPWA = document.getElementsByTagName('html')[0];
             if(!checkPWA.classList.contains('isPWA')){
-                console.log("pwaLocation:",pwaLocation)
                 if ('serviceWorker' in navigator) {
-                  window.addEventListener('load', function() {
-                    navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
-                    console.log('Service Worker successfully registered')
-                    });
-                }
+                    window.addEventListener('load', function() {
+                      navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
+                      console.log('Service Worker successfully registered')
+                      });
+                      navigator.serviceWorker.register(firebaseLocation)
+                      .then(reg => {
+                          console.log(`firebase service worker registration (Scope: ${reg.scope}`);
+                      })
+                      .catch(error => {
+                          const msg = `firebase service worker error (${error})`;
+                          console.error(msg);
+                      })
+                  }
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours
                 var now = Date.now();
@@ -1151,56 +1153,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 //Trigger Install Prompt for Android
                 const pwaWindows = document.querySelectorAll('#menu-install-pwa-android');
-                console.log(isMobile)
-                console.log("length:",pwaWindows.length)
                 if(pwaWindows.length){
+                    let deferredPrompt = null;
                     if (isMobile.Android()) {
-                        if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
+                        window.addEventListener('beforeinstallprompt', (event) => {
+                            event.preventDefault();
+                            deferredPrompt = event;
                             setTimeout(function(){
                                 if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                    console.log('Triggering PWA Window for Android')
+                                    console.log('Triggering PWA Window for Android - beforeinstall')
                                     document.getElementById('menu-install-pwa-android').classList.add('menu-active');
                                     document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
                                 }
                             },3500);
-                            var deferredPrompt;
-                            window.addEventListener('beforeinstallprompt', function(event){
-                                console.log("deferredPrompt")
-                                e.preventDefault();
-                                deferredPrompt = e;
+                        });
+                        const pwaInstall = document.querySelector('.pwa-install');
+                        pwaInstall.addEventListener('click', async () => {
+                            if(!deferredPrompt){
+                                return;
+                            }
+                            const result = await deferredPrompt.prompt();
+                            if (result.outcome === 'accepted') {
+                                console.log('Added to home screen');
+                            } else {
+                                localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
+                                localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
                                 setTimeout(function(){
                                     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                        console.log('Triggering PWA Window for Android')
-                                        document.getElementById('menu-install-pwa-android').classList.add('menu-active');
-                                        document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                                        document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                                        document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
                                     }
-                                },3500);
-                            });
-                        }
-                        const pwaInstall = document.querySelectorAll('.pwa-install');
-                        pwaInstall.forEach(el => el.addEventListener('click', e => {
-                            console.log("deferredPrompt: ",deferredPrompt)
-                            deferredPrompt.prompt();
-                            deferredPrompt.userChoice
-                                .then((choiceResult) => {
-                                    if (choiceResult.outcome === 'accepted') {
-                                        console.log('Added');
-                                    } else {
-                                        localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
-                                        console.log("wpwa timeout value")
-                                        localStorage.setItem(pwaName+'-PWA-Prompt', 'install-rejected');
-                                        setTimeout(function(){
-                                            if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                                document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
-                                                document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
-                                            }
-                                        },50);
-                                    }
-                                    deferredPrompt = null;
-                                });
-                        }));
+                                },50);
+                            }
+                            deferredPrompt = null;
+                        });
                         window.addEventListener('appinstalled', (evt) => {
-                            document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
+                            var removeClass = document.querySelector('#menu-install-pwa-android');
+                            removeClass.classList.remove('menu-active');
                             document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
                         });
                     }
@@ -1338,7 +1327,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    console.log("init_template")
     }
 
     //Fix Scroll for AJAX pages.
@@ -1362,5 +1350,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     init_template();
-    console.log('custom.js')
 });

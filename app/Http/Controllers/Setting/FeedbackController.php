@@ -14,19 +14,16 @@ class FeedbackController extends Controller
     {
         return Inertia::render('Setting/Feedback');
     }
-    public function store(Request $request)
+
+    public function storeFeedback(Request $request)
     {
         $validated = $request->validate([
             'description' => 'required'
         ],[
             'description' => 'You forgot to write something.'
         ]);
-        try {
             $user = Auth::user();
             $user->feedback()->create($validated);
-            return redirect()->route('setting.feedback.index');
-        } catch (Throwable $th) {
-            throw $th;
-        }
+            return back()->with('success', 'Feedback has been sent successfully!');
     }
 }

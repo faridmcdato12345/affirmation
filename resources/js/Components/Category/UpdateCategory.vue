@@ -2,13 +2,13 @@
   <div>
     <Modal v-model="modalShown">
       <div class="py-2">
-        <h1 class="">
+        <h1 class="dark:text-white">
           Update Category
         </h1>
-        <p class="text-base mt-2 font-light">
+        <p class="dark:text-gray-300 text-base mt-2 font-light">
           Update the text and description of your category
         </p>
-        <form class="mt-3" @submit.prevent="updateCategory">
+        <form class="mt-5" @submit.prevent="updateCategory">
           <FormInput id="category" v-model="form.text" :max-length="35" class="mb-1" label="Category" :error="form.errors.text" />
           <FormInput id="blurb" v-model="form.blurb" :max-length="150" label="Description" :error="form.errors.blurb" />
           <div class="flex justify-end gap-x-2 mt-3">
@@ -53,7 +53,6 @@ let form = useForm({
 
 watch(() => props.category, () => {
   form = useForm({...props.category})
-  console.log('Forms: ', form)
 })
 
 const loading = ref(false)

@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\NewPasswordController;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,8 +12,8 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 
 Route::post('/login', [LoginController::class, 'login'])->name('post.login');
 
-Route::get('/register',function () {
- return Inertia::render('Auth/Register');
+Route::get('/register',function (Request $request) {
+ return Inertia::render('Auth/Register', ['queryParams' => $request]);
 })->middleware('guest')->name('register');
 
 Route::post('/register',[RegisterController::class,'store'])->name('post.register');

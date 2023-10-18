@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\CacheAffirmationService;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,11 +24,19 @@ class Category extends Model
         'blurb',
     ];
 
-    public function affirmations()
+    public function affirmations(): HasMany
     {
         return $this->hasMany(Affirmation::class);
     }
-
+      /**
+     * Get all of the users currently using the Category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
     /**
      * Returns a random affirmation child.
      * 
@@ -36,20 +45,41 @@ class Category extends Model
      */
     public function getRandomAffirmation()
     {
-        return (new CacheAffirmationService())
-                ->getData()
-                ->where('category_id',Auth::user()->active_category_id)
-                ->random(1)
-                ->first();
+        //fetch all affirmation that`s not in the progress table
+        $filteredProgress = Category::with(['affirmations' => function($q){
+            $q->whereDoesntHave('progress');
+          }])->find(Auth::user()->active_category_id);
+        // count affirmation that is not in the progress table
+        if(count(collect($filteredProgress->affirmations)) == 0 || collect($filteredProgress->affirmations)->isEmpty()){
+            
+            //fetch all affirmation thats in the progress table that is not processed
+            $query = Category::with(['affirmations' => function($q){
+                $q->whereHas('progress', function(Builder $builder){
+                    $builder->where('status','=','0')->where('user_id',auth()->user()->id);
+                });
+              }])->find(Auth::user()->active_category_id);
+            return count(collect($query->affirmations)) ? [
+                'affirm' => collect($query->affirmations)->random(1)->first(),
+                'new' => false
+            ] : null;
+        }
+        return [
+            'affirm' => collect($filteredProgress->affirmations)->random(1)->first(),
+            'new' => true
+        ];
     }
-
     /**
-     * Get all of the users currently using the Category
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Return the all the progress that belongs to this category
+     * 
      */
-    public function users(): HasMany
+    public function getProgress($userId,$categoryId)
     {
-        return $this->hasMany(User::class);
+        return $this->with(['affirmations' => function($q) use ($userId){
+            $q->whereHas('progress',function(Builder $query) use ($userId){
+              $query->where('status','=','1')->where('user_id',$userId);
+            });
+          }])
+          ->withCount('affirmations')
+          ->find($categoryId);
     }
 }

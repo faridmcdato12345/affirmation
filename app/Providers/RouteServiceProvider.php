@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\AccountabilityPartner;
+use App\Models\AccountabilityPartnerNotification;
 use App\Models\UserAffirmation;
 use App\Models\UserCategories;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -20,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/';
+    public const BILLING = '/billing';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -30,6 +33,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::model('user_category', UserCategories::class);
         Route::model('user_affirmation', UserAffirmation::class);
+        Route::model('accountabilityPartnerInvite', AccountabilityPartner::class);
+        Route::model('exerciseReminder', AccountabilityPartnerNotification::class);
 
         $this->configureRateLimiting();
 
@@ -40,6 +45,9 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/setting.php'));
         });
     }
 

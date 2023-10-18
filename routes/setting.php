@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/loginhistory', [LoginHistoryController::class, 'index'])->name('history.index');
         
         Route::get('/feedback', [FeedbackController::class, 'index'])->name('feedback.index');
-        Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+        Route::post('/feedback', [FeedbackController::class, 'storeFeedback'])->name('feedback.store');
 
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');

@@ -119,14 +119,14 @@
         <component
           :is="modalIcon ? CheckCircleIcon : XCircleIcon"
           class="w-14 mx-auto text-green-600 duration-200 ease-out" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white flex justify-center items-center">
           {{ modalTextHeader }}
         </h1>
         <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
           {{ modalTextBody }}
         </p>
       </div>
-      <div clasentes="flex items-center justify-center gap-x-2 mt-4">
+      <div class="flex items-center justify-center gap-x-2 mt-4">
         <Button label="Close" color="success" btn-block @click.prevent="modal = false" />
       </div>
     </Modal>

@@ -22,13 +22,8 @@ class FeedbackController extends Controller
         ],[
             'description' => 'You forgot to write something.'
         ]);
-        try {
             $user = Auth::user();
             $user->feedback()->create($validated);
-        } catch (Throwable $th) {
-            throw $th;
-        }
-
-        return back()->with('success', 'Feedback has been sent successfully!');
+            return back()->with('success', 'Feedback has been sent successfully!');
     }
 }

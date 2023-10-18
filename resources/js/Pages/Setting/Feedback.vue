@@ -20,7 +20,7 @@
             placeholder="Help us improve our app"
             class="border-2 border-hover-theme-green w-full rounded-md px-2 dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="form.errors.description" />
-          <Button label="Report Issue" class="mt-3" btn-block color="success" />
+          <Button label="Report Issue" class="mt-3" btn-block color="success" type="submit" />
         </form>
         
         <hr class="mt-8 mb-4" />
@@ -43,7 +43,7 @@
             placeholder="Write your feedback"
             class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="feedbackForm.errors.description" />
-          <Button label="Send Feedback" class="mt-3" btn-block color="success" />
+          <Button label="Send Feedback" class="mt-3" btn-block color="success" type="submit" />
         </form>
       </div>
     </div>
@@ -51,7 +51,7 @@
     <Modal v-model="successMessage">
       <div class="text-center">
         <CheckCircleIcon class="w-14 mx-auto text-green-600" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white">
           Thank you!
         </h1>
         <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
@@ -59,7 +59,7 @@
         </p>
       </div>
       <div class="flex items-center justify-center gap-x-2 mt-4">
-        <Button label="Close" color="error" @click.prevent="successMessage = false" />
+        <Button label="Close" color="error" style="width:100%" @click.prevent="successMessage = false" />
       </div>
     </Modal>
 
@@ -69,7 +69,7 @@
         <component
           :is="modalIcon ? CheckCircleIcon : XCircleIcon"
           class="w-14 mx-auto text-green-600 duration-200 ease-out" />
-        <h1 class="mt-2">
+        <h1 class="mt-2 dark:text-white">
           {{ modalTextHeader }}
         </h1>
         <p class="text-lg max-w-md mx-auto leading-6 mt-2 font-light">
@@ -77,7 +77,7 @@
         </p>
       </div>
       <div class="flex items-center justify-center gap-x-2 mt-4">
-        <Button label="Close" color="error" @click.prevent="modal = false" />
+        <Button label="Close" color="error" style="width: 100%;" @click.prevent="modal = false" />
       </div>
     </Modal>
   </component>
@@ -116,6 +116,7 @@ const feedbackForm = useForm({
 
 
 const save = () => {
+  console.log('wtf')
   form.post(route('setting.reportbug.store'),{
     onSuccess: () => {
       form.reset('description'),
@@ -123,8 +124,6 @@ const save = () => {
     }
   })
 }
-
-
 const sendFeedback = () => {
   feedbackForm.post(route('setting.feedback.store'),{
     onSuccess: () => {

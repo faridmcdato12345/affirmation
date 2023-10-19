@@ -46,6 +46,7 @@
         "localbase": "^0.7.5",
         "mobile-device-detect": "^0.4.3",
         "qrcode.vue": "^3.4.1",
+        "v-onboarding": "^2.5.2",
         "vanilla-lazyload": "^17.8.3",
         "vue-chart-3": "^3.1.8",
         "vue-qrcode-reader": "^5.3.6",

@@ -43,6 +43,7 @@ class HomeController extends Controller
         }])
         ->where('created_at','>',today())
         ->first();
+
         return Inertia::render('Index', [
             'affirmation'      => !is_null($affirmation) ? $affirmation['affirm'] : null,
             'progressId'       => $progressId,
@@ -51,7 +52,7 @@ class HomeController extends Controller
                                     : false,
             'isSubscribed'     => Auth::user()->subscribedToPremium(),
             'isNotify'         => Auth::user()->isNotify,
-            'user_id'          => Auth::user()->id
+            'userId'          => Auth::user()->id
         ]);
     }
 

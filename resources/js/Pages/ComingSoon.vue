@@ -1,7 +1,7 @@
 <template>
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName">
     <Head title="Coming Soon" />
-    <div class="flex justify-center items-center h-screen dark:bg-gray-800 bg-white">
+    <div class="flex justify-center items-center h-screen dark:bg-gray-800 bg-white ">
       <h1 class="dark:text-white text-[20px] font-medium">
         Coming Soon!
       </h1>

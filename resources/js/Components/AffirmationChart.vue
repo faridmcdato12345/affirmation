@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BarChart :chart-data="data" class="h-full flex justify-center items-center" />
+    <BarChart :chart-data="data" class="h-full flex w-full justify-center items-center" />
     <div v-if="!user_type.paid">
       <div class="text-center mt-2">
         <component 

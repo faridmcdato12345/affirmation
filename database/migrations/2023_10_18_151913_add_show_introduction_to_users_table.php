@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('progress', function (Blueprint $table) {
-            $table->enum('status', [0,1])->default(0);
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('show_introduction')->default(true);
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('progress', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('show_introduction');
         });
     }
 };

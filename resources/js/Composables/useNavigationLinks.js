@@ -17,26 +17,31 @@ import {
 export function useNavigationLinks() {
   const navLinks = [
     {
+      id: 'nav-home',
       icon: HomeIcon,
       link: 'home',
       label: 'Home'
     },
     {
+      id: 'nav-category',
       icon: StarIcon,
       link: 'categories',
       label: 'Categories'
     },
     {
+      id: 'nav-calendar',
       icon: CalendarIcon,
       link: 'calendar.index',
       label: 'Calendar',
     },
     {
+      id: 'nav-progress',
       icon: ChartBarIcon,
       link: 'chart.index',
-      label: 'My Progress',
+      label: 'Progress',
     },
     {
+      id: 'nav-settings',
       icon: Cog6ToothIcon,
       link: isMobile ? 'settings' : 'setting.user.index',
       label: 'Settings'

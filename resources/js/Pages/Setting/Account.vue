@@ -110,6 +110,19 @@
             </div>
             <Button label="Themes" color="success" component-type="link" href="/themes" />
           </div>
+          
+          <hr class="my-6" />
+          <div class="mb-8 flex justify-between items-center">
+            <div>
+              <h1 class="dark:text-white text-theme-green font-medium">
+                Intro Tutorial
+              </h1>
+              <p class="dark:text-gray-400">
+                Walkthrough on how the application works
+              </p>
+            </div>
+            <Button label="Show Intro" color="success" @click.prevent="enableIntro" />
+          </div>
         </div>
       </div>
     </component>
@@ -135,7 +148,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { isMobile } from 'mobile-device-detect'
-import { useForm } from '@inertiajs/vue3'
+import { useForm, router } from '@inertiajs/vue3'
 import Settings from '../Settings.vue'
 import Modal from '../../Components/Modal.vue'
 import Button from '../../Components/Button.vue'
@@ -178,11 +191,19 @@ const updatePassword = () => {
 }
 
 const save = () => {
-  form.patch(route('setting.user.update',props.user.id),{
+  form.patch(route('setting.user.update', props.user.id),{
     onSuccess: () => {
       modal.value = true,
       modalTextBody.value = 'Successfully changed the personal infomation',
       modalTextHeader.value = 'Success!'
+    }
+  })
+}
+
+const enableIntro = async () => {
+  router.patch(route('intro.show'), {} ,{
+    onSuccess: () => {
+      router.get(route('home'))
     }
   })
 }

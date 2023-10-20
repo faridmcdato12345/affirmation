@@ -112,7 +112,7 @@ createInertiaApp({
       .use(plugin)
       .use(rate)
       .use(Toast, options)
-      .use(ZiggyVue,Ziggy)
+      .use(ZiggyVue)
       .use(VueQrcodeReader)
       .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)

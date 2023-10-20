@@ -59,5 +59,3 @@ Route::middleware(['auth','verified'])->group(function () {
 });
 // Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 require __DIR__.'/auth.php';
-
-

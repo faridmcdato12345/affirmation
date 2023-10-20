@@ -77,7 +77,10 @@ const nextStep = () => {
         if(response.props.flash.info){
           emit('is-complete')
         }
-      }   
+      },
+      onError: (errors) => {
+        toast.error(errors.error)
+      }
     })
   }
 

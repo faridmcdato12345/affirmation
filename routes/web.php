@@ -6,17 +6,11 @@ use App\Http\Controllers\{
   UserController, 
   ChartController, 
   CalendarController,
-    CategoryController,
-    UserCategoryController, 
+  CategoryController,
+  UserCategoryController, 
   UserAffirmationController,
   ComingSoonController
 };
-use App\Models\Affirmation;
-use App\Models\Category;
-use App\Models\ExerciseResult;
-use App\Models\Progress;
-use Illuminate\Database\Eloquent\Builder;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +22,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Auth::routes();
 
 Route::middleware(['auth','verified'])->group(function () {
 
@@ -47,6 +39,8 @@ Route::middleware(['auth','verified'])->group(function () {
 
   Route::put('user/{user}/switch-background', [UserController::class, 'switchBackground']);
   Route::post('/users/delete', [UserController::class, 'delete'])->name('deleteUser');
+  Route::patch('/users/hide-intro', [UserController::class, 'hideIntroduction'])->name('intro.hide');
+  Route::patch('/users/show-intro', [UserController::class, 'showIntroduction'])->name('intro.show');
   Route::apiResource('/user-category', UserCategoryController::class)->only(['store', 'update', 'destroy']);
   Route::apiResource('/user-affirmation', UserAffirmationController::class)->only(['store', 'update', 'destroy']);
 
@@ -54,10 +48,7 @@ Route::middleware(['auth','verified'])->group(function () {
 
   Route::put('/category/{id}',[CategoryController::class,'refresh'])->name('category.refresh');
 
-  Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
-  
+  Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');  
 });
-// Route::post('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
+
 require __DIR__.'/auth.php';
-
-

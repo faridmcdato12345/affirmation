@@ -42,6 +42,7 @@ module.exports = {
       "never"
     ],
     "vue/multi-word-component-names": 0,
+    "vue/no-multiple-template-root": "off",
     "vue/max-attributes-per-line": "off",
     "vue/require-default-prop": "off",
     "vue/no-reserved-component-names": ["error", {
@@ -61,6 +62,6 @@ module.exports = {
       },
       "svg": "always",
       "math": "always"
-    }]
-  }
+    }],
+  },
 }

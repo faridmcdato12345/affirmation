@@ -31,6 +31,7 @@ import 'vue-rate/dist/vue-rate.css'
 import "../css/app.css"
 import "../css/style.css"
 import "../sass/star_rating.scss"
+import 'v-onboarding/dist/style.css'
 
 window.LazyLoad = LazyLoad
 
@@ -100,6 +101,7 @@ const getTimeNow = () => {
 
   return formattedTime;
 }
+
 createInertiaApp({
   title: (title) => `${title} - Affirm`,
   resolve: (name) =>
@@ -112,7 +114,7 @@ createInertiaApp({
       .use(plugin)
       .use(rate)
       .use(Toast, options)
-      .use(ZiggyVue,Ziggy)
+      .use(ZiggyVue)
       .use(VueQrcodeReader)
       .component('font-awesome-icon', FontAwesomeIcon)
       .mount(el)

@@ -156,4 +156,22 @@ class UserController extends Controller
 
         return back()->with('success', 'An invite has been sent already');
     }
+
+    public function hideIntroduction()
+    {
+        auth()->user()->update([
+            'show_introduction' => false
+        ]);
+
+        return back()->with('success', 'Introduction has been hidden at startup successfully!');
+    }
+
+    public function showIntroduction()
+    {
+        auth()->user()->update([
+            'show_introduction' => true
+        ]);
+
+        return back()->with('success', 'Introduction has been shown at startup successfully!');
+    }
 }

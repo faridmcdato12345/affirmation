@@ -1,5 +1,9 @@
 var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
+    'build/app.css',
+    'build/app.js',
+    'build/Reminder.css',
+    'build/Index.css',
     'images/icons/android-launchericon-72-72.png',
     'images/icons/android-launchericon-96-96.png',
     'images/icons/128.png',

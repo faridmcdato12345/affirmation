@@ -39,10 +39,10 @@ class ExerciseResultController extends Controller
             if(count($checker->affirmations) == $checker->affirmations_count){
                 $message['info'] = true;
             }
-            //DB::commit();
+            DB::commit();
             return back()->with($message);
         } catch (\Throwable $th) {
-            //DB::rollback();
+            DB::rollback();
             return redirect()->back()->withErrors(['error' => 'Something went wrong!']);
         }
         return response()->json([

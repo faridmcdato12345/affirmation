@@ -82,7 +82,7 @@ const props = defineProps({
   isNotify: [Boolean, Number],
   userId: Number
 })
-
+console.log(props.exerciseFinished)
 const modalShown = ref(false)
 const completeModalShown = ref(false)
 const wrapper = ref('')

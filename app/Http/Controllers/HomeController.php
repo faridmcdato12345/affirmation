@@ -32,10 +32,6 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $affirmation = Auth::user()->getAffirmation();
-        $d = Auth::user()->progress()
-        ->where('affirmation_id','=',$affirmation['affirm']->id)
-        ->where('status','=','0')
-        ->first();
         $progressId = !is_null($affirmation) 
                         ? Auth::user()->progress()->where('affirmation_id',$affirmation['affirm']->id)
                         ->where('status','0')

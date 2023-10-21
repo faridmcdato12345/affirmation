@@ -106,8 +106,8 @@ class User extends Authenticatable
     {
         $todaysAffirmation = null;
         $progress = $this->progress->where('created_at','>', today())->where('status','=','0')->first();
+        
         if ($progress) {
-            
             // return today's previously generated affirmation
             if ($progress->affirmation_type === Affirmation::class) {
                 $todaysAffirmation = [
@@ -219,10 +219,10 @@ class User extends Authenticatable
     {
         if(Auth::user()->subscribedToPremium()){
             $exercises = $this->getUserExercise()->orderBy('created_at','asc')->get();
-            
         }else{
+            
             $exercises = $this->getUserExercise()->orderBy('created_at','asc')->latest()->take(6)->get();
-            unset($exercises[0]);
+            //unset($exercises[0]);
         }
         $labelData = [];
         $happinessDataPoints = [];

@@ -22,7 +22,6 @@ class UserExerciseTest extends TestCase
     {
         $this->withExceptionHandling();
         $user = User::factory()->create();
-        // dd($user);
         Progress::create([
             'user_id'            => $user->id,
             'affirmation_id'     => Affirmation::all()->random()->id,

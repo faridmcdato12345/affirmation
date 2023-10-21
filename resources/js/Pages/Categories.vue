@@ -81,6 +81,7 @@
                     <p class="text-gray-600 text-sm dark:text-gray-300">
                       <span v-if="category.affirmations.length != category.affirmations_count">Progress: </span>
                       <span v-else>Completed: </span>
+                      
                       <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600' : 'text-green-600'">
                         {{ category.affirmations ? category.affirmations.length : 0 }}
                       </span>
@@ -185,7 +186,7 @@ const props = defineProps({
   activeCategoryType: String,
   errors: Object
 })
-console.log('category props: ',props.categories)
+
 const selectedCategory = ref('')
 const setCategoryModal = ref(false)
 const upgradeModal = ref(false)

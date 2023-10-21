@@ -9,7 +9,8 @@ use App\Http\Controllers\{
   CategoryController,
   UserCategoryController, 
   UserAffirmationController,
-  ComingSoonController
+  ComingSoonController,
+  ExerciseResultController
 };
 
 /*
@@ -48,7 +49,8 @@ Route::middleware(['auth','verified'])->group(function () {
 
   Route::put('/category/{id}',[CategoryController::class,'refresh'])->name('category.refresh');
 
-  Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');  
+  Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
+  Route::post('exercise', [ExerciseResultController::class, 'store'])->name('exercise.store');
 });
 
 require __DIR__.'/auth.php';

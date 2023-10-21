@@ -17,5 +17,5 @@ import { Head } from '@inertiajs/vue3'
 const response = defineProps({
   results: Object
 })
-
+console.log(response.results)
 </script>

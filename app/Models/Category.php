@@ -58,15 +58,20 @@ class Category extends Model
                     $builder->where('status','=','0')->where('user_id',auth()->user()->id);
                 });
               }])->find(Auth::user()->active_category_id);
-            return count(collect($query->affirmations)) ? [
+           
+            return count(collect($query->affirmations)) > 0 ? [
                 'affirm' => collect($query->affirmations)->random(1)->first(),
                 'new' => false
-            ] : null;
+            ] : [
+                'affirm' => Affirmation::where('category_id',Auth::user()->active_category_id)->get()->random(1)->first(),
+                'new' => true
+            ];
         }
         return [
             'affirm' => collect($filteredProgress->affirmations)->random(1)->first(),
             'new' => true
         ];
+
     }
     /**
      * Return the all the progress that belongs to this category

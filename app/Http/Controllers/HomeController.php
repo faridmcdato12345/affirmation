@@ -41,10 +41,9 @@ class HomeController extends Controller
         $checkExerciseToday = ExerciseResult::with(['progress' => function($query){
             $query->where('user_id', auth()->id());
         }])
+        ->has('progress')
         ->where('created_at','>',today())
-        ->first();
-        //dd(auth()->id());
-        //dd(collect($checkExerciseToday->progress));
+        ->first(); 
         return Inertia::render('Index', [
             'affirmation'      => !is_null($affirmation) ? $affirmation['affirm'] : null,
             'progressId'       => $progressId,

@@ -38,16 +38,16 @@ class HomeController extends Controller
                         ->first()
                         ->id
                         : null;
-        $checkExerciseToday = ExerciseResult::with(['progress' => function($query){
-            $query->where('user_id', auth()->id());
-        }])
-        ->has('progress')
-        ->where('created_at','>',today())
+        $checkExerciseToday = ExerciseResult::whereHas('progress',function($query){
+            $query->where('user_id', auth()->id())
+                  ->where('updated_at','>',today())
+                  ->where('status','1');
+        })
         ->first(); 
         return Inertia::render('Index', [
             'affirmation'      => !is_null($affirmation) ? $affirmation['affirm'] : null,
             'progressId'       => $progressId,
-            'exerciseFinished' => !is_null($affirmation) && collect($checkExerciseToday->progress)->isNotEmpty()
+            'exerciseFinished' => !is_null($affirmation) && !is_null($checkExerciseToday)
                                     ? true
                                     : false,
             'isSubscribed'     => Auth::user()->subscribedToPremium(),

@@ -22,7 +22,7 @@
             </p>
           </div>
         </div>
-        <div v-if="link.label === 'Accountability Partner' || link.label === 'Reminderp'">
+        <div v-if="link.label === 'Accountability Partner' || link.label === 'Reminder'">
           <a href="" class="text-sm">Coming Soon</a>
         </div>
         <div v-else class="flex items-center absolute right-4">

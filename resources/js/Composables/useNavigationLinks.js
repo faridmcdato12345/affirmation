@@ -66,7 +66,7 @@ export function useNavigationLinks() {
     },
     {
       icon: ClockIcon,
-      link: 'coming-soon',
+      link: 'setting.reminder.index',
       label: 'Reminder',
       description: 'Schedule your personal reminder',
       leftIcon: ChevronRightIcon

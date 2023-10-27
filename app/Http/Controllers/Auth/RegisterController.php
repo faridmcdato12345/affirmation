@@ -75,12 +75,19 @@ class RegisterController extends Controller
     protected function store(Request $request)
     {
         $referred_by = Cookie::get('referral');
-
-        $request->validate([
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'string', "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", 'confirmed'],
-        ]);
+            'password' => ['required','min:8','string', "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", 'confirmed'],
+        ];
+        $customMessages = [
+            'email.required' => 'The email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'The password is required.',
+            'password.min' => 'The password must be at least :min characters long.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ];
+        $request->validate($rules, $customMessages);
 
         $user = User::create([
             'name'                 => $request->name,

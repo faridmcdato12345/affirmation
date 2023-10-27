@@ -65,9 +65,6 @@ const register = () => {
         registrationForm.reset('password_confirmation')
       ]
       loading.value = false
-    },
-    onError: (error) => {
-      console.log(error)
     }
   })
 }

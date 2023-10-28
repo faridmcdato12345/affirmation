@@ -29,6 +29,9 @@
           <li :class="{ is_valid: contains_uppercase }">
             Contains Uppercase
           </li>
+          <li :class="{ is_valid: contains_lowercase }">
+            Contains Lowercase
+          </li>
           <li :class="{ is_valid: contains_special_character }">
             Contains Special Character
           </li>
@@ -76,6 +79,7 @@ const password_length = ref(0)
 const contains_eight_characters = ref(false)
 const contains_number = ref(false)
 const contains_uppercase = ref(false)
+const contains_lowercase = ref(false)
 const contains_special_character = ref(false)
 
 const register = () => {
@@ -102,6 +106,7 @@ const checkPassword = () => {
 			
   contains_number.value = /\d/.test(registrationForm.password)
   contains_uppercase.value = /[A-Z]/.test(registrationForm.password)
+  contains_lowercase.value = /[a-z]/.test(registrationForm.password)
   contains_special_character.value = format.test(registrationForm.password)
       
   if (contains_eight_characters.value === true &&

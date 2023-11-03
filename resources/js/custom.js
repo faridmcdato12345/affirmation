@@ -1162,8 +1162,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             setTimeout(function(){
                                 if (!window.matchMedia('(display-mode: fullscreen)').matches) {
                                     console.log('Triggering PWA Window for Android - beforeinstall')
-                                    document.getElementById('menu-install-pwa-android').classList.add('menu-active');
-                                    document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                                    if(window.location.pathname === '/') {
+                                        const introModal = document.querySelector('.intro-modal')
+                                        const style = window.getComputedStyle(introModal).display
+                                        if(introModal && style == 'none') {
+                                            document.getElementById('menu-install-pwa-android').classList.add('menu-active');
+                                            document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                                        }
+                                    } else {
+                                        document.getElementById('menu-install-pwa-android').classList.add('menu-active');
+                                        document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                                    }
                                 }
                             },3500);
                         });

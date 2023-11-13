@@ -6,9 +6,12 @@
       </p>
     </div>
     <div>
-      <h3 class="font-medium text-2xl dark:text-white">
-        {{ currentTitle }}
-      </h3>
+      <div class="flex gap-1">
+        <h3 class="font-medium text-2xl dark:text-white">
+          {{ currentTitle }} 
+        </h3>
+        <HowTo v-if="step == 1 || step == 2" :current-how-to="currentHowTo" :class="currentHowTo" />
+      </div>
       <p class="leading-5 dark:text-gray-300">
         {{ currentDescription }}
       </p>
@@ -39,6 +42,7 @@ import { useForm } from '@inertiajs/vue3'
 import { useAffirmationExercise } from '../Composables/useAffirmationExercise'
 import { toast } from '../Composables/useToast'
 
+import HowTo from './HowTo.vue'
 import Button from './Button.vue'
 import AffirmationRate from './Affirmation/AffirmationRate.vue'
 import AffirmationExperience from './Affirmation/AffirmationExperience.vue'
@@ -56,7 +60,7 @@ const props = defineProps({
 })
 
 const step = ref(1)
-const { stepsTitle, stepsDescription } = useAffirmationExercise()
+const { stepsTitle, stepsDescription, howTo } = useAffirmationExercise()
 
 const formData = useForm({
   progress_id: props.progressId,
@@ -90,6 +94,7 @@ const nextStep = () => {
 const emit = defineEmits(['close-modal','is-complete'])
 const currentTitle = computed(() => stepsTitle[step.value] ?? '')
 const currentDescription = computed(() => stepsDescription[step.value] ?? '')
+const currentHowTo = computed(() => howTo[step.value] ?? '')
 </script>
 <style>
 .Rate .icon {

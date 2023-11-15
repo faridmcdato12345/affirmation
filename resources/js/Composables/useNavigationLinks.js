@@ -90,7 +90,13 @@ export function useNavigationLinks() {
       link: 'subscription',
       label: 'Subscription',
       description: 'Manage your subscription'
-    }
+    },
+    {
+      icon: CurrencyDollarIcon,
+      link: 'setting.subscribe',
+      label: 'Subscription',
+      description: 'Premium subscription'
+    },
 
   ]
 

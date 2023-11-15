@@ -8,6 +8,7 @@ use App\Http\Controllers\Setting\ReportBugController;
 use App\Http\Controllers\Setting\SecurityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSubscriptionController;
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/settings')
@@ -44,5 +45,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/reminder/{reminder}',[ReminderController::class, 'delete'])->name('reminder.delete');
 
         Route::patch('/reminder/status/{reminder}',[ReminderController::class, 'changeStatus'])->name('reminder.status.update');
+        Route::get('/subscribe', [UserSubscriptionController::class, 'index'])->name('subscribe');
     });
 });

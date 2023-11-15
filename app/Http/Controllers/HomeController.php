@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Category;
-use App\Models\Reminder;
 use App\Helpers\SendInBlue;
 use Illuminate\Http\Request;
 use App\Models\ExerciseResult;

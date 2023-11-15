@@ -10,8 +10,12 @@ use App\Http\Controllers\{
   UserCategoryController, 
   UserAffirmationController,
   ComingSoonController,
-  ExerciseResultController
+  ExerciseResultController,
+    UserSubscriptionController
 };
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Spark\Http\Controllers\NewSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +55,11 @@ Route::middleware(['auth','verified'])->group(function () {
 
   Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
   Route::post('exercise', [ExerciseResultController::class, 'store'])->name('exercise.store');
+
+  Route::post('/subscription-checkout', [UserSubscriptionController::class, 'subscribe'])->name('checkout');
+  Route::post('/subscription-cancel', [UserSubscriptionController::class, 'cancelSubscription'])->name('subscription.cancel');
+  Route::post('/subscription-resume', [UserSubscriptionController::class, 'resumeSubscription'])->name('subscription.resume');
 });
+
 
 require __DIR__.'/auth.php';

@@ -168,7 +168,6 @@ import { toast } from '../Composables/useToast'
 
 import AddAffirmation from '../Components/Category/Affirmation/AddAffirmation.vue'
 
-
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Affirmation from '../Components/Category/Affirmation/Affirmations.vue'
 import AddCategory from '../Components/Category/AddCategory.vue'

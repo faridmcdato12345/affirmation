@@ -25,6 +25,7 @@
         "predis/predis": "^2.2",
         "sendinblue/api-v3-sdk": "^8.4",
         "silviolleite/laravelpwa": "^2.0",
+        "spatie/laravel-stripe-webhooks": "^3.6",
         "tightenco/ziggy": "^1.6"
     },
     "require-dev": {

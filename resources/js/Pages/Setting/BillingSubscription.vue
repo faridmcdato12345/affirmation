@@ -15,32 +15,51 @@
               </div>
             </div>
           </div>
-          <!-- Notification banner for trial subscription -->
-          <div class="w-full bg-gray-100 border border-gray-300 rounded-md px-3 py-2 shadow-sm">
-            <p>You are currently with your free trial period. Your trial will expire on Nov 15, 2023.</p>
+
+          <div v-if="!packages.activeSubscription || selectPlan" class="flex gap-x-3 mt-4 items-center justify-between">
+            <a v-if="selectPlan" href="#" type="button" class="text-gray-700 underline-offset-2 hover:text-gray-800" style="text-decoration: underline !important;" @click.prevent="selectPlan = false">Nevermind, I'll keep my old plan</a>
+            <div class="flex gap-x-3">
+              <p class="font-semibold">
+                MONTHLY
+              </p>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  class="sr-only peer"
+                  :checked="yearlyPricing"
+                  @click="yearlyPricing = !yearlyPricing" />
+                <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-green-500/40 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2.5px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+              </label>
+              <p class="font-semibold">
+                YEARLY
+              </p>
+            </div>
           </div>
 
-          <ActiveSubscription v-if="packages.activeSubscription" :subscription="packages.activeSubscription" /> 
-          <PaymentMethod v-if="packages.paymentMethods" :payment-methods="packages.paymentMethods" :default-payment="packages.defaultPaymentMethod" />
+          <CardPlan 
+            v-if="!packages.activeSubscription || selectPlan" 
+            :plans="filteredPlans" 
+            :yearly-pricing="yearlyPricing"
+            :active-subscription-id="packages.activeSubscription?.stripe_price" 
+            @subscribe-plan="subscribePlan" /> 
 
-          <div v-if="!packages.activeSubscription" class="flex gap-x-3 mt-4">
-            <p class="font-semibold">
-              MONTHLY
-            </p>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                class="sr-only peer"
-                :checked="yearlyPricing"
-                @click="yearlyPricing = !yearlyPricing" />
-              <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-green-500/40 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2.5px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-            </label>
-            <p class="font-semibold">
-              YEARLY
-            </p>
-          </div>
+          <ActiveSubscription 
+            v-if="packages.activeSubscription && !selectPlan" 
+            :subscription="packages.activeSubscription" 
+            @change-subscription="selectPlan = true" /> 
 
-          <CardPlan v-if="!props.packages.activeSubscription" :plans="filteredPlans" :yearly-pricing="yearlyPricing" @subscribe-plan="subscribePlan" /> 
+          <PaymentMethod 
+            v-if="packages.paymentMethods.length > 0" 
+            :payment-methods="packages.paymentMethods" 
+            :default-payment="packages.defaultPaymentMethod" />
+
+          <NextBilling 
+            :next-billing-date="packages.activeSubscription?.currentPeriodEnd" 
+            :active-subscription="packages.activeSubscription" 
+            :amount="packages.activeSubscription"
+            :on-grace-period="packages.activeSubscription?.onGracePeriod" />
+
+          <PaymentInvoice v-if="packages.activeSubscription" :invoices="packages.invoices" />
         </div>
       </div>
     </component>
@@ -49,11 +68,16 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { isMobile } from 'mobile-device-detect'
-import { router, usePage } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
+import { useToast } from 'vue-toastification'
+
 import Settings from '../Settings.vue'
 import CardPlan from '../../Components/Subscription/CardPlan.vue'
 import PaymentMethod from '../../Components/Subscription/PaymentMethod.vue'
+import PaymentInvoice from '../../Components/Subscription/PaymentInvoice.vue'
 import ActiveSubscription from '../../Components/Subscription/ActiveSubscription.vue'
+import AuthenticateMobileSettingLayoutVue from '../../Layouts/AuthenticateMobileSettingLayout.vue'
+import NextBilling from '../../Components/Subscription/NextBilling.vue'
 
 const props = defineProps({
   packages: {
@@ -74,12 +98,9 @@ const props = defineProps({
   }
 })
 
-const page = usePage()
+const toast = useToast()
+const selectPlan = ref(false)
 const yearlyPricing = ref(false)
-
-console.log('Subscription: ', props.packages.activeSubscription)
-console.log('Packages: ', props.packages)
-console.log('Payment Method: ', props.packages.defaultPaymentMethod)
 
 const filteredPlans = computed(() => ({
   ...props.packages.plans?.map(plan => ({
@@ -96,9 +117,15 @@ const subscribePlan = (plan) => {
     plan_name: plan.name,
     plan_id: plan.plan.plan_id
   }, {
-    onSuccess: (res) => {
-      console.log(page)
-      console.log({ res })
+    onSuccess: () => {
+      if(selectPlan.value) {
+        selectPlan.value = false
+        return toast.success('Subscription has been updated successfully!')
+      }
+      toast.success('Thank you for subscribing to premium!')
+    },
+    onError: () => {
+      toast.error('Something went wrong! Please contact the support')
     }
   })
 }

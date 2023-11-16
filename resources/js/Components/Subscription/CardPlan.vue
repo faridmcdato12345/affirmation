@@ -30,7 +30,11 @@
     </div>
     <div class="bg-gray-200 dark:bg-gray-700 w-full px-4 py-3 rounded-b-md">
       <div class="flex justify-end">
+        <div v-if="isCurrentPlan(plan)">
+          Currently Subscribed
+        </div>
         <Button 
+          v-if="!isCurrentPlan(plan)"
           label="SUBSCRIBE" 
           size="sm" 
           color="success" 
@@ -41,10 +45,11 @@
   </div>
 </template>
 <script setup>
+import { computed } from 'vue'
 import Button from '../../Components/Button.vue'
 import { CheckCircleIcon } from '@heroicons/vue/24/solid'
 
-defineProps({
+const props = defineProps({
   plans: {
     type: Object,
     default: () => {}
@@ -52,9 +57,16 @@ defineProps({
   yearlyPricing: {
     type: Boolean,
     default: false
+  },
+  activeSubscriptionId: {
+    type: String,
+    default: ''
   }
-
 })
 
 const emit = defineEmits(['subscribe-plan'])
+
+const isCurrentPlan = (plan) => computed(() => {
+  return props.activeSubscriptionId === plan?.plan?.plan_id
+}).value
 </script>

@@ -1,24 +1,27 @@
 <?php
 
 namespace App\Classes;
+
+use Carbon\Carbon;
 use Laravel\Cashier\Cashier;
 use Stripe\StripeClient;
 
 class ProductManager 
 {
     public $plans;
-    public $vendorInfo;
     public $activeSubscription;
     public $paymentMethods;
+    public $invoices;
     public $defaultPaymentMethod;
+    public $user;
 
     protected StripeClient $stripe;
     
     public function __construct()
     {
         $this->plans    = config('subscription.plans');
-        $this->vendorInfo  = config('subscription.receipt_data');
-        $this->stripe      = Cashier::stripe();
+        $this->stripe   = Cashier::stripe();
+        $this->user     = auth()->user();
 
         //Get Prices
         $this->getPrices();
@@ -28,6 +31,9 @@ class ProductManager
 
         //Get Payment Methods
         $this->getPaymentMethods();
+
+        //Get Invoices
+        $this->getInvoices();
     }
 
     public static function make()
@@ -48,14 +54,14 @@ class ProductManager
      | Get Active User Subscription
      |----------------------------------------------------------------------
      | Returns the current active subscription of the user
-     | and checks if the subscription is still on 
-     | grace period. 
+     | and checks if the subscription is still on grace period. 
+     |
      |
      */
-    public function getActiveSubscription(): void 
+    protected function getActiveSubscription(): void 
     {
         //Bind the package here to show
-        $this->activeSubscription = auth()->user()->subscription('default');
+        $this->activeSubscription = $this->user->subscription('default');
         
         //If no active subscription return 
         if(!$this->activeSubscription) return;
@@ -70,16 +76,33 @@ class ProductManager
             }
 
             if(isset($this->activeSubscription['plan'])) {
-                if(auth()->user()->subscription('default')->onGracePeriod()) {
-                    $this->activeSubscription['onGracePeriod'] = true;
-                }
+                $this->activeSubscription['currentPeriodEnd'] = Carbon::createFromTimestamp($this->user
+                    ->subscription('default')
+                    ->asStripeSubscription()->current_period_end)
+                    ->toFormattedDateString();
+                $this->activeSubscription['onGracePeriod'] = $this->user->subscription('default')->onGracePeriod();
+                $this->activeSubscription['amount'] = $this->stripe
+                    ->prices
+                    ->retrieve($this->activeSubscription['stripe_price']);
             }
         }
     }
 
-    public function getPaymentMethods(): void
+    protected function getPaymentMethods(): void
     {
-        $this->paymentMethods = auth()->user()->paymentMethods();
-        $this->defaultPaymentMethod = auth()->user()->defaultPaymentMethod();
+        $this->paymentMethods = $this->user->paymentMethods();
+        $this->defaultPaymentMethod = $this->user->defaultPaymentMethod();
+    }
+
+    protected function getInvoices()
+    {
+        $this->invoices = $this->user->invoices()->map(function ($invoice) {
+            return [
+                'id' => $invoice->id,
+                'date' => $invoice->date()->toFormattedDateString(),
+                'total' => $invoice->total(),
+                'paid' => $invoice->paid
+            ];
+        });
     }
 }

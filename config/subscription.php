@@ -31,8 +31,8 @@ return [
       [
           'name'               => 'Premium Founder\'s Pricing',
           'description'        => 'Special Founder\'s Pricing. Get access to the premium features to help improve your mental wellness journey.',
-          'monthly_id'         => env('APP_ENV', 'local') === 'production' ? env('FOUNDER_PREMIUM_MONTHLY_PRICE') : env('FOUNDER_PREMIUM_MONTHLY_PRICE'),
-          'yearly_id'          => env('APP_ENV', 'local') === 'production' ? env('FOUNDER_PREMIUM_YEARLY_PRICE') : env('FOUNDER_PREMIUM_YEARLY_PRICE'),
+          'monthly_id'         => env('APP_ENV', 'local') === 'production' ? env('PROD_FOUNDER_MONTHLY_PRICE') : env('FOUNDER_PREMIUM_MONTHLY_PRICE'),
+          'yearly_id'          => env('APP_ENV', 'local') === 'production' ? env('PROD_FOUNDER_YEARLY_PRICE') : env('FOUNDER_PREMIUM_YEARLY_PRICE'),
           'monthly_incentive'  => 'Save 40%',
           'yearly_incentive'   => 'Save 50%',
           'features' => [
@@ -47,8 +47,8 @@ return [
       [
           'name'               => 'Premium',
           'description'        => 'Get access to the premium features to help improve your mental wellness journey.',
-          'monthly_id'         => env('APP_ENV', 'local') === 'production' ? env('PREMIUM_MONTHLY_PRICE') : env('PREMIUM_MONTHLY_PRICE'),
-          'yearly_id'          => env('APP_ENV', 'local') === 'production' ? env('PREMIUM_YEARLY_PRICE') : env('PREMIUM_YEARLY_PRICE'),
+          'monthly_id'         => env('APP_ENV', 'local') === 'production' ? env('PROD_PREMIUM_MONTHLY_PRICE') : env('PREMIUM_MONTHLY_PRICE'),
+          'yearly_id'          => env('APP_ENV', 'local') === 'production' ? env('PROD_PREMIUM_YEARLY_PRICE') : env('PREMIUM_YEARLY_PRICE'),
           'monthly_incentive'  => '',
           'yearly_incentive'   => 'Save 20%',
           'features' => [

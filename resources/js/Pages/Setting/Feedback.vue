@@ -116,7 +116,6 @@ const feedbackForm = useForm({
 
 
 const save = () => {
-  console.log('wtf')
   form.post(route('setting.reportbug.store'),{
     onSuccess: () => {
       form.reset('description'),

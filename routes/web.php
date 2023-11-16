@@ -56,10 +56,20 @@ Route::middleware(['auth','verified'])->group(function () {
   Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
   Route::post('exercise', [ExerciseResultController::class, 'store'])->name('exercise.store');
 
-  Route::post('/subscription-checkout', [UserSubscriptionController::class, 'subscribe'])->name('checkout');
-  Route::post('/subscription-cancel', [UserSubscriptionController::class, 'cancelSubscription'])->name('subscription.cancel');
-  Route::post('/subscription-resume', [UserSubscriptionController::class, 'resumeSubscription'])->name('subscription.resume');
+ Route::controller(UserSubscriptionController::class)->group(function () {
+   Route::get('/user/payment-method/add',  'addPaymentMethod')->name('payment-method.add');
+   Route::post('/user/payment-method/delete',  'deletePaymentMethod')->name('payment-method.delete');
+   Route::post('/user/payment-method/set-default',  'setAsDefaultPayment')->name('payment-method.default');
+
+   Route::post('/subscription-checkout',  'subscribe')->name('checkout');
+   Route::post('/subscription-cancel',  'cancelSubscription')->name('subscription.cancel');
+   Route::post('/subscription-resume',  'resumeSubscription')->name('subscription.resume');
+
+   Route::get('/user/invoice/{invoice}', 'downloadInvoice')->name('invoice.download');
+ });
+
 });
 
+Route::stripeWebhooks('stripe/webhook');
 
 require __DIR__.'/auth.php';

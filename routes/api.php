@@ -27,4 +27,3 @@ Route::apiResource('categories.affirmations', AffirmationController::class)->sha
 
 Route::get('affirmation', [UserController::class, 'getAffirmation']);
 Route::apiResource('affirmations', AffirmationController::class)->only(['index', 'show']);
-Route::stripeWebhooks('stripe-webhook');

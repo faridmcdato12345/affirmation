@@ -109,14 +109,6 @@ const checkPassword = () => {
   contains_lowercase.value = /[a-z]/.test(registrationForm.password)
   contains_special_character.value = format.test(registrationForm.password)
       
-  if (contains_eight_characters.value === true &&
-					contains_special_character.value === true &&
-					contains_uppercase.value === true &&
-					contains_number.value === true) {
-    console.log('valid')		
-  } else {
-    console.log('invalid')
-  }
 }
 
 </script>

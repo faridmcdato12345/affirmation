@@ -9,8 +9,14 @@ export function useAffirmationExercise() {
     2: 'You are the source of the change you want to see in your life.',
   }
 
+  const howTo = {
+    1: 'alignment',
+    2: 'affirmation',
+  }
+
   return { 
     stepsTitle, 
-    stepsDescription 
+    stepsDescription,
+    howTo
   }
 }

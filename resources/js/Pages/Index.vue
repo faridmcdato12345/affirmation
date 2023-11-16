@@ -1,10 +1,5 @@
 <template>
-  <VOnboardingWrapper 
-    v-show="user.show_introduction" 
-    ref="wrapper" 
-    :steps="homeSteps" 
-    class="intro-modal"
-    @finish="hideTutorialOnStart">
+  <VOnboardingWrapper v-show="user.show_introduction" ref="wrapper" :steps="homeSteps" @finish="hideTutorialOnStart">
     <template #default="{ previous, next, step, isFirst, isLast, index }">
       <VOnboardingStep>
         <div class="bg-white dark:bg-gray-800 shadow rounded-lg max-w-md">

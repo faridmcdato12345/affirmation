@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Laravel\Cashier\Subscription;
+use Laravel\Cashier\SubscriptionItem;
 use Spatie\WebhookClient\Models\WebhookCall;
 
 class CustomerSubscriptionUpdatedJob implements ShouldQueue
@@ -41,13 +42,21 @@ class CustomerSubscriptionUpdatedJob implements ShouldQueue
             }
 
             //Create Subscription Item 
-            Subscription::create([
+            $subscription = Subscription::create([
                 'user_id' => $user->id,
                 'name' => 'default',
                 'stripe_id' => $data['id'],
                 'stripe_status' =>  $data['status'],
                 'stripe_price' => $data['plan']['id'],
                 'quantity' => $data['quantity']
+            ]);
+            
+            SubscriptionItem::create([
+                'subscription_id' => $subscription->id,
+                'stripe_id' => $data['id'],
+                'stripe_price' => $data['plan']['id'],
+                'quantity' => $data['quantity'],
+                'stripe_product' => $data['plan']['product']
             ]);
         }
     }

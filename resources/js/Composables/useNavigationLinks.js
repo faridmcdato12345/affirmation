@@ -85,17 +85,17 @@ export function useNavigationLinks() {
       description: 'View your login history',
       leftIcon: ChevronRightIcon
     },
-    {
-      icon: CurrencyDollarIcon,
-      link: 'subscription',
-      label: 'Subscription',
-      description: 'Manage your subscription'
-    },
+    // {
+    //   icon: CurrencyDollarIcon,
+    //   link: 'subscription',
+    //   label: 'Subscription',
+    //   description: 'Manage your subscription'
+    // },
     {
       icon: CurrencyDollarIcon,
       link: 'setting.subscribe',
       label: 'Subscription',
-      description: 'Premium subscription'
+      description: 'Easily manage your subscription'
     },
 
   ]

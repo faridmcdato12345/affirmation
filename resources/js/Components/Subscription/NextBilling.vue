@@ -38,6 +38,6 @@ const props = defineProps({
 
 let formattedAmount = new Intl.NumberFormat('en-US', {
   style: 'currency',
-  currency: props.activeSubscription?.amount?.currency,
+  currency: props.activeSubscription?.amount?.currency ?? 'usd',
 })
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="absolute right-8">
-      <p class="text-green-700 font-medium">
+      <p class="text-green-700 font-medium dark:text-green-500">
         Step {{ step }} / 3
       </p>
     </div>
     <div>
-      <div class="flex gap-1">
+      <div class="flex gap-1 items-center gap-x-1">
         <h3 class="font-medium text-2xl dark:text-white">
           {{ currentTitle }} 
         </h3>

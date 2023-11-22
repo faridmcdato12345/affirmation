@@ -54,7 +54,7 @@ class UserSubscriptionController extends Controller
             } else {
                 $url = $user->newSubscription($request->plan_name, $request->plan_id)
                     ->checkout([
-                        'success_url' => route('home'),
+                        'success_url' => route('setting.subscribe'),
                         'cancel_url'  => route('setting.subscribe')
                     ])->url;
             

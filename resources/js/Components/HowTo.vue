@@ -1,7 +1,7 @@
 <template>
   <div
     class="tooltip" :class="className">
-    <QuestionMarkCircleIcon class="w-full h-6 fill-theme-green cursor-pointer" @click="openToolTip(props.currentHowTo)" />
+    <QuestionMarkCircleIcon class="w-full h-6 fill-theme-green  cursor-pointer" @click="openToolTip(props.currentHowTo)" />
     <div
       class="tooltiptext md:w-32 h-auto" :class="[
         {'active' : isActive},

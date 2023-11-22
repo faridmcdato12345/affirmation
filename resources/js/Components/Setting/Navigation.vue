@@ -17,7 +17,7 @@
           </div>
           <div class="flex flex-col ml-4 justify-center">
             <span class="text-base">{{ link.label }}</span>
-            <p v-if="link.description" class="text-xs">
+            <p v-if="link.description" class="text-xs dark:text-gray-300">
               {{ link.description }}
             </p>
           </div>

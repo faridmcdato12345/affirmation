@@ -5,10 +5,12 @@
     </h3>
     <div class="border-2 border-green-500/40 dark:border-green-600 rounded-md mt-3 bg-white relative dark:bg-gray-900 dark:text-white">
       <div class="p-5 flex-[1]">
-        <h2 class="font-medium mt-1 mb-2">
+        <h2 class="font-medium mt-1 mb-2 dark:text-white">
           {{ subscription?.plan.name }}
         </h2>
-        <p>{{ subscription?.plan?.description }}</p>
+        <p class="dark:text-gray-300">
+          {{ subscription?.plan?.description }}
+        </p>
         <ul class="mt-3">
           <li v-for="(feature, i) in subscription?.plan?.features" :key="i" class="flex items-center gap-x-1">
             <CheckCircleIcon class="h-4 w-4 text-green-600" />
@@ -17,21 +19,24 @@
         </ul>
         <div v-if="!subscription.onGracePeriod" class="mt-2 font-medium flex md:items-center gap-x-2">
           <ExclamationCircleIcon class="h-4 w-4 text-blue-500" />
-          <p class="leading-5">
+          <p class="leading-5 dark:text-white">
             Your <span class="font-semibold">default payment</span> method will be charged automatically for each billing period
           </p>
         </div>
-        <p v-if="subscription.onGracePeriod" class="flex gap-x-1 items-center mt-3 font-medium">
+        <p v-if="subscription.onGracePeriod" class="flex gap-x-1 items-center mt-3 font-medium dark:text-white">
           <ExclamationCircleIcon class="h-4 w-4 text-blue-500" />
           Your subscription is still active until {{ getFormattedDate(subscription.ends_at) }}
         </p>
       </div>
-      <div class="w-full bg-gray-200 px-4 py-2 flex justify-end gap-x-2">
+      <div class="w-full bg-gray-200 dark:bg-gray-700 px-4 py-2 flex justify-end gap-x-2">
         <div 
           v-if="!subscription.onGracePeriod" 
           :disabled="isLoading" 
-          class="flex items-center hover:bg-gray-300 rounded-md transition-all duration-300 cursor-pointer px-4" @click.prevent="showModal('cancel')">
-          <p>Cancel Subscription</p>
+          class="flex items-center hover:bg-gray-300 rounded-md transition-all duration-300 cursor-pointer px-4" 
+          @click.prevent="showModal('cancel')">
+          <p class="dark:text-gray-200">
+            Cancel Subscription
+          </p>
         </div>
         <Button 
           v-if="!subscription.onGracePeriod"

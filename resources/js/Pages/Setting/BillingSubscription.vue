@@ -17,7 +17,9 @@
           </div>
 
           <div v-if="!packages.activeSubscription || selectPlan" class="flex gap-x-3 mt-4 items-center justify-between">
-            <a v-if="selectPlan" href="#" type="button" class="text-gray-700 underline-offset-2 hover:text-gray-800" style="text-decoration: underline !important;" @click.prevent="selectPlan = false">Nevermind, I'll keep my old plan</a>
+            <a v-if="selectPlan" href="#" type="button" class="text-gray-700 underline-offset-2 hover:text-gray-800 dark:text-gray-200" style="text-decoration: underline !important;" @click.prevent="selectPlan = false">
+              Nevermind, I'll keep my old plan
+            </a>
             <div class="flex gap-x-3">
               <p class="font-semibold">
                 MONTHLY

@@ -8,7 +8,7 @@
           </h1>
         </div>
         <div class="flex justify-between">
-          <component :is="isMobile ? 'h5' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium">
+          <component :is="isMobile ? 'h3' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium mb-0">
             Receive notification
           </component>
           <ToggleSwitch :notifiable="isNotify" @toggle-checkbox="updateNotifs" />
@@ -18,7 +18,7 @@
         </p>
         <div v-if="toggleSwitch.value" :class="!isMobile ? 'mb-6 flex justify-between' : 'mb-2'">
           <div class="mt-7">
-            <h1 class="dark:text-white text-theme-green font-medium">
+            <h1 class="dark:text-white text-theme-green font-medium mb-0">
               Personal Reminder
             </h1>
             <p class="dark:text-gray-300">

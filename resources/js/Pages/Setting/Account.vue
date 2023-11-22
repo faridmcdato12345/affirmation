@@ -9,7 +9,7 @@
                 Account Settings
               </h1>
             </div>
-            <div class="mb-10">
+            <div class="mb-5">
               <h1 class="dark:text-white text-theme-green font-medium">
                 Personal Information
               </h1>

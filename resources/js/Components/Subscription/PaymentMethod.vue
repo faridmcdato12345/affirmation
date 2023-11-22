@@ -3,8 +3,8 @@
     <h2 class="dark:text-white mt-5 font-medium">
       Payment Methods
     </h2>
-    <div class="flex flex-col gap-2 border border-gray-150 bg-white darkbg-gray-900 p-2 rounded-md">
-      <div v-for="payment in paymentMethods" :key="payment.id" class="w-full border border-gray-150 rounded-md bg-white dark:text-white dark:bg-gray-900 px-4 py-3">
+    <div class="flex flex-col gap-2 border border-gray-150 bg-white dark:border-gray-600 dark:bg-gray-900 p-2 rounded-md">
+      <div v-for="payment in paymentMethods" :key="payment.id" class="w-full border border-gray-150 rounded-md dark:border-gray-600 bg-white dark:text-white dark:bg-gray-700 px-4 py-3">
         <div class="flex items-center gap-x-4 justify-between">
           <div class="flex gap-x-5 items-center">
             <div class="w-7 h-6 bg-white flex items-center">
@@ -12,15 +12,17 @@
             </div>
             <div class="leading-4">
               <div class="flex gap-x-1 text-gray-700 text-sm">
-                <p class="text-gray-700">
+                <p class="text-gray-700 dark:text-white">
                   {{ payment.card?.brand.charAt(0).toUpperCase() + payment.card?.brand.slice(1) }}
                 </p>
-                <span>Ending in</span>
-                <p class="text-gray-700">
+                <span class="dark:text-white">Ending in</span>
+                <p class="text-gray-700 dark:text-gray-100">
                   {{ payment.card?.last4.padStart('8', '*') }}
                 </p>
               </div>
-              <p>Expires on {{ getMonth(payment.card.exp_month) }} {{ payment.card.exp_year }}</p>
+              <p class="dark:text-gray-300">
+                Expires on {{ getMonth(payment.card.exp_month) }} {{ payment.card.exp_year }}
+              </p>
             </div>
           </div>
           <div v-if="payment.id === defaultPayment.id" class="bg-gray-200 px-3 py-1 rounded-full text-xs">

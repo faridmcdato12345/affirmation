@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="isMobile ? AuthenticateMobileSettingLayoutVue : Settings" route-name="Login History">
+    <component :is="isMobile ? AuthenticateMobileSettingLayoutVue : Settings" route-name="Billing Subscription">
       <div :class="isMobile ? 'w-full h-full p-4' : ''">
         <div class="md:w-full md:pl-12 md:pr-8 md:py-16 h-full">
           <div class="mb-5 border-b-2 border-hover-theme-green pb-5">

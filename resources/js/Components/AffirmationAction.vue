@@ -21,6 +21,7 @@
 <script setup>
 import Button from './Button.vue'
 
+defineEmits(['close-tooltip'])
 </script>
 
 <style scoped>

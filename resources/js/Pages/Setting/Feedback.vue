@@ -18,7 +18,7 @@
             cols="200"
             rows="5"
             placeholder="Help us improve our app"
-            class="border-2 border-hover-theme-green w-full rounded-md px-2 dark:bg-gray-800"></textarea>
+            class="border-2 border-hover-theme-green w-full rounded-md px-3 dark:bg-gray-800 py-2"></textarea>
           <InputError class="mt-2 mb-2" :message="form.errors.description" />
           <Button label="Report Issue" class="mt-3" btn-block color="success" type="submit" />
         </form>
@@ -41,7 +41,7 @@
             cols="200"
             rows="5"
             placeholder="Write your feedback"
-            class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800"></textarea>
+            class="border-2 border-hover-theme-green w-full rounded-md px-3 py-2 dark:bg-gray-800"></textarea>
           <InputError class="mt-2 mb-2" :message="feedbackForm.errors.description" />
           <Button label="Send Feedback" class="mt-3" btn-block color="success" type="submit" />
         </form>
@@ -95,7 +95,7 @@ import Button from '../../Components/Button.vue'
 import Modal from '../../Components/Modal.vue'
 import InputError from '../../Components/InputError.vue'
 
-const routeName = ref('Get In Contact')
+const routeName = ref('Feedback')
 const successMessage = ref(false)
 
 const form = useForm({

@@ -44,7 +44,7 @@
               <template #icon-right>
                 <component 
                   :is="showPass.password ? EyeSlashIcon : EyeIcon" 
-                  class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" 
+                  class="text-theme-green dark:text-gray-500 w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" 
                   @click.prevent="showPass.password = !showPass.password" />
               </template>
             </FormInput>
@@ -57,7 +57,7 @@
                 <template #icon-right>
                   <component 
                     :is="showPass.new_password ? EyeSlashIcon : EyeIcon" 
-                    class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" 
+                    class="text-theme-green dark:text-gray-500 w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" 
                     @click.prevent="showPass.new_password = !showPass.new_password" />
                 </template>
               </FormInput>
@@ -68,7 +68,7 @@
                 <template #icon-right>
                   <component 
                     :is="showPass.confirm_new_password ? EyeSlashIcon : EyeIcon" 
-                    class="text-theme-green w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" 
+                    class="text-theme-green dark:text-gray-500 w-5 h-5 cursor-pointer hover:text-hover-theme-green duration-200 ease-out" 
                     @click.prevent="showPass.confirm_new_password = !showPass.confirm_new_password" />
                 </template>
               </FormInput>
@@ -81,7 +81,7 @@
 
           <div class="mb-8 flex justify-between">
             <div>
-              <h1 class="dark:text-white text-theme-green font-medium">
+              <h1 class="dark:text-white text-theme-green font-medium mb-0">
                 Dark Mode
               </h1>
               <p class="dark:text-gray-400">
@@ -94,14 +94,14 @@
                 class="sr-only peer" 
                 :checked="isDarkMode"
                 @click="toggleDarkMode" />
-              <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[13px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+              <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[10px] sm:after:top-[10px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
             </label>
           </div>
 
           <hr class="my-6" />
           <div class="mb-8 flex justify-between items-center">
             <div>
-              <h1 class="dark:text-white text-theme-green font-medium">
+              <h1 class="dark:text-white text-theme-green font-medium mb-0">
                 Background Theme
               </h1>
               <p class="dark:text-gray-400">
@@ -114,7 +114,7 @@
           <hr class="my-6" />
           <div class="mb-8 flex justify-between items-center">
             <div>
-              <h1 class="dark:text-white text-theme-green font-medium">
+              <h1 class="dark:text-white text-theme-green font-medium mb-0">
                 Intro Tutorial
               </h1>
               <p class="dark:text-gray-400">

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('load', () => {
     'use strict'
     
     //Removing Preloader

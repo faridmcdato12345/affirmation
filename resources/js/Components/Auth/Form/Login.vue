@@ -4,7 +4,7 @@
       <h1 class="font-normal mb-0">
         Sign In
       </h1>
-      <p>Please enter your credentials to proceed to your accounts.</p>
+      <p>Please enter your credentials to proceed to your account.</p>
     </div>
     <form class="" @submit.prevent="submit">
       <FormInput id="email" v-model="loginForm.email" label="Email Address" :error="loginForm.errors.email" required />

@@ -4,7 +4,7 @@
       <img src="/images/bg1.jpg" alt="Background Image" class="object-cover h-full w-full brightness-50" />
       <div class="typewriter w-4/5 absolute bottom-16 left-16">
         <h1 class="text-white font-normal text-2xl md:text-3xl">
-          Affirmation is like a gentle breeze that whispers hope to the souls, strengthening our belief in ourselves and reminding us of the power we hold within.
+          Affirmation is like a gentle breeze that whispers hope to the soul, strengthening our belief in ourselves and reminding us of the power we hold within.
         </h1>
       </div>
     </div>

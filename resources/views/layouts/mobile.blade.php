@@ -12,7 +12,6 @@
     @include('components.apple-meta')
 
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
-    @laravelPWA
     @routes
     @vite(['resources/js/app.js'])
     @inertiaHead

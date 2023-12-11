@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4">
     <p class="leading-4 text-gray-700 dark:text-gray-300">
-      Enter 0-3 times your actions or beliefs have been in line with this affirmation.
+      Enter 0-3 actions that you will do which in line with this affirmation.
     </p>
     <FormInput id="input1" v-model="experience.input1" label="First Experience" required />
     <FormInput id="input2" v-model="experience.input2" label="Second Experience" required />

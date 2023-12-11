@@ -8,7 +8,7 @@
           </h1>
         </div>
         <div class="flex justify-between">
-          <component :is="isMobile ? 'h5' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium">
+          <component :is="isMobile ? 'h3' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium mb-0">
             Receive notification
           </component>
           <ToggleSwitch :notifiable="isNotify" @toggle-checkbox="updateNotifs" />
@@ -18,7 +18,7 @@
         </p>
         <div v-if="toggleSwitch.value" :class="!isMobile ? 'mb-6 flex justify-between' : 'mb-2'">
           <div class="mt-7">
-            <h1 class="dark:text-white text-theme-green font-medium">
+            <h1 class="dark:text-white text-theme-green font-medium mb-0">
               Personal Reminder
             </h1>
             <p class="dark:text-gray-300">
@@ -145,7 +145,6 @@ const toggleSwitch = reactive({
   value: isNotify.value == 1 ? true : false
 })
 const updateNotifs = (data) => {
-  console.log('emited value: ', data)
   toggleSwitch.value = data
   if(data){
     const firebaseConfig = {
@@ -162,7 +161,6 @@ const updateNotifs = (data) => {
     
     const messaging = getMessaging(app)
     if(Notification.permission !== 'denied'){
-      console.log('initial permissionStatus: ',permissionStatus.value) // true
       if(!permissionStatus.value){
         Notification.requestPermission().then((permission) => {
           // If the user accepts, let's create a notification
@@ -180,8 +178,7 @@ const updateNotifs = (data) => {
           }
         }).catch((error) => console.log('error request permission: ', error))
         permissionStatus.value = true
-        console.log('permissionStatus: ', permissionStatus.value)
-      }else{
+      } else {
         getToken(messaging, {
           vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
         }).then(result => {

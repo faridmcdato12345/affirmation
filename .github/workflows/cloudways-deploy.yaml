@@ -1,10 +1,6 @@
 name: Cloudways API Git Pull
 
 on:
-  pull_request:
-    branches:
-      - staging
-
   push:
     branches:
       - staging

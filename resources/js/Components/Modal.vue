@@ -8,7 +8,7 @@
       <Transition name="slide-fade" appear>
         <div
           class="bg-white dark:bg-gray-800 dark:shadow-white/20 dark:border-gray-700 shadow-md border p-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm"
-          :class="!checkRoute ? `w-[96%] md:max-w-[${modalWidth}]` : 'w-[96%] md:w-auto'">
+          :class="!checkRoute ? `w-[96%] ${modalWidth}` : 'w-[96%] md:w-auto'">
           <slot></slot>
         </div>
       </Transition>
@@ -36,9 +36,9 @@ const emit = defineEmits(['update:modelValue'])
 
 const modalWidth = computed(() => {
   return {
-    'sm': '400px',
-    'default': '500px',
-    'lg': '640px'
+    'sm': 'md:max-w-[400px]',
+    'default': 'md:max-w-[500px]',
+    'lg': 'md:max-w-[640px]'
   }[props.maxWidth]
 })
 

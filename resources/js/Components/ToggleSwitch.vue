@@ -54,7 +54,7 @@ const toggleSwitch = () => {
   content: "";
   height: 20px;
   width: 20px;
-  left: 2px;
+  left: 4px;
   bottom: 2px;
   background-color: #8ABE53;
   -webkit-transition: .4s;
@@ -70,9 +70,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
 }
 
 /* Rounded sliders */
@@ -85,7 +85,14 @@ input:checked + .slider:before {
 }
 @media screen and (max-width: 480px) {
   .slider:before {
+    left: 2px;
+  }
+
+  input:checked + .slider:before {
     left: 0px;
+    transform: translateX(28px);
+    -webkit-transform: translateX(28px);
+    -ms-transform: translateX(28px);
   }
 }
 </style>

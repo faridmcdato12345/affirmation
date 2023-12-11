@@ -10,8 +10,12 @@ use App\Http\Controllers\{
   UserCategoryController, 
   UserAffirmationController,
   ComingSoonController,
-  ExerciseResultController
+  ExerciseResultController,
+    UserSubscriptionController
 };
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Spark\Http\Controllers\NewSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +55,21 @@ Route::middleware(['auth','verified'])->group(function () {
 
   Route::get('/coming-soon', [ComingSoonController::class,'index'])->name('coming-soon');
   Route::post('exercise', [ExerciseResultController::class, 'store'])->name('exercise.store');
+
+ Route::controller(UserSubscriptionController::class)->group(function () {
+   Route::get('/user/payment-method/add',  'addPaymentMethod')->name('payment-method.add');
+   Route::post('/user/payment-method/delete',  'deletePaymentMethod')->name('payment-method.delete');
+   Route::post('/user/payment-method/set-default',  'setAsDefaultPayment')->name('payment-method.default');
+
+   Route::post('/subscription-checkout',  'subscribe')->name('checkout');
+   Route::post('/subscription-cancel',  'cancelSubscription')->name('subscription.cancel');
+   Route::post('/subscription-resume',  'resumeSubscription')->name('subscription.resume');
+
+   Route::get('/user/invoice/{invoice}', 'downloadInvoice')->name('invoice.download');
+ });
+
 });
+
+Route::stripeWebhooks('stripe/webhook');
 
 require __DIR__.'/auth.php';

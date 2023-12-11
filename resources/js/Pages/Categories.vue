@@ -78,15 +78,15 @@
               <div class="absolute bottom-[0.5rem] w-full pr-8">
                 <div class="flex justify-between">
                   <div>
-                    <p class="text-gray-600 text-sm dark:text-gray-300">
+                    <p class="text-gray-600 text-sm dark:text-gray-300 font-semibold">
                       <span v-if="category.affirmations.length != category.affirmations_count">Progress: </span>
                       <span v-else>Completed: </span>
                       
-                      <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600' : 'text-green-600'">
+                      <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600 dark:text-gray-300' : 'text-green-600'">
                         {{ category.affirmations ? category.affirmations.length : 0 }}
                       </span>
-                      <span>/</span>
-                      <span class="text-green-600">{{ category.affirmations_count }}</span>
+                      <span> / </span>
+                      <span class="text-green-600 dark:text-green-500">{{ category.affirmations_count }}</span>
                     </p>
                   </div>
                   <div v-if="category.affirmations.length == category.affirmations_count" class="w-[5%]">
@@ -135,8 +135,8 @@
 
     <!-- UPGRADE MODAL -->
     <Modal v-model="upgradeModal">
-      <div class="py-2 flex">
-        <LockClosedIcon class="w-14 mx-auto text-gray-400" />
+      <div class="py-2 flex gap-x-3">
+        <LockClosedIcon class="w-12 mx-auto text-gray-400" />
         <div>
           <h1 class="mt-2 dark:text-white">
             Subscribe to Premium
@@ -148,7 +148,7 @@
       </div>
       <div class="flex items-center justify-end gap-x-2 mt-4">
         <Button label="Cancel" color="gray" component-type="link" @click.prevent="upgradeModal = false" />
-        <Button component-type="link" href="/billing" label="Subscribe for Access" color="success" />
+        <Button component-type="link" href="/settings/subscribe" label="Subscribe for Access" color="success" />
       </div>
     </Modal>
 
@@ -167,7 +167,6 @@ import { Head, router } from '@inertiajs/vue3'
 import { toast } from '../Composables/useToast'
 
 import AddAffirmation from '../Components/Category/Affirmation/AddAffirmation.vue'
-
 
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import Affirmation from '../Components/Category/Affirmation/Affirmations.vue'
@@ -242,8 +241,7 @@ const switchCategory = async () => {
 const refreshCategory = (category) => {
   selectedCategory.value = category
   router.put(route('category.refresh',selectedCategory.value.id),{
-    onSuccess: (response) => {
-      console.log('reponse: ',response)
+    onSuccess: () => {
       toast.success('Status has been updated!')
     },
     onFinish: () => {

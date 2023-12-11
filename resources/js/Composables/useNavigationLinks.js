@@ -66,7 +66,7 @@ export function useNavigationLinks() {
     },
     {
       icon: ClockIcon,
-      link: 'coming-soon',
+      link: 'setting.reminder.index',
       label: 'Reminder',
       description: 'Schedule your personal reminder',
       leftIcon: ChevronRightIcon
@@ -85,12 +85,18 @@ export function useNavigationLinks() {
       description: 'View your login history',
       leftIcon: ChevronRightIcon
     },
+    // {
+    //   icon: CurrencyDollarIcon,
+    //   link: 'subscription',
+    //   label: 'Subscription',
+    //   description: 'Manage your subscription'
+    // },
     {
       icon: CurrencyDollarIcon,
-      link: 'subscription',
+      link: 'setting.subscribe',
       label: 'Subscription',
-      description: 'Manage your subscription'
-    }
+      description: 'Easily manage your subscription'
+    },
 
   ]
 

@@ -17,12 +17,12 @@
           </div>
           <div class="flex flex-col ml-4 justify-center">
             <span class="text-base">{{ link.label }}</span>
-            <p v-if="link.description" class="text-xs">
+            <p v-if="link.description" class="text-xs dark:text-gray-300">
               {{ link.description }}
             </p>
           </div>
         </div>
-        <div v-if="link.label === 'Accountability Partner' || link.label === 'Reminder'">
+        <div v-if="link.label === 'Accountability Partner'">
           <a href="" class="text-sm">Coming Soon</a>
         </div>
         <div v-else class="flex items-center absolute right-4">

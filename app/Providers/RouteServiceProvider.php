@@ -22,7 +22,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/';
-    public const BILLING = '/billing';
+    public const BILLING = '/settings/subscribe';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.

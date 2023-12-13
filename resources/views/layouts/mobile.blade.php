@@ -9,8 +9,8 @@
         content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <title>{{ env('APP_NAME') }}</title>
     <link rel="icon" type="image/png" sizes="128x128" href="{{ asset('favicon.png') }}">
+    <link rel="manifest" href="{{ public_path('site.webmanifest') }}">
     @include('components.apple-meta')
-
     <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
     @routes
     @vite(['resources/js/app.js'])

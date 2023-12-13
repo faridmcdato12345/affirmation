@@ -24,10 +24,6 @@
         "livewire/livewire": "^2.10",
         "predis/predis": "^2.2",
         "sendinblue/api-v3-sdk": "^8.4",
-<<<<<<< HEAD
-=======
-        "silviolleite/laravelpwa": "^2.0",
->>>>>>> 1f147ce99ced0de74babba16a307767249cacdc4
         "spatie/laravel-stripe-webhooks": "^3.6",
         "tightenco/ziggy": "^1.6"
     },

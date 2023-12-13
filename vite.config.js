@@ -3,7 +3,6 @@ import laravel from 'laravel-vite-plugin';
 import path from 'path';
 import vue from '@vitejs/plugin-vue';
 import eslintPlugin from 'vite-plugin-eslint'
-import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
     build: {
@@ -30,21 +29,6 @@ export default defineConfig({
             },
         }),
         eslintPlugin(),
-        VitePWA({ 
-            strategies: 'injectManifest',
-            srcDir: 'public',
-            filename: 'serviceworker.js',
-            workbox: {
-                globPatterns: ['**/*.{js,css,html,ico,png,svg}']
-            },
-            injectManifest: {
-                injectionPoint: undefined
-            },
-            devOptions: {
-                enabled: true,
-                type: 'module'
-            }
-        })
     ],
     server: {
         host: '0.0.0.0',

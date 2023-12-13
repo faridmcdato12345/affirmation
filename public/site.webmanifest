@@ -1,0 +1,79 @@
+{
+    "name":"Affirm",
+    "short_name":"Affirm",
+    "permissions":["notifications"],
+    "start_url":"/",
+    "background_color":"#729343",
+    "theme_color":"#096A2E",
+    "display":"standalone",
+    "orientation": "any",
+    "status_bar": "black",
+    "icons":[
+        {
+            "src": "/images/icons/android-launchericon-72-72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "any"       
+        },
+        {
+            "src":"/images/icons/android-launchericon-96-96.png",
+            "purpose":"any",
+            "sizes": "92x92",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/icons/128.png",
+            "purpose":"any",
+            "sizes": "128x128",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/icons/android-launchericon-144-144.png",
+            "purpose":"any",
+            "sizes": "144x144",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/icons/152.png",
+            "purpose":"any",
+            "sizes": "152x152",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/icons/android-launchericon-192-192.png",
+            "purpose":"any",
+            "sizes": "192x192",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/icons/256.png",
+            "purpose":"any",
+            "sizes": "256x256",
+            "type":"image/png"
+        },
+        {
+            "src":"/images/icons/android-launchericon-512-512.png",
+            "purpose":"any",
+            "sizes": "512x512",
+            "type":"image/png"
+        }
+    ],
+    "shortcuts":[
+        {
+            "name":"Affirm",
+            "description":"Affirmations just a tap away",
+            "url":"/",
+            "icons":{
+                "src":"/images/icons/android-launchericon-72-72.png",
+                "purpose":"any"
+            }
+        },
+        {
+            "name":"Affirm",
+            "description":"Your Daily Affirmations",
+            "url":"/"
+        }
+    ],
+    "custom":{}
+    
+}

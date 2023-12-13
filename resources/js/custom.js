@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Setting Service Worker Locations scope = folder | location = service worker js location
     var pwaScope = ".";
-    var pwaLocation = "/serviceworker.js";
+    var pwaLocation = "/service-worker.js";
     var firebaseLocation = "/firebase-messaging-sw.js";
 
     //Place all your custom Javascript functions and plugin calls below this line

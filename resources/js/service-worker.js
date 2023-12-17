@@ -12,12 +12,11 @@ if (workbox) {
     '/chart',
     '/settings',
     '/settings/account',
-    '/comming-soon',
+    '/coming-soon',
     '/settings/reminder',
     '/settings/feedback',
     '/settings/loginhistory',
     '/settings/subscribe',
-    '/logout',
     '/register',
     '/forgot-password'
   ])

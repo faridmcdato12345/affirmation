@@ -1,5 +1,5 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js')
-precacheAndRoute(self.__WB_MANIFEST)
+
 
 if (workbox) {
 
@@ -23,7 +23,7 @@ if (workbox) {
   ])
 
   // injected assets by Workbox CLI
-  workbox.precaching.precacheAndRoute([])
+  workbox.precaching.precacheAndRoute(self.__WB_MANIFEST || [])
 
   // match routes for homepage, blog and any sub-pages of blog
   workbox.routing.registerRoute(
@@ -60,3 +60,4 @@ if (workbox) {
     })
   )
 }
+self.addEventListener('install', () => self.skipWaiting())

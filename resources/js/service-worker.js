@@ -2,25 +2,6 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox
 
 
 if (workbox) {
-
-  // top-level routes we want to precache
-  workbox.precaching.precacheAndRoute([
-    '/', 
-    '/login',
-    '/categories',
-    '/calendar',
-    '/chart',
-    '/settings',
-    '/settings/account',
-    '/coming-soon',
-    '/settings/reminder',
-    '/settings/feedback',
-    '/settings/loginhistory',
-    '/settings/subscribe',
-    '/register',
-    '/forgot-password'
-  ])
-
   // injected assets by Workbox CLI
   workbox.precaching.precacheAndRoute(self.__WB_MANIFEST || [])
 

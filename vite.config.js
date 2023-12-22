@@ -28,7 +28,7 @@ export default defineConfig({
                 },
             },
         }),
-        eslintPlugin()
+        eslintPlugin(),
     ],
     server: {
         host: '0.0.0.0',

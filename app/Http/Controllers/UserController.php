@@ -7,6 +7,8 @@ use App\Http\Requests\PartnerInviteRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\AccountabilityPartner;
 use App\Models\AccountabilityPartnerNotification;
+use App\Models\AppVersion;
+use App\Models\AppVersionList;
 use App\Models\User;
 use App\Models\UserBackground;
 use Exception;
@@ -173,5 +175,34 @@ class UserController extends Controller
         ]);
 
         return back()->with('success', 'Introduction has been shown at startup successfully!');
+    }
+    public function getUserAppVersion($userId)
+    {
+        try {
+            $user = User::select('id','app_update_trigger')->where('id',$userId)->first();
+            if($user['app_update_trigger'] == 0){
+                return response()->json(['status' => false]);
+            }
+            $appVersion = AppVersion::latest()->first();
+            $appDesc = AppVersionList::select('app_version_id','description')->where('app_version_id',$appVersion->id)->get();
+            return response()->json([
+                'status' => true,
+                'version_number' => $appVersion->version_number,
+                'list' => $appDesc
+            ]);    
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+    }
+
+    public function updateUserTrigger($id)
+    {
+        try {
+            $user = User::where('id',$id)->update(['app_update_trigger' => 0]);
+            return response()->json(['status' => true]);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+        
     }
 }

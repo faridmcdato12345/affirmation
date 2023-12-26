@@ -39,7 +39,8 @@ class User extends Authenticatable
         'background_image',
         'fcm_token',
         'isNotify',
-        'show_introduction' 
+        'show_introduction',
+        'app_update_trigger' 
     ];
 
     /**

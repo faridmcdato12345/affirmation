@@ -19,25 +19,27 @@
             {{ list.description }}
           </li>
         </ol>
+        <hr class="border-dashed mt-4" />
         <div class="mt-3">
-          <h3 class="text-green-700 font-bold dark:text-green-500">
-            HOW TO UPDATE
-          </h3>
+          <h5 class="italic text-green-700 font-bold dark:text-green-500">
+            How to update:
+          </h5>
           <ol>
-            <li class="font-medium mt-1 dark:text-gray-200 text-gray-700">
+            <li class="text-xs italic mt-1 dark:text-gray-200 text-gray-700">
               Click the update button.
             </li>
-            <li class="font-medium mt-1 dark:text-gray-200 text-gray-700">
-              Close the application
+            <li class="text-xs italic mt-1 dark:text-gray-200 text-gray-700">
+              After successful update close the application.
             </li>
-            <li class="font-medium mt-1 dark:text-gray-200 text-gray-700">
+            <li class="text-xs italic mt-1 dark:text-gray-200 text-gray-700">
               Reopen the application to get the latest version of the application.
             </li>
           </ol>        
         </div>
         <form class="mt-3">
           <div class="w-full mt-3">
-            <Button :loading="loading" label="Update" color="success" class="w-full" @click.prevent="update" />
+            <ProgressBar v-if="showProgressBar" :duration="60" />
+            <Button v-else :loading="loading" label="Update" color="success" class="w-full" @click.prevent="update" />
           </div>
         </form>
       </div>
@@ -51,12 +53,18 @@ import LoginForm from '../../Components/Auth/Form/Login.vue'
 import Modal from '../../Components/AppUpdateModal.vue'
 import Button from '../../Components/Button.vue'
 import { WrenchScrewdriverIcon } from '@heroicons/vue/24/solid'
+import ProgressBar from '../../Components/ProgressBar.vue'
 
 const user_id = localStorage.getItem('userId')
 const modalShown = ref(false)
 const loading = ref(false)
+const showProgressBar = ref(false)
 const lists = ref('')
 const version = ref('')
+
+const startProgressBar = () => {
+  showProgressBar.value = true
+}
 fetch('/api/user/' + user_id)
   .then(res => res.json())
   .then(data => {
@@ -74,9 +82,7 @@ const update = () => {
     .then(data => {
       console.log(data)
       if(data.status){
-        setInterval(() => {
-          loading.value = true
-        }, 60000)
+        startProgressBar()
       }
     })
 }

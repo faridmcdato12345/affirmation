@@ -15,7 +15,7 @@ class UpdateApp extends Command
      *
      * @var string
      */
-    protected $signature = 'update:app {data*}';
+    protected $signature = 'update:app {data}';
 
     /**
      * The console command description.
@@ -31,7 +31,8 @@ class UpdateApp extends Command
      */
     public function handle()
     {
-        $dataList = $this->argument('data');
+        $dataString = $this->argument('data');
+        $dataList = explode(',',$dataString);
         $currentVersion = AppVersion::latest()->first();
         if($currentVersion){
             $newVersion = floatval($currentVersion->version_number) + 0.01;

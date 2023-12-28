@@ -1,7 +1,7 @@
 <template>
   <div
     class="tooltip" :class="className">
-    <QuestionMarkCircleIcon class="w-full h-6 fill-theme-green  cursor-pointer" @click="openToolTip(props.currentHowTo)" />
+    <QuestionMarkCircleIcon class="w-full h-5 mt-[-15px] fill-theme-green  cursor-pointer" @click="openToolTip(props.currentHowTo)" />
     <div
       class="tooltiptext md:w-32 h-auto" :class="[
         {'active' : isActive},
@@ -98,19 +98,22 @@ const className = computed(()=> {
     height: auto;
     top: 100%;
     z-index: 100;
-    left: -500%;
+    left: -270%;
   }
   .tooltiptext.affirmation{
     width: 330px;
     height: auto;
-    top: 100%;
+    top: 10px;
     z-index: 100;
-    left: -320%;
+    left: -956%;
   }
-  .tooltip.affirmation{
-    position: absolute;
-    top: 17%;
+}
+@media only screen and (min-width: 768px) {
+  .tooltiptext.alignment{
     left: 25%;
+  }
+  .tooltiptext.affirmation{
+    left: -73%;
   }
 }
 @media only screen and (min-width: 1024px) {

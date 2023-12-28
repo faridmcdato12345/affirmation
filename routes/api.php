@@ -27,3 +27,5 @@ Route::apiResource('categories.affirmations', AffirmationController::class)->sha
 
 Route::get('affirmation', [UserController::class, 'getAffirmation']);
 Route::apiResource('affirmations', AffirmationController::class)->only(['index', 'show']);
+Route::get('/user/{id}',[UserController::class, 'getUserAppVersion']);
+Route::get('/user/update_trigger/{id}',[UserController::class,'updateUserTrigger']);

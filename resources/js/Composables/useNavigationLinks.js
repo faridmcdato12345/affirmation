@@ -11,6 +11,7 @@ import {
   ChevronRightIcon,
   BoltIcon,
   ClockIcon,
+  WrenchScrewdriverIcon,
   UsersIcon
 } from '@heroicons/vue/24/solid'
 
@@ -69,6 +70,13 @@ export function useNavigationLinks() {
       link: 'setting.reminder.index',
       label: 'Reminder',
       description: 'Schedule your personal reminder',
+      leftIcon: ChevronRightIcon
+    },
+    {
+      icon: WrenchScrewdriverIcon,
+      link: 'setting.customization.index',
+      label: 'Customization',
+      description: 'Modify app appearance based on your preference',
       leftIcon: ChevronRightIcon
     },
     {

@@ -69,7 +69,6 @@ Route::middleware(['auth','verified'])->group(function () {
  });
 
 });
-
 Route::stripeWebhooks('stripe/webhook');
 
 require __DIR__.'/auth.php';

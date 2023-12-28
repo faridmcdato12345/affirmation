@@ -1,11 +1,11 @@
 <template>
   <div class="mt-4">
     <p class="leading-4 text-gray-700 dark:text-gray-300">
-      Enter 0-3 actions that you will do which in line with this affirmation.
+      Share 0-3 examples in your life that fit this affirmation
     </p>
-    <FormInput id="input1" v-model="experience.input1" label="First Experience" required />
-    <FormInput id="input2" v-model="experience.input2" label="Second Experience" required />
-    <FormInput id="input3" v-model="experience.input3" label="Third Experience" required />
+    <FormInput id="input1" v-model="experience.input1" label="First Example" required />
+    <FormInput id="input2" v-model="experience.input2" label="Second Example" required />
+    <FormInput id="input3" v-model="experience.input3" label="Third Example" required />
   </div>
 </template>
 <script setup>

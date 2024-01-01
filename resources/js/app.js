@@ -3,7 +3,7 @@ import LazyLoad from "~vanilla-lazyload"
 import "./custom"
 import { initializeApp } from "@firebase/app";
 import { getMessaging, getToken, onMessage  } from "@firebase/messaging";
-
+import { VueCookieNext } from 'vue-cookie-next'
 import { VueQrcodeReader } from "vue-qrcode-reader";
 
 //Inertia Vue
@@ -113,6 +113,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(rate)
+      .use(VueCookieNext)
       .use(Toast, options)
       .use(ZiggyVue)
       .use(VueQrcodeReader)

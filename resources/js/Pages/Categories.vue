@@ -1,7 +1,7 @@
 <template>
   <AuthenticatedLayout background-image="the-river-gfd490d610_1280.jpg" class="">
     <Head title="Categories" />
-    <div class="h-screen w-full bg-gray-900/60 fixed top-0"></div>
+    <div class="h-screen w-full bg-gray-800/40 backdrop-blur-sm fixed top-0"></div>
     <div class="h-screen w-full flex flex-col px-6 md:max-w-7xl mx-auto z-20 relative">
       <h1 class="text-white text-3xl mt-20 text-center">
         Categories
@@ -75,13 +75,12 @@
                 </p>
               </div>
               
-              <div class="absolute bottom-[0.5rem] w-full pr-8">
+              <div class="absolute bottom-[1rem] w-full pr-8">
                 <div class="flex justify-between">
                   <div>
-                    <p class="text-gray-600 text-sm dark:text-gray-300 font-semibold">
+                    <p class="text-gray-600 text-sm dark:text-gray-300 font-medium">
                       <span v-if="category.affirmations.length != category.affirmations_count">Progress: </span>
                       <span v-else>Completed: </span>
-                      
                       <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600 dark:text-gray-300' : 'text-green-600'">
                         {{ category.affirmations ? category.affirmations.length : 0 }}
                       </span>
@@ -135,20 +134,20 @@
 
     <!-- UPGRADE MODAL -->
     <Modal v-model="upgradeModal">
-      <div class="py-2 flex gap-x-3">
-        <LockClosedIcon class="w-12 mx-auto text-gray-400" />
+      <div class="py-2 flex gap-x-5">
+        <LockClosedIcon class="w-10 mx-auto text-gray-400" />
         <div>
           <h1 class="mt-2 dark:text-white">
             Subscribe to Premium
           </h1>
-          <p class="dark:text-gray-400 text-base max-w-md mx-auto leading-6 mt-2 font-light">
+          <p class="dark:text-gray-200 text-base max-w-md mx-auto leading-6 mt-2 font-light">
             Gain access to our premium categories, exclusive contents and exciting features within our app.
           </p>
         </div>
       </div>
       <div class="flex items-center justify-end gap-x-2 mt-4">
         <Button label="Cancel" color="gray" component-type="link" @click.prevent="upgradeModal = false" />
-        <Button component-type="link" href="/settings/subscribe" label="Subscribe for Access" color="success" />
+        <Button component-type="link" href="/settings/subscribe" label="Subscribe to Premium" color="success" />
       </div>
     </Modal>
 

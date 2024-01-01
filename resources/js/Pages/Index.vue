@@ -59,20 +59,46 @@
     <Modal v-model="completeModalShown">
       <CompleteCategory />
     </Modal>
+   
+    <!-- UPGRADE MODAL -->
+    <Modal v-model="showUpgradeModal" max-width="default" persistent>
+      <div class="py-2 flex gap-x-5">
+        <div class="mt-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="stroke-green-600 w-10 h-10">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="mt-2 dark:text-white text-xl">
+            Hey There!
+          </h1>
+          <p class="dark:text-gray-200 text-base x-auto leading-6 mt-2 max-w-sm text-">
+            Are you enjoying this application? Unlock exclusive features: more affirmations, custom backgrounds, 
+            scheduled notifications, and more by subscribing to our premium plan.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-x-2 mt-4">
+        <Button label="Close" color="gray" component-type="link" @click.prevent="hideModal" />
+        <Button component-type="link" label="Subscribe to Premium" color="success" @click.prevent="redirectToUpgrade" />
+      </div>
+    </Modal> 
   </AuthenticatedLayout>
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import { VOnboardingWrapper, useVOnboarding, VOnboardingStep } from 'v-onboarding'
-import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
-import Button from '../Components/Button.vue'
+import { useCookie } from 'vue-cookie-next'
+
 import Modal from '../Components/Modal.vue'
+import Button from '../Components/Button.vue'
+import { toast } from '../Composables/useToast'
+import { useAppIntro } from '../Composables/useAppIntro'
+import { useInsertIndexdb } from '../Composables/useInsertIndexdb'
+import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import AffirmationExercise from '../Components/AffirmationExercise.vue'
 import CompleteCategory from '../Components/Category/CompleteCategory.vue'
-import { toast } from '../Composables/useToast'
-import { useInsertIndexdb } from '../Composables/useInsertIndexdb'
-import { useAppIntro } from '../Composables/useAppIntro'
 
 const props = defineProps({
   affirmation: Object,
@@ -84,11 +110,13 @@ const props = defineProps({
 })
 const modalShown = ref(false)
 const completeModalShown = ref(false)
+const showUpgradeModal = ref(false)
 const wrapper = ref('')
 
 const page = usePage()
 const { homeSteps } = useAppIntro()
 const { start } = useVOnboarding(wrapper)
+const { setCookie, getCookie } = useCookie()
 
 const user = computed(() => page.props.auth.user)
 
@@ -118,7 +146,31 @@ onMounted(() => {
   if(user.value.show_introduction) {
     start()
   } 
+
+  setTimeout(() => {
+    promptUserUpgrade()
+  }, 2000)
 })
+
+const hideModal = () => {
+  showUpgradeModal.value = false
+  setCookie('upgradeModalShown', true, { expire: '3d' })
+}
+
+const promptUserUpgrade = () => {
+  if (props.isSubscribed) return
+  if (user.value.show_introduction) return 
+
+  const cookie = getCookie('upgradeModalShown')
+  if(!cookie) {
+    showUpgradeModal.value = true
+  }
+}
+
+const redirectToUpgrade = () => {
+  hideModal()
+  router.get(route('setting.subscribe'))
+}
 
 const modifiedAffirmation = computed(() => props.affirmation?.text.replace(/\{([^}]+)\}/, user.value.name))
 </script>

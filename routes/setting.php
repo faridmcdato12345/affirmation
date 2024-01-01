@@ -39,15 +39,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
             ->name('logout');
 
-        Route::get('/reminder',[ReminderController::class, 'index'])->name('reminder.index');
-        Route::post('/reminder',[ReminderController::class, 'store'])->name('reminder.store');
+        Route::get('/reminder', [ReminderController::class, 'index'])->name('reminder.index');
+        Route::post('/reminder', [ReminderController::class, 'store'])->name('reminder.store');
 
-        Route::get('/customization',[CustomizationController::class, 'index'])->name('customization.index');
+        Route::get('/customization', [CustomizationController::class, 'index'])->name('customization.index');
 
-        Route::patch('/reminder/{reminder}',[ReminderController::class, 'update'])->name('reminder.update');
-        Route::delete('/reminder/{reminder}',[ReminderController::class, 'delete'])->name('reminder.delete');
+        Route::patch('/reminder/{reminder}', [ReminderController::class, 'update'])->name('reminder.update');
+        Route::delete('/reminder/{reminder}', [ReminderController::class, 'delete'])->name('reminder.delete');
 
-        Route::patch('/reminder/status/{reminder}',[ReminderController::class, 'changeStatus'])->name('reminder.status.update');
+        Route::patch('/reminder/status/{reminder}', [ReminderController::class, 'changeStatus'])->name('reminder.status.update');
         Route::get('/subscribe', [UserSubscriptionController::class, 'index'])->name('subscribe');
     });
 });

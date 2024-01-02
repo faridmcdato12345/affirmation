@@ -2,7 +2,7 @@
   <AuthLayout>
     <LoginForm />
     <Modal v-model="modalShown" class="relative">
-      <div class="update-icon-div w-2/12">
+      <div class="update-icon-div md:w-2/12 w-1/12">
         <WrenchScrewdriverIcon class="text-green-700 animate-bounce" />
       </div>
       <div class="py-2">

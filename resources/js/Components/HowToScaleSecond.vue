@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>3. Rate the affirmation if it fits what you feel today.</p>
+    <p>Evaluate how well the affirmation aligns with you:</p>
     <div class="l:grid grid-cols-2 gap-2 star-container sm:grid-cols-1 md:rid-cols-1">
       <div class="flex  px-2 mb-2">
         <img src="images/svg/star.svg" alt="star-svg" class="star-icon" />

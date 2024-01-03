@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>1. Internalize and evaluate how you feel today.</p>
-    <p>2. Rate what you feel today by clicking the stars.</p>
+    <p>Take some time to reflect on how you are feeling right now.</p>
+    <p>Rate your feelings today using the star system:</p>
     <div class="l:grid grid-cols-2 gap-2 star-container sm:grid-cols-1 md:rid-cols-1">
       <div class="flex px-2 mb-2">
         <img src="images/svg/star.svg" alt="star-svg" class="star-icon" />
@@ -49,7 +49,6 @@
 }
 p{
   color:#fff;
-  
 }
 .star-container .flex p {
   margin-left: 20px;

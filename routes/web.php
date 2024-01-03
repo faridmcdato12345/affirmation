@@ -11,11 +11,8 @@ use App\Http\Controllers\{
   UserAffirmationController,
   ComingSoonController,
   ExerciseResultController,
-    UserSubscriptionController
+  UserSubscriptionController
 };
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Spark\Http\Controllers\NewSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,9 +64,6 @@ Route::middleware(['auth','verified'])->group(function () {
 
    Route::get('/user/invoice/{invoice}', 'downloadInvoice')->name('invoice.download');
  });
-
 });
-
 Route::stripeWebhooks('stripe/webhook');
-
 require __DIR__.'/auth.php';

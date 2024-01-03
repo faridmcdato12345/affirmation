@@ -7,7 +7,7 @@
     </div>
     <div>
       <div class="flex gap-1 items-center gap-x-1">
-        <h3 class="font-medium text-2xl dark:text-white">
+        <h3 class="font-medium md:text-xl text-base dark:text-white">
           {{ currentTitle }} 
         </h3>
         <HowTo v-if="step == 1 || step == 2" :current-how-to="currentHowTo" :class="currentHowTo" />

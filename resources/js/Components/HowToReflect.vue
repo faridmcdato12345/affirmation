@@ -1,10 +1,10 @@
 <template>
   <div>
     <h1 class="font-medium text-2xl text-white">
-      Instructions:
+      Instructions: What to do?
     </h1>
-    <HowToScaleFirst v-if="step == 1" />
-    <HowToScaleSecond v-if="step == 2" />
+    <HowToReflectFirst v-if="step == 1" />
+    <HowToReflectSecond v-if="step == 2" />
     <Button 
       :label="step < 2 ? 'Next' : 'GOT IT!'" 
       btn-block 
@@ -18,8 +18,8 @@
 <script setup>
 import { ref } from 'vue'
 import Button from './Button.vue'
-import HowToScaleFirst from './HowToScaleFirst.vue'
-import HowToScaleSecond from './HowToScaleSecond.vue'
+import HowToReflectFirst from './HowToReflectFirst.vue'
+import HowToReflectSecond from './HowToReflectSecond.vue'
 
 
 const step = ref(1)

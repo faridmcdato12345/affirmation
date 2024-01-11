@@ -17,11 +17,11 @@
             :date="affirm.created_at" 
             @delete="destroy(affirm.id)" 
             @update="update" />
-          <p v-if="affirmations.length == 0" class="dark:text-gray-300 text-base mt-2 mb-3">
+          <p v-if="affirmations?.length == 0" class="dark:text-gray-300 text-base mt-2 mb-3">
             There are no affirmations added to this category.
           </p>
         </div>
-        <p v-if="affirmations.length != 0" class="dark:text-gray-300 text-sm">
+        <p v-if="affirmations?.length != 0" class="dark:text-gray-300 text-sm">
           Click on an affirmation text to edit and press <span class="font-medium text-black dark:text-green-600">enter</span> to save update.
         </p>
         <div class="flex justify-end mt-4 gap-x-2">

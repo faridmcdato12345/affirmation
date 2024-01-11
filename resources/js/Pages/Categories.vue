@@ -15,7 +15,7 @@
           <div
             v-for="myCategory in myCategories"
             :key="myCategory.id"
-            class="bg-white dark:bg-gray-800 dark:border-gray-600 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
+            class="bg-white dark:bg-gray-800/90 backdrop-blur-lg dark:border-gray-800 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
             @click.prevent="toggleSwitchCategory(myCategory, 'personal')">
             <div class="absolute bottom-3 right-3 gap-x-1 flex">
               <EyeIcon class="w-5 text-gray-500 hover:text-green-600" @click.stop="toggleAffirmation(myCategory)" />
@@ -32,7 +32,7 @@
               {{ myCategory.blurb }}
             </p>
           </div>
-          <div class="bg-white dark:bg-gray-800 dark:border-gray-600 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
+          <div class="bg-white dark:bg-gray-800/90 backdrop-blur-lg dark:border-gray-800 dark:border relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.prevent="addCategoryModal = true">
             <div class="absolute top-3 right-3">
               <PlusCircleIcon class="w-6 text-green-600 hover:text-green-700" />
             </div>
@@ -57,7 +57,7 @@
               :key="category.id"
               class="relative hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer"
               :class="[
-                i == 0 || isPremium ? 'bg-white dark:bg-gray-800 dark:border-gray-600 dark:border' : 'bg-gray-200 dark:bg-gray-800 dark:border dark:border-gray-600'
+                i == 0 || isPremium ? 'bg-white dark:bg-gray-800/90 backdrop-blur-md dark:border-gray-800 dark:border' : 'bg-gray-200 dark:bg-gray-800/90 backdrop-blur-md dark:border dark:border-gray-800'
               ]"
               @click.prevent="toggleSwitchCategory(category)">
               <div v-if="category.id === activeCategory && activeCategoryType === 'App\\Models\\Category'" class="absolute right-3 top-3">
@@ -70,15 +70,15 @@
                 <h3 class="font-medium dark:text-white">
                   {{ category.text }}
                 </h3>
-                <p class="text-gray-600 text-sm dark:text-gray-300 mb-6">
+                <p class="text-gray-600 text-sm dark:text-gray-300 mb-6 leading-6 flex-[1]">
                   {{ category.blurb }}
                 </p>
               </div>
               
-              <div class="absolute bottom-[1rem] w-full pr-8">
+              <div class="w-full pr-8">
                 <div class="flex justify-between">
                   <div>
-                    <p class="text-gray-600 text-sm dark:text-gray-300 font-medium">
+                    <p class="text-gray-600 text-sm dark:text-gray-300 font-medium mt-4">
                       <span v-if="category.affirmations.length != category.affirmations_count">Progress: </span>
                       <span v-else>Completed: </span>
                       <span :class="category.affirmations.length != category.affirmations_count ? 'text-gray-600 dark:text-gray-300' : 'text-green-600'">
@@ -110,8 +110,13 @@
           Please add atleast one affirmation to your category before switching it as active.
         </p>
       </div>
-      <div class="flex items-center justify-center gap-x-2 mt-4">
-        <Button label="Close" btn-block color="gray" @click.prevent="infoSwitchModal = false" />
+      <div class="mt-6 flex align-items-center gap-x-2 justify-content-center">
+        <Button label="Close" class="" btn-block color="gray" @click.prevent="infoSwitchModal = false" />
+        <Button 
+          label="Add Affirmation" 
+          btn-block 
+          color="success" 
+          @click.prevent="infoSwitchModal = false; addAffirmationModal = true" />
       </div>
     </Modal>
 
@@ -135,7 +140,7 @@
     <!-- UPGRADE MODAL -->
     <Modal v-model="upgradeModal">
       <div class="py-2 flex gap-x-5">
-        <LockClosedIcon class="w-10 mx-auto text-gray-400" />
+        <LockClosedIcon class="w-9 mx-auto text-gray-400" />
         <div>
           <h1 class="mt-2 dark:text-white">
             Subscribe to Premium
@@ -150,11 +155,30 @@
         <Button component-type="link" href="/settings/subscribe" label="Subscribe to Premium" color="success" />
       </div>
     </Modal>
+    
+    <Modal v-model="promptModal">
+      <div class="py-2">
+        <LockClosedIcon class="w-9 mx-auto text-gray-400" />
+        <h3 class="max-w-xs font-normal mt-3 text-center mx-auto">
+          Have your affirmations organized the way you want them
+        </h3>
+        <p class="dark:text-gray-200 text-center text-base max-w-md mx-auto leading-6 mt-2 font-light">
+          Gain access to our premium categories, exclusive contents and exciting features within our app.
+        </p>
+        <div class="mt-4">
+          <Button label="Subscribe to Premium" color="success" component-type="link" href="/settings/subscribe" />
+        </div>
+      </div>
+    </Modal>
 
     <Affirmation v-model="showAffirmationModal" :affirmations="selectedCateg?.affirmations" @add-affirmation="addAffirmation" />
     <AddAffirmation v-model="addAffirmationModal" :category="selectedCateg" :errors="errors" />
 
-    <AddCategory v-model="addCategoryModal" />
+    <AddCategory 
+      v-model="addCategoryModal" 
+      :is-premium="isPremium" 
+      :category-count="myCategories?.length"
+      @show-upgrade="promptModal = true" />
     <UpdateCategory v-model="updateCategoryModal" :category="selectedCateg" />
     <DeleteCategory v-model="deleteCategoryModal" :category="selectedCateg?.text" :category-id="selectedCateg?.id" />
   </AuthenticatedLayout>
@@ -188,6 +212,7 @@ const props = defineProps({
 const selectedCategory = ref('')
 const setCategoryModal = ref(false)
 const upgradeModal = ref(false)
+const promptModal = ref(false)
 const addCategoryModal = ref(false)
 const updateCategoryModal = ref(false)
 const infoSwitchModal = ref(false)

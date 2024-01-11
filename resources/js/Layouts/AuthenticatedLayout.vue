@@ -15,9 +15,11 @@ import { ref, computed } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
 import NavigationBar from '../Components/NavigationBar.vue'
+import { useToggleDarkMode } from '../Composables/useToggleDarkMode'
 
 const page = usePage()
 const checkRoute = ref(true)
+useToggleDarkMode()
 
 const bgImage = computed(() => page.props.auth.user.background_image ?? '/images/bg1.jpg')
 const route = window.location.pathname

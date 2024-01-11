@@ -2,31 +2,23 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName" :is-button-header="true" @show-tutorial="tutorial = true">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <div v-if="!isMobile" class="mb-9 border-b-2 border-hover-theme-green pb-5" :class="isMobile ?? 'flex justify-between'">
-          <h1 class="dark:text-white text-theme-green md:text-left text-center">
-            Reminders
+        <div v-if="!isMobile" class="mb-6 border-b border-gray-400 dark:border-gray-700 pb-2" :class="isMobile ?? 'flex justify-between'">
+          <h1 class="dark:text-white text-theme-green md:text-left text-center tracking-normal">
+            Reminder 
           </h1>
         </div>
         <div class="flex justify-between">
-          <component :is="isMobile ? 'h3' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium mb-0">
-            Receive notification
+          <component :is="isMobile ? 'h3' : 'h1'" class="dark:text-white text-theme-green md:text-left font-medium mb-0 tracking-normal">
+            Enable Notifications
           </component>
           <ToggleSwitch :notifiable="isNotify" @toggle-checkbox="updateNotifs" />
         </div>
         <p class="dark:text-gray-300">
           Enable to start receiving notifications
         </p>
-        <div v-if="toggleSwitch.value" :class="!isMobile ? 'mb-6 flex justify-between' : 'mb-2'">
-          <div class="mt-7">
-            <h1 class="dark:text-white text-theme-green font-medium mb-0">
-              Personal Reminder
-            </h1>
-            <p class="dark:text-gray-300">
-              Schedule your reminder to make your affirmation fit your routine.
-            </p>
-          </div>
+        <div v-if="toggleSwitch.value" :class="!isMobile ? 'mb-2 flex justify-end' : 'mb-2'">
           <div v-if="isSubscribed.value" :class="isMobile ? 'flex justify-end' : ''">
-            <component :is="PlusCircleIcon" class="mt-7 w-8 h-8 text-theme-green cursor-pointer hover:text-theme-green/70 transition-all dark:text-green-600 dark:hover:text-green-700" @click.prevent="addTimeModal = true" />
+            <Button label="Add Notification" color="success" @click.prevent="addTimeModal = true" />
           </div>
         </div>
         <div v-if="toggleSwitch.value" class="">
@@ -34,14 +26,14 @@
             <div 
               v-for="reminder in response.reminders" 
               :key="reminder.id" 
-              class="flex justify-between bg-green-800 p-4 text-white rounded items-center mb-4"
+              class="flex justify-between bg-green-700 p-4 text-white rounded items-center mb-4"
               @click="isMobile ? toggleModal('edit', reminder): ''">
               <div :class="!isMobile ? 'w-60' : ''">
                 <p class="text-white text-base font-semibold">
                   {{ convertToAMPPM(reminder.original_time) }}
                 </p>
                 <p v-if="isSubscribed.value" class="text-white">
-                  "{{ reminder.custom_message ? reminder.custom_message : 'You can add your custom message' }}"
+                  {{ reminder.custom_message ? reminder.custom_message : 'You can add your custom message' }}
                 </p>
               </div>
               <div :class="!isMobile ? 'w-52' : ''" @click.stop="toggleData(reminder.status)">
@@ -51,11 +43,11 @@
                 <component 
                   :is="PencilSquareIcon" 
                   v-if="isSubscribed.value" 
-                  class="w-6 h-6 cursor-pointer  duration-200 ease-out " 
+                  class="w-5 h-5 cursor-pointer  duration-200 ease-out " 
                   @click.stop="toggleModal('edit',reminder)" />
                 <component 
                   :is="TrashIcon" 
-                  class="w-6 h-6 cursor-pointer duration-200 ease-out" 
+                  class="w-5 h-5 cursor-pointer duration-200 ease-out" 
                   @click.stop="toggleModal('delete',reminder)" />
               </div>
             </div>
@@ -98,24 +90,23 @@
   </component>
 </template>
 <script setup>
+import { ref,reactive } from 'vue'
+import {  router } from '@inertiajs/vue3'
+import { initializeApp } from '@firebase/app'
+import { isMobile } from 'mobile-device-detect'
+import { getMessaging, getToken } from '@firebase/messaging'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/solid'
+import Settings from '../Settings.vue'
+import Modal from '../../Components/Modal.vue'
+import Button from '../../Components/Button.vue'
+import ToggleSwitch from '../../Components/ToggleSwitch.vue'
 import MobileEditTutorial from '../../Components/MobileEditTutorial.vue'
 import ToggleStatusSwitch from '../../Components/ToggleStatusSwitch.vue'
 import UpdateReminder from '../../Components/Reminder/UpdateReminder.vue'
 import AddReminderModal from '../../Components/Reminder/AddReminder.vue'
 import DeleteReminderModal from '../../Components/Reminder/DeleteReminder.vue'
-import { initializeApp } from '@firebase/app'
-import { getMessaging, getToken } from '@firebase/messaging'
-import ToggleSwitch from '../../Components/ToggleSwitch.vue'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
-import { isMobile } from 'mobile-device-detect'
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/solid'
-import Settings from '../Settings.vue'
-import { PencilSquareIcon, TrashIcon, PlusCircleIcon } from '@heroicons/vue/24/solid'
-import Button from '../../Components/Auth/Button.vue'
-import { ref,reactive } from 'vue'
-import Modal from '../../Components/Modal.vue'
-import {  router } from '@inertiajs/vue3'
-
 
 const routeName = ref('Reminder')
 const modal = ref(false)

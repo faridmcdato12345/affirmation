@@ -55,31 +55,6 @@ class UserController extends Controller
         return back()->with('success', 'Image has been switched successfully!');
     }
 
-    public function uploadUserImage(ImageUploadRequest $request)
-    {
-        $user = auth()->user()->loadCount('backgroundImages');
-
-        if($user->background_images_count > 9) {
-            return back()->with('error', 'You\'ve reached the amount of images allowed for each user');
-        }
-
-        try {
-            DB::beginTransaction();
-            $image = Storage::disk('public')->put(auth()->id(), $request->validated('image'));
-
-            UserBackground::create([
-                'user_id' => auth()->id(),
-                'image' => Storage::disk('public')->url($image) 
-            ]);
-
-            DB::commit();
-        } catch(\Exception $exception) {
-            return back()->with('error', 'Something went wrong in uploading your image.');
-        }
-
-        return back()->with('success', 'Image has been uploaded successfully!');
-    } 
-
     public function update(User $user, UpdateUserRequest $request)
     {
         $user->update($request->validated());

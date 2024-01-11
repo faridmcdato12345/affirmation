@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\AccountabilityPartner;
 use App\Models\AccountabilityPartnerNotification;
 use App\Models\UserAffirmation;
+use App\Models\UserBackground;
 use App\Models\UserCategories;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -35,6 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('user_affirmation', UserAffirmation::class);
         Route::model('accountabilityPartnerInvite', AccountabilityPartner::class);
         Route::model('exerciseReminder', AccountabilityPartnerNotification::class);
+        Route::model('background', UserBackground::class);
 
         $this->configureRateLimiting();
 

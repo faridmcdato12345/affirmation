@@ -2,14 +2,14 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayout : Settings" :route-name="routeName">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-16 md:pr-8 md:py-16 h-full">
-        <div v-if="!isMobile" class="mb-5 border-b-2 border-hover-theme-green pb-4">
+        <div v-if="!isMobile" class="mb-7 border-b border-gray-700 pb-2">
           <h1 class="dark:text-white text-theme-green text-center md:text-left font-semibold">
             Customization
           </h1>
         </div>
-        <div class="mb-8 flex justify-between">
+        <div class="mb-4 flex justify-between">
           <div>
-            <h1 class="dark:text-white text-theme-green font-medium mb-0">
+            <h1 class="dark:text-white text-lg text-theme-green font-medium mb-0">
               Dark Mode
             </h1>
             <p class="dark:text-gray-400">
@@ -22,13 +22,12 @@
               class="sr-only peer" 
               :checked="isDarkMode"
               @click="toggleDarkMode" />
-            <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[10px] sm:after:top-[10px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+            <div class="w-12 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 dark:bg-gray-600 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[9px] sm:after:top-[9px] after:left-[2px] peer-checked:after:left-[5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
           </label>
         </div>
-        <hr class="my-6" />
-        <div class="mb-8 flex justify-between items-center">
+        <div class="flex justify-between items-center border-t dark:border-gray-700 py-5">
           <div>
-            <h1 class="dark:text-white text-theme-green font-medium mb-0">
+            <h1 class="dark:text-white text-lg text-theme-green font-medium mb-0">
               Background Theme
             </h1>
             <p class="dark:text-gray-400">
@@ -37,13 +36,24 @@
           </div>
           <Button label="Themes" color="success" component-type="link" href="/themes" />
         </div>
+        <div class="mb-8 flex justify-between items-center border-t dark:border-gray-700 py-5">
+          <div>
+            <h1 class="dark:text-white text-lg text-theme-green font-medium mb-0">
+              Intro Tutorial
+            </h1>
+            <p class="dark:text-gray-400">
+              Walkthrough on how the application works
+            </p>
+          </div>
+          <Button label="Show Intro" color="success" @click.prevent="enableIntro" />
+        </div> 
       </div>
     </div>
   </component>
 </template>
 <script setup>
-
 import { ref } from 'vue'
+import { router } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
 import Settings from '../Pages/Settings.vue'
 import AuthenticateMobileSettingLayout from '../Layouts/AuthenticateMobileSettingLayout.vue'
@@ -53,4 +63,12 @@ import Button from '../Components/Button.vue'
 const { isDarkMode, toggleDarkMode } = useToggleDarkMode()
 
 const routeName = ref('Customization')
+
+const enableIntro = async () => {
+  router.patch(route('intro.show'), {} ,{
+    onSuccess: () => {
+      router.get(route('home'))
+    }
+  })
+}
 </script>

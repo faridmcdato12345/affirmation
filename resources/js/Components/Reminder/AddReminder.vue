@@ -1,11 +1,13 @@
 <template>
   <Modal v-model="modalShown">
     <div class="text-left">
-      <h1 class="mt-2 mb-8 dark:text-white">
-        Add Personal Reminder
+      <h1 class="mt-2 dark:text-white">
+        Add Reminder
       </h1>
+      <p class="mb-4">
+        Select the time that you want to get notified and write your own message.
+      </p>
     </div>
-    <hr />
     <form class="mt-8" @submit.prevent="addTime">
       <div class="edit-modal-body">
         <FormInput id="input1" v-model="form.original_time" label="Time" required type="time" :error="form.errors.original_time" />
@@ -17,11 +19,11 @@
           cols="10"
           rows="4"
           placeholder="Write your custom message here"
-          class="border-2 border-hover-theme-green w-full rounded-md px-2 py-1 dark:bg-gray-800 mt-4"></textarea>
+          class="border-2 border-green-700 w-full rounded-md px-2 py-1 dark:bg-gray-800 mt-4"></textarea>
       </div>
       <div class="flex justify-end gap-x-2 mt-4">
-        <Button label="Save" type="submit" color="success" />
         <Button label="Cancel" color="gray" @click.prevent="modalShown = false" />
+        <Button label="Save Reminder" type="submit" color="success" />
       </div>
     </form>
   </Modal>

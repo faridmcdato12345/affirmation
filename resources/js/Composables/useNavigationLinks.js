@@ -54,7 +54,7 @@ export function useNavigationLinks() {
     {
       icon: UserIcon,
       link: 'setting.user.index',
-      label: 'Account Setting',
+      label: 'Account Information',
       description: 'Personal Infomation, Email',
       leftIcon: ChevronRightIcon
     },
@@ -69,7 +69,7 @@ export function useNavigationLinks() {
       icon: ClockIcon,
       link: 'setting.reminder.index',
       label: 'Reminder',
-      description: 'Schedule your personal reminder',
+      description: 'Set your desired schedule for your reminders',
       leftIcon: ChevronRightIcon
     },
     {

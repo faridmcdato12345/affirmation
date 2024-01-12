@@ -67,13 +67,17 @@ class HomeController extends Controller
      */
     public function categories()
     {
+        $categories = Category::with(['affirmations' => function($query){
+            $query->whereHas('progress',function(Builder $builder){
+                $builder->where('user_id',auth()->id())->where('status','=','1');
+            })->count();
+        }])->withCount('affirmations')->get()->groupBy('premium');
+
+        $myCategories = UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get();
+
         return Inertia::render('Categories', [
-            'categories'         => Category::with(['affirmations' => function($query){
-                                        $query->whereHas('progress',function(Builder $builder){
-                                            $builder->where('user_id',auth()->id())->where('status','=','1');
-                                        })->count();
-                                    }])->withCount('affirmations')->get()->groupBy('premium'),
-            'myCategories'       => UserCategories::where('user_id', auth()->id())->with(['affirmations'])->get(),
+            'categories'         => $categories,
+            'myCategories'       => $myCategories, 
             'isPremium'          => Auth::user()->subscribed(),
             'activeCategory'     => Auth::user()->active_category_id,
             'activeCategoryType' => Auth::user()->active_category_type
@@ -82,8 +86,10 @@ class HomeController extends Controller
 
     public function themes()
     {
+        $userBackgrounds = UserBackground::where('user_id', auth()->id())->get(['id', 'user_id', 'image']);
         return Inertia::render('Themes', [
-            'backgroundImages' => UserBackground::where('user_id', auth()->id())->get(['user_id', 'image'])
+            'backgroundImages' => $userBackgrounds,
+            'isPremium' =>  Auth::user()->subscribed(),
         ]);
     }
 

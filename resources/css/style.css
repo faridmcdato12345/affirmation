@@ -3091,10 +3091,6 @@ button:active {
   -webkit-appearance: none !important;
 }
 
-.theme-light input, select {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
 .input-style {
   position: relative;
   margin-bottom: 15px !important;

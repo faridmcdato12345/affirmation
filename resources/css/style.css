@@ -6268,10 +6268,6 @@ input[type=number] {
   background-image: linear-gradient(to bottom, #656D78, #434A54);
 }
 
-.theme-light input:not([type=submit]):not(.focus-color):focus, .theme-light select:focus, .theme-light textarea:active {
-  border-color: rgba(0, 0, 0, 0.3) !important;
-}
-
 .theme-light [data-card-height=cover] input:not([type=submit]):not(.focus-color):focus, .theme-light [data-card-height=cover] select:focus, .theme-light [data-card-height=cover] textarea:active {
   border-color: rgba(255, 255, 255, 0.3) !important;
 }

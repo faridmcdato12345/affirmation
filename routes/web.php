@@ -11,11 +11,9 @@ use App\Http\Controllers\{
   UserAffirmationController,
   ComingSoonController,
   ExerciseResultController,
-    UserSubscriptionController
+  UserSubscriptionController,
+    UserThemeController
 };
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Spark\Http\Controllers\NewSubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,13 +32,15 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/categories','categories')->name('categories');
     Route::get('/themes', 'themes')->name('themes');
+    Route::delete('/themes', 'deleteBackground')->name('themes.destroy');
     Route::get('/settings', 'settings')->name('settings');
     Route::post('/categories/active', 'setActiveCategory')->name('setCategory');
     Route::get('/calendar',[CalendarController::class,'index'])->name('calendar.index');
     Route::get('/chart',[ChartController::class,'index'])->name('chart.index');
   });
 
-  Route::post('/themes/upload-image', [UserController::class, 'uploadUserImage'])->name('themes.image-upload');
+  Route::post('/themes/upload-image', [UserThemeController::class, 'uploadUserImage'])->name('themes.image-upload');
+  Route::delete('/themes/delete-image/{background}', [UserThemeController::class, 'deleteUserImage'])->name('themes.delete');
 
   Route::put('user/{user}/switch-background', [UserController::class, 'switchBackground']);
   Route::post('/users/delete', [UserController::class, 'delete'])->name('deleteUser');
@@ -67,8 +67,6 @@ Route::middleware(['auth','verified'])->group(function () {
 
    Route::get('/user/invoice/{invoice}', 'downloadInvoice')->name('invoice.download');
  });
-
 });
 Route::stripeWebhooks('stripe/webhook');
-
 require __DIR__.'/auth.php';

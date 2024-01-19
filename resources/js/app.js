@@ -113,6 +113,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(rate)
+      .use(VueCookieNext)
       .use(Toast, options)
       .use(ZiggyVue)
       .use(VueQrcodeReader)

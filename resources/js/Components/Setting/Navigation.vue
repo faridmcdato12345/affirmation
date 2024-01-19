@@ -5,7 +5,7 @@
       v-for="link in settingNavLinks"
       :key="`${link.label}-route`"
       :href="link.link != 'subscription' ? route(link.link) : (link.link === 'Reminder' || link.link === 'Accountability Partner') ? '#' : '/billing'"
-      class="border-b-2 text-xl dark:text-white text-theme-green hover:bg-gray-100 dark:hover:bg-gray-700 dark:border-gray-500 flex items-center py-1">
+      class="border-b text-xl dark:text-white text-theme-green hover:bg-gray-100 dark:hover:bg-gray-700/20 dark:border-gray-700 flex items-center py-1">
       <div
         :class="[
           'flex justify-start relative w-full h-[70px] p-4',
@@ -23,10 +23,10 @@
           </div>
         </div>
         <div v-if="link.label === 'Accountability Partner'">
-          <a href="" class="text-sm">Coming Soon</a>
+          <a href="" class="text-xs text-gray-600 dark:text-gray-400">Coming Soon</a>
         </div>
         <div v-else class="flex items-center absolute right-4">
-          <component :is="link.leftIcon" class="w-6 h-6" />
+          <component :is="link.leftIcon" class="w-5 h-5" />
         </div>
       </div>
     </Link>

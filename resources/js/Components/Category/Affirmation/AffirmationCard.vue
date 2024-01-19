@@ -1,16 +1,16 @@
 <template>
   <div tabindex="0" class="relative flex justify-between px-3 py-3 border dark:border-gray-500 rounded-sm my-2">
     <div>
-      <h2 v-if="!isEdit" class="dark:text-white font-medium max-w-[45ch]" @click.prevent="isEdit = true">
+      <p v-if="!isEdit" class="dark:text-white text-base text-black font-medium max-w-[45ch]" @click.prevent="isEdit = true">
         {{ affirmation }}
-      </h2>
+      </p>
       <FormInput v-else :id="id" autofocus label="Update affirmation" :model-value="affirmation" class="w-[400px]" @update:model-value="logUpdate" @keyup-enter="updateAffirmation" @blur="isEdit = false" />
-      <p class="text-sm text-gray-500 dark:text-gray-300">
+      <p class="text-xs text-gray-500 dark:text-gray-300">
         {{ date }}
       </p>
     </div>
     <div class="absolute top-1/2 -translate-y-1/2 right-4 flex gap-x-1">
-      <TrashIcon class="w-6 text-gray-500 hover:text-red-600 cursor-pointer" @click.prevent="emit('delete')" />
+      <TrashIcon class="w-4 text-gray-500 hover:text-red-600 cursor-pointer" @click.prevent="emit('delete')" />
     </div>
   </div>
 </template>

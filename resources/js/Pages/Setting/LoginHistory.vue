@@ -2,7 +2,7 @@
   <component :is="isMobile ? AuthenticateMobileSettingLayoutVue : Settings" route-name="Login History">
     <div :class="isMobile ? 'w-full h-full p-4' : ''">
       <div class="md:w-full md:pl-12 md:pr-8 md:py-16 h-full">
-        <div class="mb-5 border-b-2 border-hover-theme-green pb-5">
+        <div class="mb-5 border-b border-gray-400 dark:border-gray-700 pb-3">
           <h1 class="dark:text-white text-theme-green">
             Login History
           </h1>
@@ -12,7 +12,7 @@
         </div>
         <div class="">
           <ul class="overflow-y-auto relative h-full md:h-[480px]">
-            <li v-for="login in data" :key="login.id" class="py-2 border-b">
+            <li v-for="login in data" :key="login.id" class="pb-5 pt-3 border-b dark:border-gray-700">
               <div class="flex">
                 <div>
                   <p class="text-gray-700 dark:text-gray-300 font-medium">

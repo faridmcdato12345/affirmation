@@ -3091,10 +3091,6 @@ button:active {
   -webkit-appearance: none !important;
 }
 
-.theme-light input, select {
-  border-color: rgba(0, 0, 0, 0.08) !important;
-}
-
 .input-style {
   position: relative;
   margin-bottom: 15px !important;
@@ -6270,10 +6266,6 @@ input[type=number] {
 
 .gradient-dark {
   background-image: linear-gradient(to bottom, #656D78, #434A54);
-}
-
-.theme-light input:not([type=submit]):not(.focus-color):focus, .theme-light select:focus, .theme-light textarea:active {
-  border-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .theme-light [data-card-height=cover] input:not([type=submit]):not(.focus-color):focus, .theme-light [data-card-height=cover] select:focus, .theme-light [data-card-height=cover] textarea:active {

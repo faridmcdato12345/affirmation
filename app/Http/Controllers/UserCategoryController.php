@@ -10,11 +10,6 @@ class UserCategoryController extends Controller
 {
     public function store(UserCategoryRequest $request)
     {
-        /**
-         * TODO:
-         * Check if user is premium to allow adding unlimited number
-         * of category.
-         */
         if(!auth()->user()->subscribed()) {
             $userCategories = UserCategories::where('user_id', auth()->id())->count();
             if($userCategories > 0) {

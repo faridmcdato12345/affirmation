@@ -12,7 +12,8 @@
       <hr class="my-5 border-gray-600" />
       <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
         <div v-for="img in backgroundImages" :key="img" class="relative w-full h-[160px] md:h-[200px] rounded-md border border-gray-200/30 object-cover items-stretch hover:-translate-y-1 cursor-pointer ease-out duration-150" @click.prevent="toggleSwitchBackground(img.image)">
-          <CheckCircleIcon v-if="bgImage === img.image" class="w-6 md:w-7 text-green-600 absolute top-2 right-3 z-20" />
+          <TrashIcon class="w-6 md:w-6 absolute top-2 right-3 z-20 text-white" @click.stop="toggleDeleteBackground(img)" />
+          <CheckCircleIcon v-if="bgImage === img.image" class="w-6 md:w-7 text-green-600 absolute top-2 left-3 z-20" />
           <img :src="img.image" alt="Background Image" class="object-cover w-full h-full rounded-md brightness-75 hover:brightness-100" />
         </div>
         <div class="bg-white dark:bg-gray-800 dark:border dark:border-gray-600 relative h-fit hover:-translate-y-1 active:bg-gray-200 duration-200 ease-out w-full rounded-md shadow px-5 py-6 cursor-pointer" @click.stop="triggerUpload">
@@ -23,7 +24,7 @@
             Upload Image
           </h3>
           <p class="dark:text-gray-300 text-gray-600 text-sm mt-3">
-            Click here to start adding your own background image. You can add up to 10 images only
+            Click to upload your own background image. You can add up to 10 images only.
           </p>
           <input id="imageUpload" ref="imageUploadRef" type="file" name="imageUpload" class="hidden" @change="onSelect" />
         </div> 
@@ -40,7 +41,24 @@
       </div>
     </div>
 
-    <!-- SWITCH CATEGORY MODAL -->
+    <!-- DELETE BACKGROUND MODAL -->
+    <Modal v-model="deleteBackgroundModal">
+      <div class="text-center">
+        <TrashIcon class="w-8 md:w-10 mx-auto text-red-600" />
+        <h1 class="mt-2 dark:text-white">
+          Delete Background
+        </h1>
+        <p class="dark:text-gray-300 text-sm md:text-base max-w-md mx-auto leading-6 mt-2 font-light">
+          Are you sure you want to remove this background?
+        </p>
+      </div>
+      <div class="flex items-center justify-center gap-x-2 mt-4">
+        <Button label="Cancel" :disabled="loading" color="gray" @click.prevent="deleteBackgroundModal = false" />
+        <Button label="Delete" :loading="loading" color="error" @click.prevent="deleteBackground" />
+      </div>
+    </Modal>
+
+    <!-- SWITCH BACKGROUND MODAL -->
     <Modal v-model="switchBackgroundModal">
       <div class="text-center">
         <CheckCircleIcon class="w-10 md:w-14 mx-auto text-green-600" />
@@ -56,31 +74,58 @@
         <Button label="Switch Background" color="success" @click.prevent="switchBackground" />
       </div>
     </Modal>
+
+    <!-- UPGRADE MODAL -->
+    <Modal v-model="upgradeModal">
+      <div class="py-2 flex gap-x-5">
+        <LockClosedIcon class="w-10 mx-auto text-gray-400" />
+        <div>
+          <h1 class="mt-2 dark:text-white">
+            Subscribe to Premium
+          </h1>
+          <p class="dark:text-gray-200 text-base max-w-md mx-auto leading-6 mt-2 font-light">
+            Gain access to our premium categories, exclusive contents and exciting features within our app.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-x-2 mt-4">
+        <Button label="Cancel" color="gray" component-type="link" @click.prevent="upgradeModal = false" />
+        <Button component-type="link" href="/settings/subscribe" label="Subscribe to Premium" color="success" />
+      </div>
+    </Modal>
   </AuthenticatedLayout>
 </template>
 <script setup>
+import { computed, ref } from 'vue'
+import { Head, usePage, router, useForm } from '@inertiajs/vue3'
+import { CheckCircleIcon, PlusCircleIcon, TrashIcon, LockClosedIcon } from '@heroicons/vue/24/solid'
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
+import { toast } from '../Composables/useToast'
 import Modal from '../Components/Modal.vue'
 import Button from '../Components/Button.vue'
 
-import { computed, ref } from 'vue'
-import { Head, usePage, router, useForm } from '@inertiajs/vue3'
-import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/vue/24/solid'
-import { toast } from '../Composables/useToast'
 
-defineProps({
-  backgroundImages: Object
+const props = defineProps({
+  backgroundImages: {
+    type: Object,
+    default: () => {}
+  },
+  isPremium: {
+    type: [String, Boolean],
+    default: false 
+  }
 })
 
 const page = usePage()
 const bgImage = computed(() => page.props.auth.user.background_image ?? '/images/bg1.jpg')
 
-const switchBackgroundModal = ref(false)
+const loading = ref(false)
 const selectedImage = ref('')
 const imageUploadRef = ref('')
-const form = useForm({
-  image: null
-})
+const upgradeModal = ref(false)
+const form = useForm({ image: null })
+const switchBackgroundModal = ref(false)
+const deleteBackgroundModal = ref(false)
 
 const images = [
   '/images/bg1.jpg', 
@@ -99,6 +144,10 @@ const toggleSwitchBackground = (data) => {
 }
 
 const triggerUpload = () => { 
+  if(!props.isPremium) {
+    upgradeModal.value = true 
+    return 
+  }
   imageUploadRef.value.click()
 }
 
@@ -113,6 +162,31 @@ const onSelect = (e) => {
   
   form.image = e.target.files[0]
   uploadImage()
+}
+
+const toggleDeleteBackground = (img) => {
+  console.log(img)
+  selectedImage.value = img.id 
+  deleteBackgroundModal.value = true
+}
+
+const deleteBackground = () => {
+  loading.value = true 
+  console.log(selectedImage.value)
+  router.delete(route('themes.delete', selectedImage.value), {
+    onSuccess: () => {
+      toast('Background has been deleted successfully!')
+      deleteBackgroundModal.value = false 
+    },
+    onError: () => {
+      toast.error('Something went wrong. Please try again')
+    },
+    onFinish: () => {
+      setTimeout(() => {
+        loading.value = false
+      }, 200)
+    }
+  }) 
 }
 
 const switchBackground = () => {

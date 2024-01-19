@@ -62,7 +62,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'trial_ends_at'     => 'datetime',
     ];
-
+    public function pushSubscriptions()
+    {
+        return $this->hasMany(PushSubscription::class);
+    }
     public function backgroundImages()
     {
         return $this->hasMany(UserBackground::class);

@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AffirmationController;
 use App\Http\Controllers\ExerciseResultController;
+use App\Models\PushSubscription;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,10 @@ Route::get('affirmation', [UserController::class, 'getAffirmation']);
 Route::apiResource('affirmations', AffirmationController::class)->only(['index', 'show']);
 Route::get('/user/{id}',[UserController::class, 'getUserAppVersion']);
 Route::get('/user/update_trigger/{id}',[UserController::class,'updateUserTrigger']);
+Route::post('push-subscribe', function(Request $request){
+    PushSubscription::create([
+        'data' => $request->data,
+        'user_id' => $request->user_id,
+        'notifiable' => $request->notifiable
+    ]);
+});

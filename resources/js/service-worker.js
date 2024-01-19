@@ -41,3 +41,18 @@ if (workbox) {
   )
 }
 self.addEventListener('install', () => self.skipWaiting())
+self.addEventListener('push', (event) => {
+  notification = event.data.json()
+  
+  event.waitUntil(self.registration.showNotification(notification.title, {
+    body: notification.body,
+    icon: 'images/icons/128.png',
+    data: {
+      notifURL: notification.url
+    }
+  }))
+
+})
+self.addEventListener('notificationclick', (event) => {
+  event.waitUntil(clients.openWindow(event.notification.data.notifURL))
+})

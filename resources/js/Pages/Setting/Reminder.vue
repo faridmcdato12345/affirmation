@@ -103,8 +103,8 @@ import ToggleStatusSwitch from '../../Components/ToggleStatusSwitch.vue'
 import UpdateReminder from '../../Components/Reminder/UpdateReminder.vue'
 import AddReminderModal from '../../Components/Reminder/AddReminder.vue'
 import DeleteReminderModal from '../../Components/Reminder/DeleteReminder.vue'
-import { initializeApp } from '@firebase/app'
-import { getMessaging, getToken } from '@firebase/messaging'
+// import { initializeApp } from '@firebase/app'
+// import { getMessaging, getToken } from '@firebase/messaging'
 import ToggleSwitch from '../../Components/ToggleSwitch.vue'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 import { isMobile } from 'mobile-device-detect'
@@ -114,6 +114,7 @@ import { PencilSquareIcon, TrashIcon, PlusCircleIcon } from '@heroicons/vue/24/s
 import Button from '../../Components/Auth/Button.vue'
 import { ref,reactive } from 'vue'
 import Modal from '../../Components/Modal.vue'
+// import { useRequestNotificationPermission } from '../../Composables/useRequestNotificationPermission'
 import {  router } from '@inertiajs/vue3'
 
 
@@ -147,61 +148,85 @@ const toggleSwitch = reactive({
 const updateNotifs = (data) => {
   toggleSwitch.value = data
   if(data){
-    const firebaseConfig = {
-      apiKey: 'AIzaSyCDL5jn4IThej6gpOILzj8XmrzOFMRn0H0',
-      authDomain: 'affirm-7b375.firebaseapp.com',
-      projectId: 'affirm-7b375',
-      storageBucket: 'affirm-7b375.appspot.com',
-      messagingSenderId: '629732409638',
-      appId: '1:629732409638:web:48727d1382c07824e941e7',
-      measurementId: 'G-G2NDWXEH44'
-    }
-    
-    const app = initializeApp(firebaseConfig)
-    
-    const messaging = getMessaging(app)
-    if(Notification.permission !== 'denied'){
-      if(!permissionStatus.value){
-        Notification.requestPermission().then((permission) => {
-          // If the user accepts, let's create a notification
-          if (permission === 'granted') {
-            getToken(messaging, {
-              vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
-            }).then(result => {
-              const token = reactive({
-                fcm_token: result,
-                isNotify: true,
-              })
-              router.post(route('fcmToken'), token)
-              localStorage.setItem('isNotify',1)
-            })
-          }
-        }).catch((error) => console.log('error request permission: ', error))
-        permissionStatus.value = true
-      } else {
-        getToken(messaging, {
-          vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
-        }).then(result => {
-          const token = reactive({
-            fcm_token: result,
-            isNotify: true,
+    Notification.requestPermission().then((permission) => {
+      if(permission == 'granted'){
+        navigator.serviceWorker.ready.then((sw) => {
+          sw.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: 'BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI'
+          }).then((subscription) => {
+            const __data = {
+              data: JSON.stringify(subscription),
+              user_id: localStorage.getItem('userId'),
+              notifiable: 1
+            }
+            fetch('/api/push-subscribe', {
+              method: 'post',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(__data)
+            }).then(console.log('enabled permission'))
           })
-          router.post(route('fcmToken'), token)
-          localStorage.setItem('isNotify',1)
         })
       }
-    }else if(Notification.permission === 'granted'){
-      getToken(messaging, {
-        vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
-      }).then(result => {
-        const token = reactive({
-          fcm_token: result,
-          isNotify: true,
-        })
-        router.post(route('fcmToken'), token)
-        localStorage.setItem('isNotify',1)
-      })
-    }
+    })
+    // const __requestPermission = useRequestNotificationPermission() // eslint-disable-line
+    // const firebaseConfig = {
+    //   apiKey: 'AIzaSyCDL5jn4IThej6gpOILzj8XmrzOFMRn0H0',
+    //   authDomain: 'affirm-7b375.firebaseapp.com',
+    //   projectId: 'affirm-7b375',
+    //   storageBucket: 'affirm-7b375.appspot.com',
+    //   messagingSenderId: '629732409638',
+    //   appId: '1:629732409638:web:48727d1382c07824e941e7',
+    //   measurementId: 'G-G2NDWXEH44'
+    // }
+    
+    // const app = initializeApp(firebaseConfig)
+    
+    // const messaging = getMessaging(app)
+    // if(Notification.permission !== 'denied'){
+    //   if(!permissionStatus.value){
+    //     Notification.requestPermission().then((permission) => {
+    //       // If the user accepts, let's create a notification
+    //       if (permission === 'granted') {
+    //         getToken(messaging, {
+    //           vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
+    //         }).then(result => {
+    //           const token = reactive({
+    //             fcm_token: result,
+    //             isNotify: true,
+    //           })
+    //           router.post(route('fcmToken'), token)
+    //           localStorage.setItem('isNotify',1)
+    //         })
+    //       }
+    //     }).catch((error) => console.log('error request permission: ', error))
+    //     permissionStatus.value = true
+    //   } else {
+    //     getToken(messaging, {
+    //       vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
+    //     }).then(result => {
+    //       const token = reactive({
+    //         fcm_token: result,
+    //         isNotify: true,
+    //       })
+    //       router.post(route('fcmToken'), token)
+    //       localStorage.setItem('isNotify',1)
+    //     })
+    //   }
+    // }else if(Notification.permission === 'granted'){
+    //   getToken(messaging, {
+    //     vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
+    //   }).then(result => {
+    //     const token = reactive({
+    //       fcm_token: result,
+    //       isNotify: true,
+    //     })
+    //     router.post(route('fcmToken'), token)
+    //     localStorage.setItem('isNotify',1)
+    //   })
+    // }
   }else{
     const token = reactive({
       isNotify: false,

@@ -1123,14 +1123,14 @@ document.addEventListener('DOMContentLoaded', () => {
                       navigator.serviceWorker.register(pwaLocation, {scope: pwaScope}).then(function(registration){registration.update();})
                       console.log('Service Worker successfully registered')
                       });
-                      navigator.serviceWorker.register(firebaseLocation)
-                      .then(reg => {
-                          console.log(`firebase service worker registration (Scope: ${reg.scope}`);
-                      })
-                      .catch(error => {
-                          const msg = `firebase service worker error (${error})`;
-                          console.error(msg);
-                      })
+                    //   navigator.serviceWorker.register(firebaseLocation)
+                    //   .then(reg => {
+                    //       console.log(`firebase service worker registration (Scope: ${reg.scope}`);
+                    //   })
+                    //   .catch(error => {
+                    //       const msg = `firebase service worker error (${error})`;
+                    //       console.error(msg);
+                    //   })
                   }
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours

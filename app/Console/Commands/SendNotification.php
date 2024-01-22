@@ -11,6 +11,7 @@ use Illuminate\Console\Command;
 use Minishlink\WebPush\Subscription;
 use Minishlink\WebPush\WebPush;
 use Illuminate\Support\Facades\Log;
+use Nette\Utils\Json;
 
 class SendNotification extends Command
 {
@@ -46,7 +47,7 @@ class SendNotification extends Command
                 "privateKey" => "oLlTzEdeAT0fAd0Cd46yiKeii-_AETDFJUUGIWH_-c0",
                 "subject" => env("APP_URL")
             ]
-        ]);
+        ], [], 30, ['verify' => false]);
         // if($firebaseToken || count($firebaseToken) > 0){
             // $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
             $reminders = Reminder::select('user_id','time','status','custom_message','original_time')
@@ -56,21 +57,18 @@ class SendNotification extends Command
             if(!$reminders->isEmpty()){
                 foreach ($reminders as $reminder) {
                     $pushes = PushSubscription::where('user_id',$reminder->user_id)->where('notifiable',1)->get();
+                    $dd = array("title" => "Affirmation","body" => $reminder->custom_message, "url" => env('APP_URL'));
+                    $this->info("json: " . json_encode($dd));
                     if(!$pushes->isEmpty()){
                         foreach($pushes as $push){
                             try {
                                 $result = $webPush->sendOneNotification(
                                     Subscription::create(json_decode($push->data, true)),
-                                    $reminder->custom_message
+                                    json_encode($dd)
                                 );
                                 $this->info('Success send notif');
                                 $this->info('Result: '. json_encode($result));
                             } catch (\Exception $e) {
-                                // Log::error('Caught exception: ' . $e->getMessage(), [
-                                //     'file' => $e->getFile(),
-                                //     'line' => $e->getLine(),
-                                //     'trace' => $e->getTraceAsString(),
-                                // ]);
                                 $this->info('Caught exception: ' . $e->getMessage());
                             }
                             

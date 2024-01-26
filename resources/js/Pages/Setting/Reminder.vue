@@ -158,7 +158,15 @@ const updateNotifs = (data) => {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify(__data)
-            }).then(console.log('enabled permission'))
+            }).then(() => {
+              const token = reactive({
+                fcm_token: 'NA',
+                isNotify: true,
+              })
+              router.post(route('fcmToken'), token)
+              localStorage.setItem('isNotify',1)
+              console.log('enabled permission')
+            })
           })
         })
       }

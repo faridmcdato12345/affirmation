@@ -13,6 +13,7 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         'spark/*',
-        'stripe/webhook' 
+        'stripe/webhook',
+        'api/push-subscribe'
     ];
 }

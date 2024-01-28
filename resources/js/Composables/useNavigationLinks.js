@@ -75,8 +75,8 @@ export function useNavigationLinks() {
     {
       icon: WrenchScrewdriverIcon,
       link: 'setting.customization.index',
-      label: 'Customization',
-      description: 'Modify app appearance based on your preference',
+      label: 'Preference',
+      description: 'Newsletter, app notif and app preference',
       leftIcon: ChevronRightIcon
     },
     {

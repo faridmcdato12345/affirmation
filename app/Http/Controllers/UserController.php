@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\BrevoSubscription;
 use App\Http\Requests\ImageUploadRequest;
 use App\Http\Requests\PartnerInviteRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -179,5 +180,51 @@ class UserController extends Controller
             return response()->json($th);
         }
         
+    }
+   
+    public function updateAppNotif()
+    {
+        try {
+            DB::beginTransaction();
+            auth()->user()->update([
+                'app_notifications_subscription' => !auth()->user()->app_notifications_subscription
+            ]);
+            $this->updateBrevoSubscription();
+            DB::commit();
+            return back()->with('success', 'App notification subscription has been updated');
+        } catch(Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Something went wrong: ', $e->getMessage());
+        }
+    }
+
+    public function updateNewsLetter()
+    {
+        try {
+            DB::beginTransaction();
+            auth()->user()->update([
+                'newsletter_subscription' => !auth()->user()->newsletter_subscription
+            ]);
+            $this->updateBrevoSubscription();
+            DB::commit();
+            return back()->with('success', 'App notification subscription has been updated');
+        } catch(Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Something went wrong: ', $e->getMessage());
+        }
+    }
+
+    private function updateBrevoSubscription()
+    {
+        $unlinkIds = [];
+        $listIds = [];
+        $user = auth()->user();
+
+        !$user->app_notifications_subscription ? $unlinkIds[] = 5 : $listIds[] = 5;
+        !$user->newsletter_subscription ? $unlinkIds[] = 6 : $listIds[] = 6;
+
+        //Subscribe to Brevo List
+        $brevo = new BrevoSubscription();
+        $brevo->updateSubIds($user->email, $unlinkIds, $listIds);
     }
 }

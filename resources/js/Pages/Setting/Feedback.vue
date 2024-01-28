@@ -59,11 +59,14 @@
         </p>
       </div>
       <div class="flex items-center justify-center gap-x-2 mt-4">
-        <Button label="Close" color="error" style="width:100%" @click.prevent="successMessage = false" />
+        <Button 
+          label="Close" 
+          color="error" 
+          style="width:100%" 
+          @click.prevent="successMessage = false" />
       </div>
     </Modal>
 
-     
     <Modal v-model="modal">
       <div class="text-center">
         <component

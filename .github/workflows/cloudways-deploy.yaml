@@ -31,15 +31,15 @@ jobs:
       - name: Add HTTP basic auth credentials
         run: echo '${{ secrets.COMPOSER_AUTH_JSON }}' > $GITHUB_WORKSPACE/auth.json
 
-      - name: Run Composer
-        run: composer install --no-interaction 
+      # - name: Run Composer
+      #   run: composer install --no-interaction 
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-      - run: npm install
-      - run: npm run build --if-present
+      # - name: Use Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '16.x'
+      # - run: npm install
+      # - run: npm run build --if-present
 
       # - name: Extract Build
       #   shell: bash

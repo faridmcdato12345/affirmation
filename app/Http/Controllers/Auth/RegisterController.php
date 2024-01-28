@@ -6,12 +6,12 @@ use Str;
 use Cookie;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use App\Helpers\BrevoSubscription;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\Category;
 use App\Http\Traits\ConvertTimeZone;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -72,33 +72,17 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function store(Request $request)
+    protected function store(RegisterRequest $request)
     {
         $referred_by = Cookie::get('referral');
-        $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required','min:8','string', "regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", 'confirmed'],
-        ];
-        $customMessages = [
-            'email.required' => 'The email address is required.',
-            'email.email' => 'Please enter a valid email address.',
-            'password.required' => 'The password is required.',
-            'password.min' => 'The password must be at least :min characters long.',
-            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
-        ];
-        $request->validate($rules, $customMessages);
-
-        $user = User::create([
-            'name'                 => $request->name,
-            'email'                => $request->email,
-            'password'             => Hash::make($request->password),
+     
+        $user = User::create($request->validated() + [
             'active_category'      => 1,
             'active_category_type' => Category::class,
             'active_category_id'   => 1,
             'affiliate_id'         => Str::uuid(), 
             'referred_by'          => ($referred_by === null) ? null :  User::where('affiliate_id', $referred_by)->first()->id,
-            'timezone'             => $request->timezone
+            'timezone'             => $request?->timezone
         ]);
 
         if ($user->save()) {
@@ -112,14 +96,26 @@ class RegisterController extends Controller
                 ]
             );
         }
-        event(new Registered($user));
 
+        //Check subIds subscription
+        $subIds = [];
+        if($request->app_notifications_subscription) {
+            $subIds[] = 5;
+        }
+        if($request->newsletter_subscription) {
+            $subIds[] = 6;
+        }
+
+        //Subscribe to Brevo List
+        $brevo = new BrevoSubscription();
+        $brevo->subscribe($request->email, $request->name, $subIds);
+
+        event(new Registered($user));
         Auth::login($user, $remember = true);
 
         if($request->redirectTo === '/billing') {
             return redirect(RouteServiceProvider::BILLING);
         }
-
         return redirect(RouteServiceProvider::HOME);
     }
 }

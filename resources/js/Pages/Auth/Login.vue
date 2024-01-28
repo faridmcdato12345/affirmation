@@ -80,7 +80,6 @@ const update = () => {
   fetch('/api/user/update_trigger/' + user_id)
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       if(data.status){
         startProgressBar()
       }

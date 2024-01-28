@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CustomizationController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Customize');
+        $user = auth()->user();
+
+        return Inertia::render('Customize', [
+            'newsLetterSubscription' => $user->newsletter_subscription,
+            'appNotifSubscription' => $user->app_notifications_subscription
+        ]);
     }
 }

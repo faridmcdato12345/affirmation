@@ -47,10 +47,8 @@ class UserSubscriptionController extends Controller
         try {
 
             if ($user->hasDefaultPaymentMethod()) {
-
                 $user->subscription('default')->swap($request->plan_id);
                 return back()->with('success', 'Subscription has been resumed successfully!');
-
             } else {
                 $url = $user->newSubscription($request->plan_name, $request->plan_id)
                     ->checkout([
@@ -96,11 +94,9 @@ class UserSubscriptionController extends Controller
 
         try {   
             $paymentMethod = $user->findPaymentMethod($request->paymentMethodId);
-
             if($paymentMethod) {
                 $paymentMethod->delete();
             }
-
             return back()->with('success', 'Payment method has been removed successfully!');
         } catch(\Exception $e) {
             return back()->with('error', $e->getMessage());
@@ -112,7 +108,6 @@ class UserSubscriptionController extends Controller
         $user = auth()->user();
 
         try {   
-
             $user->updateDefaultPaymentMethod($request->paymentMethodId);
             $user->updateDefaultPaymentMethodFromStripe();
 

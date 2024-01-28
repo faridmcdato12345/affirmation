@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Setting\Feedback;
 use App\Models\Setting\ReportBug;
 use App\Services\CacheAffirmationService;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
@@ -40,7 +42,9 @@ class User extends Authenticatable
         'fcm_token',
         'isNotify',
         'show_introduction',
-        'app_update_trigger' 
+        'app_update_trigger',
+        'app_notifications_subscription',
+        'newsletter_subscription'
     ];
 
     /**
@@ -62,10 +66,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'trial_ends_at'     => 'datetime',
     ];
+    
     public function pushSubscriptions()
     {
         return $this->hasMany(PushSubscription::class);
     }
+
+    protected function password(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => Hash::make($value)
+        );
+    }
+
     public function backgroundImages()
     {
         return $this->hasMany(UserBackground::class);

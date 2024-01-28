@@ -67,6 +67,9 @@ Route::middleware(['auth','verified'])->group(function () {
 
    Route::get('/user/invoice/{invoice}', 'downloadInvoice')->name('invoice.download');
  });
+
+ Route::patch('/notification/newsletter', [UserController::class, 'updateNewsLetter'])->name('subscription.newsletter');
+ Route::patch('/notification/appnotif', [UserController::class, 'updateAppNotif'])->name('subscription.appnotif');
 });
 Route::stripeWebhooks('stripe/webhook');
 require __DIR__.'/auth.php';

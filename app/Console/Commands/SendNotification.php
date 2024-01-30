@@ -36,20 +36,16 @@ class SendNotification extends Command
      */
     public function handle()
     {
-        $this->info("start");
         date_default_timezone_get();
         $serverTimeNow = date("H:i");
-        $this->info("server time: ".$serverTimeNow);
         $firebaseToken = PushSubscription::where('notifiable',1)->get();
         $webPush = new WebPush([
             "VAPID" => [
-                "publicKey" => "BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI",
-                "privateKey" => "oLlTzEdeAT0fAd0Cd46yiKeii-_AETDFJUUGIWH_-c0",
+                "publicKey" => "BJG1XAHzzuZY2VTgKvvycBKikvRJXFpswILkTQa1a1Ot3iaGajndVpEYy288-nhKq_4kAAbFOobYBenfMGVJPfI",
+                "privateKey" => "A4MgZic6q7n8bRbZmRp2_lg5WSoh2gmy2cG-Scgy1Uk",
                 "subject" => env("APP_URL")
             ]
-        ], [], 30, ['verify' => false]);
-        // if($firebaseToken || count($firebaseToken) > 0){
-            // $SERVER_API_KEY = env('FIREBASE_SERVER_KEY');
+        ], ["verify" => false]);
             $reminders = Reminder::select('user_id','time','status','custom_message','original_time')
                 ->where('time',$serverTimeNow)
                 ->where('status',true)
@@ -67,7 +63,6 @@ class SendNotification extends Command
                                     json_encode($dd)
                                 );
                                 $this->info('Success send notif');
-                                $this->info('Result: '. json_encode($result));
                             } catch (\Exception $e) {
                                 $this->info('Caught exception: ' . $e->getMessage());
                             }
@@ -80,40 +75,5 @@ class SendNotification extends Command
             }else{
                 $this->info("empty reminders");
             }
-            
-            // if(!$reminders->isEmpty()){
-            //     $userId = [];
-            //     $userMessage = $reminders;
-            //     foreach ($reminders as $reminder) {
-            //         $userId[] = $reminder->user_id;
-            //     }
-            //     $data = [
-            //         "registration_ids" => $firebaseToken,
-            //         "data" => [
-            //             "title" => 'Affirm',
-            //             "user" => $userId,
-            //             "user_reminders" => $reminders,
-            //             "icon" => env('APP_URL').'images/icons/128.png'
-            //         ]
-            //     ];
-            //     $dataString = json_encode($data);
-            
-            //     $headers = [
-            //         'Authorization: key=' . $SERVER_API_KEY,
-            //         'Content-Type: application/json',
-            //     ];
-            
-            //     $ch = curl_init();
-            
-            //     curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
-            //     curl_setopt($ch, CURLOPT_POST, true);
-            //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            //     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            //     curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
-                    
-            //     $response = curl_exec($ch);
-            // }
-        //}
     }
 }

@@ -34,6 +34,7 @@ class LoginSuccessful
      */
     public function handle(Login $event)
     {
+        
         auth()->user()->update([
             'timezone' => request()->timezone
         ]);

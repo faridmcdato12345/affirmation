@@ -13,8 +13,7 @@ trait ConvertTimeZone {
         try{
             $this->timezone = $timezone;
             $this->time = $time;
-
-            $clientTime = new DateTimeZone('America/Vancouver'); 
+            $clientTime = new DateTimeZone($timezone); 
             
             $this->_convertedTime = new DateTime($this->time,$clientTime); 
             

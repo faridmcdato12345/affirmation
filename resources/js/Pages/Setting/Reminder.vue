@@ -104,10 +104,7 @@ import ToggleStatusSwitch from '../../Components/ToggleStatusSwitch.vue'
 import UpdateReminder from '../../Components/Reminder/UpdateReminder.vue'
 import AddReminderModal from '../../Components/Reminder/AddReminder.vue'
 import DeleteReminderModal from '../../Components/Reminder/DeleteReminder.vue'
-// import { initializeApp } from '@firebase/app'
-// import { getMessaging, getToken } from '@firebase/messaging'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
-// import { useRequestNotificationPermission } from '../../Composables/useRequestNotificationPermission'
 
 
 const routeName = ref('Reminder')
@@ -145,7 +142,7 @@ const updateNotifs = (data) => {
         navigator.serviceWorker.ready.then((sw) => {
           sw.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: 'BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI'
+            applicationServerKey: 'BJG1XAHzzuZY2VTgKvvycBKikvRJXFpswILkTQa1a1Ot3iaGajndVpEYy288-nhKq_4kAAbFOobYBenfMGVJPfI'
           }).then((subscription) => {
             const __data = {
               data: JSON.stringify(subscription),
@@ -171,62 +168,6 @@ const updateNotifs = (data) => {
         })
       }
     })
-    // const __requestPermission = useRequestNotificationPermission() // eslint-disable-line
-    // const firebaseConfig = {
-    //   apiKey: 'AIzaSyCDL5jn4IThej6gpOILzj8XmrzOFMRn0H0',
-    //   authDomain: 'affirm-7b375.firebaseapp.com',
-    //   projectId: 'affirm-7b375',
-    //   storageBucket: 'affirm-7b375.appspot.com',
-    //   messagingSenderId: '629732409638',
-    //   appId: '1:629732409638:web:48727d1382c07824e941e7',
-    //   measurementId: 'G-G2NDWXEH44'
-    // }
-    
-    // const app = initializeApp(firebaseConfig)
-    
-    // const messaging = getMessaging(app)
-    // if(Notification.permission !== 'denied'){
-    //   if(!permissionStatus.value){
-    //     Notification.requestPermission().then((permission) => {
-    //       // If the user accepts, let's create a notification
-    //       if (permission === 'granted') {
-    //         getToken(messaging, {
-    //           vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
-    //         }).then(result => {
-    //           const token = reactive({
-    //             fcm_token: result,
-    //             isNotify: true,
-    //           })
-    //           router.post(route('fcmToken'), token)
-    //           localStorage.setItem('isNotify',1)
-    //         })
-    //       }
-    //     }).catch((error) => console.log('error request permission: ', error))
-    //     permissionStatus.value = true
-    //   } else {
-    //     getToken(messaging, {
-    //       vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
-    //     }).then(result => {
-    //       const token = reactive({
-    //         fcm_token: result,
-    //         isNotify: true,
-    //       })
-    //       router.post(route('fcmToken'), token)
-    //       localStorage.setItem('isNotify',1)
-    //     })
-    //   }
-    // }else if(Notification.permission === 'granted'){
-    //   getToken(messaging, {
-    //     vapidKey: 'BBAUnekRlG_a9NYANo55GflZVJmmx1MmqERD6rfn1Ka_OUxOqjOizxQ1x568qRi81w-flcnnv1Q0sS3TkqGVyDA'
-    //   }).then(result => {
-    //     const token = reactive({
-    //       fcm_token: result,
-    //       isNotify: true,
-    //     })
-    //     router.post(route('fcmToken'), token)
-    //     localStorage.setItem('isNotify',1)
-    //   })
-    // }
   }else{
     const token = reactive({
       isNotify: false,

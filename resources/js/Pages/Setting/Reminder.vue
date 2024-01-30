@@ -142,7 +142,7 @@ const updateNotifs = (data) => {
         navigator.serviceWorker.ready.then((sw) => {
           sw.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: 'BJG1XAHzzuZY2VTgKvvycBKikvRJXFpswILkTQa1a1Ot3iaGajndVpEYy288-nhKq_4kAAbFOobYBenfMGVJPfI'
+            applicationServerKey: 'BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI'
           }).then((subscription) => {
             const __data = {
               data: JSON.stringify(subscription),

@@ -41,8 +41,8 @@ class SendNotification extends Command
         $firebaseToken = PushSubscription::where('notifiable',1)->get();
         $webPush = new WebPush([
             "VAPID" => [
-                "publicKey" => "BJG1XAHzzuZY2VTgKvvycBKikvRJXFpswILkTQa1a1Ot3iaGajndVpEYy288-nhKq_4kAAbFOobYBenfMGVJPfI",
-                "privateKey" => "A4MgZic6q7n8bRbZmRp2_lg5WSoh2gmy2cG-Scgy1Uk",
+                "publicKey" => "BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI",
+                "privateKey" => "oLlTzEdeAT0fAd0Cd46yiKeii-_AETDFJUUGIWH_-c0",
                 "subject" => env("APP_URL")
             ]
         ], ["verify" => false]);

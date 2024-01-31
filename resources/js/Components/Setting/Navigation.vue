@@ -22,10 +22,7 @@
             </p>
           </div>
         </div>
-        <div v-if="link.label === 'Accountability Partner'">
-          <a href="" class="text-xs text-gray-600 dark:text-gray-400">Coming Soon</a>
-        </div>
-        <div v-else class="flex items-center absolute right-4">
+        <div class="flex items-center absolute right-4">
           <component :is="link.leftIcon" class="w-5 h-5" />
         </div>
       </div>

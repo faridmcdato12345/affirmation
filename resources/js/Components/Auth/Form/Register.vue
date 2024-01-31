@@ -60,7 +60,7 @@
           v-model="registrationForm.newsletter_subscription" 
           type="checkbox" 
           class="accent-theme-green w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-        <label for="newsLetterSubscription" class="ml-2 text-sm font-medium text-gray-700">Signup for newsletter</label>
+        <label for="newsLetterSubscription" class="ml-2 text-sm font-medium text-gray-700">Signup for newsletter to get exclusive update every week</label>
       </div>
       <div class="flex mx-2 mt-1">
         <input 
@@ -68,7 +68,7 @@
           v-model="registrationForm.app_notifications_subscription" 
           type="checkbox" 
           class="accent-theme-green w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-        <label for="appNotificationSubscription" class="ml-2 text-sm font-medium text-gray-700">Signup for app notifications</label>
+        <label for="appNotificationSubscription" class="ml-2 text-sm font-medium text-gray-700">Signup for app notifications and never miss out on exclusive offers</label>
       </div>
       <!-- <label for="">Password strength indicator:</label>
       <div class="input_container">

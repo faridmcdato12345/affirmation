@@ -38,7 +38,7 @@ class SendNotification extends Command
     {
         date_default_timezone_get();
         $serverTimeNow = date("H:i");
-        $firebaseToken = PushSubscription::where('notifiable',1)->get();
+        $firebaseToken = PushSubscription::where('notifiable', 1)->get();
         $webPush = new WebPush([
             "VAPID" => [
                 "publicKey" => "BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI",
@@ -47,12 +47,12 @@ class SendNotification extends Command
             ]
         ], ["verify" => false]);
             $reminders = Reminder::select('user_id','time','status','custom_message','original_time')
-                ->where('time',$serverTimeNow)
+                ->where('time', $serverTimeNow)
                 ->where('status',true)
                 ->get();
             if(!$reminders->isEmpty()){
                 foreach ($reminders as $reminder) {
-                    $pushes = PushSubscription::where('user_id',$reminder->user_id)->where('notifiable',1)->get();
+                    $pushes = PushSubscription::where('user_id',$reminder->user_id)->where('notifiable', 1)->get();
                     $dd = array("title" => "Affirmation","body" => $reminder->custom_message, "url" => env('APP_URL'));
                     $this->info("json: " . json_encode($dd));
                     if(!$pushes->isEmpty()){

@@ -15,15 +15,20 @@ use DateTime;
 
 class ReminderController extends Controller
 {
-
     use ConvertTimeZone;
 
     public function index()
     {
+        $reminders = Reminder::query()
+                        ->where('user_id', auth()->id())
+                        ->whereNull('reminder_type')
+                        ->get();
+
         return Inertia::render('Setting/Reminder',[
-            'reminders' => auth()->user()->reminders()->get(),
+            'reminders' => $reminders,
         ]);
     }
+
     public function store(UpdateUserTimeRequest $request)
     {
         $reminder = auth()->user()->reminders()->create($request->validated());
@@ -32,6 +37,7 @@ class ReminderController extends Controller
             'timezone' => auth()->user()->timezone
         ]);
     }
+    
     public function update(Reminder $reminder,UpdateUserTimeRequest $request)
     {
         DB::beginTransaction();

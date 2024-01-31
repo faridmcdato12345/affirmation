@@ -106,7 +106,6 @@ import AddReminderModal from '../../Components/Reminder/AddReminder.vue'
 import DeleteReminderModal from '../../Components/Reminder/DeleteReminder.vue'
 import AuthenticateMobileSettingLayout from '../../Layouts/AuthenticateMobileSettingLayout.vue'
 
-
 const routeName = ref('Reminder')
 const modal = ref(false)
 const tutorial = ref(false)
@@ -129,11 +128,10 @@ const response = defineProps({
 isSubscribed.value = localStorage.getItem('isSubcribe')
 isNotify.value = localStorage.getItem('isNotify')
 
-const permissionStatus = ref(false)
-
 const toggleSwitch = reactive({
   value: isNotify.value == 1 ? true : false
 })
+
 const updateNotifs = (data) => {
   toggleSwitch.value = data
   if(data){
@@ -175,8 +173,8 @@ const updateNotifs = (data) => {
     router.post(route('fcmToken'), token)
     localStorage.setItem('isNotify',0)
   }
-  console.log('permissionStatus: ', permissionStatus.value)
 }
+
 const toggleData = (status) => {
   let x = status == 0 ? false : true
   statusData.value = !x

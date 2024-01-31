@@ -11,8 +11,8 @@
   </div>
 </template>
 <script setup>
-import { ref, computed } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { ref, computed, onMounted, reactive } from 'vue'
+import { usePage, router } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
 import NavigationBar from '../Components/NavigationBar.vue'
 import { useToggleDarkMode } from '../Composables/useToggleDarkMode'
@@ -27,4 +27,43 @@ const route = window.location.pathname
 if(route.includes('settings') && isMobile){
   checkRoute.value = false
 }
+
+const requestNotificationAccess = () => {
+  Notification.requestPermission().then((permission) => {
+    if(permission == 'granted'){
+      navigator.serviceWorker.ready.then((sw) => {
+        sw.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: 'BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI'
+        }).then((subscription) => {
+          const __data = {
+            data: JSON.stringify(subscription),
+            user_id: localStorage.getItem('userId'),
+            notifiable: 1
+          }
+          fetch('/api/push-subscribe', {
+            method: 'post',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(__data)
+          }).then(() => {
+            const token = reactive({
+              fcm_token: 'NA',
+              isNotify: true,
+            })
+            router.post(route('fcmToken'), token)
+            localStorage.setItem('isNotify',1)
+            console.log('enabled permission')
+          })
+        })
+      })
+    }
+  })
+}
+
+onMounted(() => {
+  requestNotificationAccess()
+})
+
 </script>

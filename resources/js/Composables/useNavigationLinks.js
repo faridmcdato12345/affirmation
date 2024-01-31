@@ -60,7 +60,7 @@ export function useNavigationLinks() {
     },
     {
       icon: UsersIcon,
-      link: 'coming-soon',
+      link: 'setting.user.accountability',
       label: 'Accountability Partner',
       description: 'Get additional support from other people',
       leftIcon: ChevronRightIcon

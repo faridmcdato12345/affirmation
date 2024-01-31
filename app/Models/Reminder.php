@@ -18,6 +18,8 @@ class Reminder extends Model
         'timezone',
         'status',
         'original_time',
+        'reminder_type',
+        'dispatched'
     ];
 
     public function users(): BelongsTo

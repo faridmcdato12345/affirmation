@@ -3,25 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\BrevoSubscription;
-use App\Http\Requests\ImageUploadRequest;
 use App\Http\Requests\PartnerInviteRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Traits\ConvertTimeZone;
 use App\Models\AccountabilityPartner;
 use App\Models\AccountabilityPartnerNotification;
 use App\Models\AppVersion;
 use App\Models\AppVersionList;
+use App\Models\Reminder;
 use App\Models\User;
-use App\Models\UserBackground;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    use ConvertTimeZone;
+
     public function delete(Request $request) {
         $user = $request->user();
         if (Hash::check($request->password, $user->password)) {
@@ -92,15 +94,21 @@ class UserController extends Controller
             'partner_id' => auth()->id()
         ]);
 
+        Reminder::create([
+            'original_time' => now()->format('H:i'),
+            'custom_message' => $request->message,
+            'user_id' => $request->user_id,
+            'reminder_type' => 'reminder',
+            'time' => now()->format('H:i'),
+            'timezone' => auth()->user()->timezone
+        ]);
+
         return back()->with('success', 'A reminder has been sent successfully!');
     }
 
     public function markAsRead(AccountabilityPartnerNotification $reminder)
     {
-        $reminder->update([
-            'seen_at' => now()
-        ]);
-
+        $reminder->update(['seen_at' => now()]);
         return back()->with('success', 'Reminder has been marked as read');
     }
 
@@ -179,7 +187,6 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th);
         }
-        
     }
    
     public function updateAppNotif()

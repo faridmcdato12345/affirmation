@@ -70,26 +70,6 @@
           class="accent-theme-green w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
         <label for="appNotificationSubscription" class="ml-2 text-sm font-medium text-gray-700">Signup for app notifications and never miss out on exclusive offers</label>
       </div>
-      <!-- <label for="">Password strength indicator:</label>
-      <div class="input_container">
-        <ul class="flex items-stretch flex-col">
-          <li :class="{ is_valid: contains_eight_characters }">
-            8 Characters
-          </li>
-          <li :class="{ is_valid: contains_number }">
-            Contains Number
-          </li>
-          <li :class="{ is_valid: contains_uppercase }">
-            Contains Uppercase
-          </li>
-          <li :class="{ is_valid: contains_lowercase }">
-            Contains Lowercase
-          </li>
-          <li :class="{ is_valid: contains_special_character }">
-            Contains Special Character
-          </li>
-        </ul>
-      </div> -->
       <Button label="Sign Up" class="mt-4" btn-block color="success" type="submit" :loading="loading" />
       <p class="text-sm text-gray-700 dark:text-gray-900 flex justify-center items-center mt-4">
         Already have an account?

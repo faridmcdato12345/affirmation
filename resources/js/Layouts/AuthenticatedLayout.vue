@@ -55,7 +55,6 @@ const requestNotificationAccess = () => {
             })
             router.post(route('fcmToken'), token)
             localStorage.setItem('isNotify',1)
-            console.log('enabled permission')
           })
         })
       })

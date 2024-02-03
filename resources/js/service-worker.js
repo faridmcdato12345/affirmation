@@ -42,7 +42,6 @@ if (workbox) {
 }
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('push', (event) => {
-  console.log('event',event)
   let notification = event.data.json()
   
   event.waitUntil(self.registration.showNotification(notification.title, {

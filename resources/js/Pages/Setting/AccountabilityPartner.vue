@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="isMobile ? AuthenticateMobileSettingLayoutVue : Settings" route-name="Login History">
+    <component :is="isMobile ? AuthenticateMobileSettingLayoutVue : Settings" route-name="Accountability Partner">
       <div :class="isMobile ? 'w-full h-full p-4' : ''">
         <div class="md:w-full md:pl-12 md:pr-8 md:py-16 h-full">
           <div class="mb-5 border-b-2 border-hover-theme-green pb-5">
@@ -39,7 +39,7 @@
                 Here are the list of users that you've sent request with to be your partner
               </p>
             </div>
-            <div v-for="(invite, i) in accountabilityPartner" :key="i" class="flex w-full gap-x-2 items-center justify-between border-t border-b dark:border-gray-600 p-3 md:w-full">
+            <div v-for="(invite, i) in accountabilityPartner" :key="i" class="flex flex-col md:flex-row w-full gap-x-2 md:items-center md:justify-between border-t border-b dark:border-gray-600 p-3 md:w-full">
               <div class="flex items-center gap-x-3">
                 <div class="h-12 w-12 bg-gray-300 rounded-full"></div>
                 <div class="leading-3">
@@ -51,8 +51,8 @@
                   </p>
                 </div>
               </div>
-              <div class="leading-4">
-                <p class="font-semibold dark:text-gray-300">
+              <div class="leading-4 ps-[3.7rem] md:ps-0 my-2.5">
+                <p class="font-semibold dark:text-gray-300 text-xs md:text-sm text-gray-700">
                   {{ invite.accepted_at ? 'ACCEPTED' : invite.declined_at ? 'DECLINED' : 'PENDING' }}
                 </p>
                 <p class="dark:text-gray-300">
@@ -84,7 +84,7 @@
                 List of users that sent you a request to be their accountability partner.
               </p>
             </div>
-            <div v-for="(requesting, i) in accountabilityRequest" :key="i" class="flex w-1/2 gap-x-2 items-center justify-between border-t border-b dark:border-gray-600 p-3 md:w-full">
+            <div v-for="(requesting, i) in accountabilityRequest" :key="i" class="flex flex-col md:flex-row w-full gap-x-2 md:items-center md:justify-between border-t border-b dark:border-gray-600 p-3 md:w-full">
               <div class="flex items-center gap-x-3">
                 <div class="h-12 w-12 bg-gray-300 rounded-full"></div>
                 <div class="leading-3">
@@ -96,15 +96,15 @@
                   </p>
                 </div>
               </div>
-              <div class="leading-4">
-                <p class="font-semibold dark:text-gray-300">
+              <div class="leading-4 my-2.5 ps-[3.7rem] md:ps-0">
+                <p class="font-semibold dark:text-gray-300 text-gray-700">
                   {{ requesting.accepted_at ? 'APPROVED' : requesting.declined_at ? 'DECLINED' : 'PENDING' }}
                 </p>
                 <p class="dark:text-gray-300">
                   {{ requesting.created_at }}
                 </p>
               </div>
-              <div class="flex gap-x-1">
+              <div class="flex gap-x-1 ps-[3.7rem] md:ps-0 mt-2 md:mt-0 md:justify-start">
                 <Button 
                   v-if="!requesting.accepted_at && !requesting.declined_at" 
                   label="Decline" 

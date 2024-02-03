@@ -1,7 +1,7 @@
 <template>
   <div class="dark:bg-gray-800 min-h-screen">
-    <img :src="bgImage" alt="" class="fixed top-0 left-0 w-full h-screen object-cover z-0" />
-    <div class="h-screen w-full fixed top-0 left-0 dark:bg-gray-800/90 backdrop-blur-md to-gray-800 z-0"></div>
+    <img :src="bgImage" alt="" class="fixed top-0 left-0 w-full h-screen object-cover z-[-1] brightness-75" />
+    <div class="h-screen w-full fixed top-0 left-0 bg-white/80 dark:bg-gray-800/90 backdrop-blur-md to-gray-800 z-0"></div>
     <div class="pb-16 z-50">
       <template v-if="isMobile">
         <div class="w-full dark:shadow-gray-700/50 dark:shadow-md shadow-sm dark:bg-gray-800 bg-white py-4 px-4 flex gap-x-3 fixed top-0 left-0 z-50">
@@ -19,7 +19,7 @@
         </div>
       </template>
     </div>
-    <div class="z-50 relative">
+    <div class="z-40 relative">
       <slot></slot>
     </div>
   </div>

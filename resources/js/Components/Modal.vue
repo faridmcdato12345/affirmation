@@ -2,7 +2,7 @@
   <Teleport to="body">
     <div 
       v-if="modelValue" 
-      class="fixed top-0 left-0 w-full h-screen z-[21]" 
+      class="fixed top-0 left-0 w-full h-screen z-[100]" 
       :class="{ 'modal-open' : modelValue }">
       <div class="w-full h-full dark:bg-gray-900/70 bg-gray-800/70" @click.prevent="closeModal"></div>
       <Transition name="slide-fade" appear>

@@ -40,7 +40,7 @@ class SendNotification extends Command
             "VAPID" => [
                 "publicKey" => "BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI",
                 "privateKey" => "oLlTzEdeAT0fAd0Cd46yiKeii-_AETDFJUUGIWH_-c0",
-                "subject" => env("APP_URL")
+                "subject" => config('app.url')
             ]
         ], ["verify" => false]);
             

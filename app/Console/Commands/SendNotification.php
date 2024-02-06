@@ -39,6 +39,7 @@ class SendNotification extends Command
         date_default_timezone_get();
         $serverTimeNow = date("H:i");
         $firebaseToken = PushSubscription::where('notifiable', 1)->get();
+        $this->info('env: '.env("APP_URL"));
         $webPush = new WebPush([
             "VAPID" => [
                 "publicKey" => "BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI",

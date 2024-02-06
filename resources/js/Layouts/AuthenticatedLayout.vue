@@ -11,8 +11,8 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onMounted, reactive } from 'vue'
-import { usePage, router } from '@inertiajs/vue3'
+import { ref, computed, onMounted } from 'vue'
+import { usePage } from '@inertiajs/vue3'
 import { isMobile } from 'mobile-device-detect'
 import NavigationBar from '../Components/NavigationBar.vue'
 import { useToggleDarkMode } from '../Composables/useToggleDarkMode'
@@ -48,11 +48,6 @@ const requestNotificationAccess = () => {
             },
             body: JSON.stringify(__data)
           }).then(() => {
-            const token = reactive({
-              fcm_token: 'NA',
-              isNotify: true,
-            })
-            router.post(route('fcmToken'), token)
             localStorage.setItem('isNotify',1)
             console.log('enabled permission')
           })

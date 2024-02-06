@@ -15,13 +15,14 @@ class PushNotifSubscriptionController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $subscription = PushSubscription::where('user_id', auth()->user()->id)->first();
-        if(! $subscription) {
-            PushSubscription::create([
-                'data' => $request->data,
-                'user_id' => $request->user_id,
-                'notifiable' => $request->notifiable
-            ]);
-        }
+        PushSubscription::create([
+            'data' => $request->data,
+            'user_id' => $request->user_id,
+            'notifiable' => $request->notifiable
+        ]);
+        // $subscription = PushSubscription::where('user_id', auth()->user()->id)->first();
+        // if(! $subscription) {
+           
+        // }
     }
 }

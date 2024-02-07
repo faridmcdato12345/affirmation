@@ -55,7 +55,7 @@ class SendNotification extends Command
                 $dd = [
                     'title' => 'Affirmation',
                     'body' => $reminder->custom_message ?? 'Unlock a boost of positivity for your day – open the app now to discover your personalized affirmation and set the tone for a brighter, more empowered you!',
-                    'url' => env('APP_URL')
+                    'url' => config('app.url')
                 ];
 
                 $this->info("json: " . json_encode($dd));

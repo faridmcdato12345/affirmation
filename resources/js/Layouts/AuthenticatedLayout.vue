@@ -33,7 +33,6 @@ const requestNotificationAccess = () => {
   
   Notification.requestPermission().then((permission) => {
     if(permission == 'granted'){
-      console.log('pumasok sa granted')
       navigator.serviceWorker.ready.then((sw) => {
         sw.pushManager.subscribe({
           userVisibleOnly: true,

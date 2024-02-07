@@ -30,8 +30,10 @@ if(route.includes('settings') && isMobile){
 }
 
 const requestNotificationAccess = () => {
+  
   Notification.requestPermission().then((permission) => {
     if(permission == 'granted'){
+      console.log('pumasok sa granted')
       navigator.serviceWorker.ready.then((sw) => {
         sw.pushManager.subscribe({
           userVisibleOnly: true,
@@ -53,12 +55,18 @@ const requestNotificationAccess = () => {
           })
         })
       })
+    }else{
+      console.log('nothing to do')
     }
   })
+  
 }
 
 onMounted(() => {
-  requestNotificationAccess()
+  if(Notification.permission !== 'granted'){
+    requestNotificationAccess()
+  }
+  
 })
 
 </script>

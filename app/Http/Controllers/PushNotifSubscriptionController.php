@@ -22,7 +22,7 @@ class PushNotifSubscriptionController extends Controller
         ]);
         // $subscription = PushSubscription::where('user_id', auth()->user()->id)->first();
         // if(! $subscription) {
-           
+            
         // }
     }
 }

@@ -73,7 +73,3 @@ Route::middleware(['auth','verified'])->group(function () {
 });
 Route::stripeWebhooks('stripe/webhook');
 require __DIR__.'/auth.php';
-
-Route::get('test-device', function(){
-  dd(request()->server('HTTP_USER_AGENT'));
-});

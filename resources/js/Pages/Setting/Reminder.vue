@@ -135,37 +135,13 @@ const toggleSwitch = reactive({
 const updateNotifs = (data) => {
   toggleSwitch.value = data
   if(data){
-    Notification.requestPermission().then((permission) => {
-      if(permission == 'granted'){
-        navigator.serviceWorker.ready.then((sw) => {
-          sw.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: 'BPPP43im220nXU30GVoHws2lU_R_nz1IZeyOFSEM1CzqCADXqjGEKS2WArCHtjJ7UHmDZRfrHVrqZFQYLiCT5BI'
-          }).then((subscription) => {
-            const __data = {
-              data: JSON.stringify(subscription),
-              user_id: localStorage.getItem('userId'),
-              notifiable: 1
-            }
-            fetch('/api/push-subscribe', {
-              method: 'post',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(__data)
-            }).then(() => {
-              const token = reactive({
-                fcm_token: 'NA',
-                isNotify: true,
-              })
-              router.post(route('fcmToken'), token)
-              localStorage.setItem('isNotify',1)
-              console.log('enabled permission')
-            })
-          })
-        })
-      }
+    const token = reactive({
+      fcm_token: 'NA',
+      isNotify: true,
     })
+    router.post(route('fcmToken'), token)
+    localStorage.setItem('isNotify',1)
+    console.log('enabled permission')
   }else{
     const token = reactive({
       isNotify: false,

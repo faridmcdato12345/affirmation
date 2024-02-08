@@ -22,7 +22,7 @@
             "type":"image/png"
         },
         {
-            "src":"/images/icons/128.png",
+            "src":"/images/icons/android-launchericon-128-128.png",
             "purpose":"any",
             "sizes": "128x128",
             "type":"image/png"
@@ -40,7 +40,7 @@
             "type":"image/png"
         },
         {
-            "src":"/images/icons/152.png",
+            "src":"/images/icons/android-launchericon-152-152.png",
             "purpose":"any",
             "sizes": "152x152",
             "type":"image/png"
@@ -52,7 +52,7 @@
             "type":"image/png"
         },
         {
-            "src":"/images/icons/256.png",
+            "src":"/images/icons/android-launchericon-256-256.png",
             "purpose":"any",
             "sizes": "256x256",
             "type":"image/png"

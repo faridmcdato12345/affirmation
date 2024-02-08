@@ -34,6 +34,12 @@
             "type":"image/png"
         },
         {
+            "src":"/images/icons/android-launchericon-48-48.png",
+            "purpose":"any",
+            "sizes": "48X48",
+            "type":"image/png"
+        },
+        {
             "src":"/images/icons/152.png",
             "purpose":"any",
             "sizes": "152x152",

@@ -11,7 +11,7 @@
     <div class="flex md:w-[768px] h-screen w-full items-center justify-center">
       <div class="p-6 sm:p-8 w-full max-w-lg">
         <div class="flex justify-center items-center">
-          <img src="/images/icons/256.png" width="150" height="150" alt="affirm" srcset="" />
+          <img src="/images/icons/android-launchericon-256-256.png" width="150" height="150" alt="affirm" srcset="" />
         </div>
         <slot></slot>
       </div>

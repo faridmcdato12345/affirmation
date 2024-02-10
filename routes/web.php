@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
-  HomeController, 
+    AccountabilityPartnerController,
+    HomeController, 
   UserController, 
   ChartController, 
   CalendarController,
@@ -26,8 +27,7 @@ use App\Http\Controllers\{
 |
 */
 
-Route::middleware(['auth','verified'])->group(function () {
-
+Route::middleware(['auth', 'verified'])->group(function () {
   Route::controller(HomeController::class)->group(function() {
     Route::get('/', 'index')->name('home');
     Route::get('/categories','categories')->name('categories');
@@ -38,6 +38,8 @@ Route::middleware(['auth','verified'])->group(function () {
     Route::get('/calendar',[CalendarController::class,'index'])->name('calendar.index');
     Route::get('/chart',[ChartController::class,'index'])->name('chart.index');
   });
+
+  Route::get('/partner/invite', AccountabilityPartnerController::class);
 
   Route::post('/themes/upload-image', [UserThemeController::class, 'uploadUserImage'])->name('themes.image-upload');
   Route::delete('/themes/delete-image/{background}', [UserThemeController::class, 'deleteUserImage'])->name('themes.delete');
@@ -71,5 +73,6 @@ Route::middleware(['auth','verified'])->group(function () {
  Route::patch('/notification/newsletter', [UserController::class, 'updateNewsLetter'])->name('subscription.newsletter');
  Route::patch('/notification/appnotif', [UserController::class, 'updateAppNotif'])->name('subscription.appnotif');
 });
+
 Route::stripeWebhooks('stripe/webhook');
 require __DIR__.'/auth.php';

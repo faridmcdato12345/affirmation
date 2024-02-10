@@ -160,6 +160,7 @@ class UserController extends Controller
 
         return back()->with('success', 'Introduction has been shown at startup successfully!');
     }
+    
     public function getUserAppVersion($userId)
     {
         try {

@@ -47,6 +47,10 @@ class LoginController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
+
+        if ($request->session()->has('previous_url')) {
+            return redirect($request->session()->get('previous_url'));
+        }
         return redirect(RouteServiceProvider::HOME);
     }
 

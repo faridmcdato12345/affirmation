@@ -86,7 +86,7 @@
   </AuthenticatedLayout>
 </template>
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import { VOnboardingWrapper, useVOnboarding, VOnboardingStep } from 'v-onboarding'
 import { useCookie } from 'vue-cookie-next'
@@ -146,11 +146,19 @@ onMounted(() => {
   if(user.value.show_introduction) {
     start()
   } 
-
+  
   setTimeout(() => {
     promptUserUpgrade()
   }, 2000)
+
+  showInviteMessage()
 })
+
+const showInviteMessage = async () => {
+  await nextTick()
+  if (page.props.flash.success) return toast.success(page.props.flash.success)
+  if (page.props.flash.error) return toast.error(page.props.flash.error)
+}
 
 const hideModal = () => {
   showUpgradeModal.value = false

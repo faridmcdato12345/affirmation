@@ -151,8 +151,6 @@ const checkPasswordStrength = () => {
   if(contains_uppercase.value) passStrength.value += 1
   if(contains_lowercase.value) passStrength.value += 1
   if(contains_special_character.value) passStrength.value += 1
-
-  console.log('Pass Strength : ', passStrength.value)
 }
 
 </script>

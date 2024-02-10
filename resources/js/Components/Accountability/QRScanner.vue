@@ -1,8 +1,10 @@
 <template>
   <Modal v-model="modalShown">
-    <div class="mb-4">
-      <h3>Scan QR</h3>
-      <p class="mb-5">
+    <div class="mb-3">
+      <h3 class="mb-0">
+        Scan QR
+      </h3>
+      <p class="mb-4">
         Scan the QR Code of your Friend
       </p>
       <div class="mt-5 min-w-[320px]">

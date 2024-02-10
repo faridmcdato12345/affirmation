@@ -165,14 +165,12 @@ const onSelect = (e) => {
 }
 
 const toggleDeleteBackground = (img) => {
-  console.log(img)
   selectedImage.value = img.id 
   deleteBackgroundModal.value = true
 }
 
 const deleteBackground = () => {
   loading.value = true 
-  console.log(selectedImage.value)
   router.delete(route('themes.delete', selectedImage.value), {
     onSuccess: () => {
       toast('Background has been deleted successfully!')

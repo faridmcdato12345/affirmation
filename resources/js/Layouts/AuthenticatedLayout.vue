@@ -22,7 +22,6 @@ const checkRoute = ref(true)
 useToggleDarkMode()
 
 const bgImage = computed(() => page.props.auth.user.background_image ?? '/images/bg1.jpg')
-console.log(page.props.auth.user)
 const route = window.location.pathname
 
 if(route.includes('settings') && isMobile){
@@ -54,8 +53,6 @@ const requestNotificationAccess = () => {
           })
         })
       })
-    }else{
-      console.log('nothing to do')
     }
   })
   
@@ -65,7 +62,6 @@ onMounted(() => {
   if(Notification.permission !== 'granted'){
     requestNotificationAccess()
   }
-  
 })
 
 </script>

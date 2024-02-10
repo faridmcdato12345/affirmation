@@ -116,6 +116,7 @@ class RegisterController extends Controller
         if($request->redirectTo === '/billing') {
             return redirect(RouteServiceProvider::BILLING);
         }
+
         return redirect(RouteServiceProvider::HOME);
     }
 }

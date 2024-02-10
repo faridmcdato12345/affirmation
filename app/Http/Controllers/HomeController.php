@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Helpers\SendInBlue;
 use Illuminate\Http\Request;
 use App\Models\ExerciseResult;
+use App\Models\User;
 use App\Models\UserBackground;
 use App\Models\UserCategories;
 use Illuminate\Support\Facades\Log;
@@ -27,21 +28,20 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(Request $request)
+    public function index()
     {
         $affirmation = Auth::user()->getAffirmation();
         $progressId = !is_null($affirmation) 
                         ? Auth::user()->progress()->where('affirmation_id',$affirmation['affirm']->id)
                         ->where('status','0')
                         ->first()
-                        ->id
-                        : null;
+                        ->id : null;
         $checkExerciseToday = ExerciseResult::whereHas('progress',function($query){
             $query->where('user_id', auth()->id())
                   ->where('updated_at','>',today())
-                  ->where('status','1');
-        })
-        ->first(); 
+                  ->where('status','1'
+                );
+        })->first(); 
         return Inertia::render('Index', [
             'affirmation'      => !is_null($affirmation) ? $affirmation['affirm'] : null,
             'progressId'       => $progressId,

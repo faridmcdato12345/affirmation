@@ -302,7 +302,7 @@
       </div>
       <div class="flex justify-center">
         <qrcode-vue 
-          :value="user.email" 
+          :value="qrValue" 
           :size="300" 
           level="H" 
           :margin="2" />
@@ -368,10 +368,10 @@ const affirmationStatus = ref(null)
 const reminder = ref(null)
 
 const showQRScanner = ref(false)
-
 const userInviteId = ref(null)
 
 const user = computed(() => page.props.auth.user)
+const qrValue = computed(() => `${window.location.origin}/partner/invite?email=${user.value.email}`)
 
 const initiateSendInvite = (email) => {
   form.email = email

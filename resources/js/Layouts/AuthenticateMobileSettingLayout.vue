@@ -4,7 +4,7 @@
     <div class="h-screen w-full fixed top-0 left-0 bg-white/80 dark:bg-gray-800/90 backdrop-blur-md to-gray-800 z-0"></div>
     <div class="pb-16 z-50">
       <template v-if="isMobile">
-        <div class="w-full dark:shadow-gray-700/50 dark:shadow-md shadow-sm dark:bg-gray-800 bg-white py-4 px-4 flex gap-x-3 fixed top-0 left-0 z-50">
+        <div :class="isIPhone ? 'relative pt-10 pb-4' : 'py-4'" class="w-full dark:shadow-gray-700/50 dark:shadow-md shadow-sm dark:bg-gray-800 bg-white px-4 flex gap-x-3 fixed top-0 left-0 z-50">
           <Link :href="route('settings')" class="mb-0 items-center flex">
             <ArrowLeftIcon class="w-5" />
           </Link>
@@ -25,6 +25,7 @@
   </div>
 </template>
 <script setup>
+import useIPhoneDetector from '../Composables/useIphoneDetector'
 import { computed } from 'vue'
 import { ArrowLeftIcon, QuestionMarkCircleIcon } from '@heroicons/vue/24/solid'
 import { Link, usePage } from '@inertiajs/vue3'
@@ -42,4 +43,6 @@ const bgImage = computed(() => page.props.auth.user.background_image ?? '/images
 const showTutorial = () => {
   emit('show-tutorial')
 }
+const { isIPhone } = useIPhoneDetector()
+
 </script>

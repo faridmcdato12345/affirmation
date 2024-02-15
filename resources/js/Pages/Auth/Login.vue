@@ -47,6 +47,7 @@
   </AuthLayout>
 </template>
 <script setup>
+import useIphoneDetector from '../../Composables/useIphoneDetector'
 import { ref } from 'vue'
 import AuthLayout from '../../Layouts/Auth.vue'
 import LoginForm from '../../Components/Auth/Form/Login.vue'
@@ -86,6 +87,8 @@ const update = () => {
     })
 }
 
+const { isIPhone } = useIphoneDetector()
+console.log(isIPhone.value)
 </script>
 <style scoped>
 ol{

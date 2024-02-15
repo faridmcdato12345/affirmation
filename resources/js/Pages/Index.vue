@@ -142,6 +142,7 @@ const hideTutorialOnStart = () => {
 }
 
 onMounted(() => {
+ 
   insertData(props.userId)
   if(user.value.show_introduction) {
     start()

@@ -38,7 +38,7 @@
     <!-- Install instructions for iOS -->
     <div id="menu-install-pwa-ios" class="menu menu-box-bottom menu-box-detached rounded-md">
         <div class="boxed-text-xl mt-4 pb-3">
-            <img class="rounded-l mb-3" src="{{ asset('/images/icons/android-launchericon-128-128') }}" alt="img" width="128"
+            <img class="rounded-l mb-3" src="{{ asset('/images/icons/android-launchericon-128-128.png') }}" alt="img" width="128"
                 style="margin: 0 auto">
             <h4 class="mt-3">Add Affirm on your Home Screen</h4>
             <p class="mb-0 pb-0">

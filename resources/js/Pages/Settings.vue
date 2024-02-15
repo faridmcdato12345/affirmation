@@ -6,7 +6,7 @@
       <div class="w-full md:w-390px md:max-w-[390px] border-r dark:border-gray-600">
         <SettingsNavigation :user_type="userSub.isUserSubscribe">
           <template v-if="isMobile" #header>
-            <div class="w-full dark:bg-gray-800 shadow-md dark:shadow-gray-700/50 dark:shadow-md bg-white py-4 px-4 flex gap-x-3">
+            <div :class="isIPhone ? 'pt-10 pb-4' : 'py-4'" class="w-full dark:bg-gray-800 shadow-md dark:shadow-gray-700/50 dark:shadow-md bg-white py-4 px-4 flex gap-x-3">
               <Link href="/" class="mb-0 items-center flex">
                 <ArrowLeftIcon class="w-5" />
               </Link>
@@ -24,6 +24,7 @@
   </AuthenticatedLayout>
 </template>
 <script setup>
+import useIPhoneDetector from '../Composables/useIphoneDetector'
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import SettingsNavigation from '../Components/Setting/Navigation.vue'
@@ -33,4 +34,6 @@ import { isMobile } from 'mobile-device-detect'
 const userSub = defineProps({
   isUserSubscribe: Object
 })
+const { isIPhone } = useIPhoneDetector()
+
 </script>

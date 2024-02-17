@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="done" class="flex items-center justify-center">
-      <Button size="xl" type="button" label="Update Successful!" color="success" btn-block rounded />
+      <Button size="xl" type="button" label="Relaunch Now" color="success" btn-block rounded />
     </div>
     <div v-else class="relative bg-gray-200 h-4 rounded-full w-full progress-container overflow-hidden">
       <div class="progress" :style="`width: ${progress}%`">

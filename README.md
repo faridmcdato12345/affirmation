@@ -7,6 +7,7 @@
     <li>Registration.</li>
     <li>Login.</li>
     <li>Generate a affirmation that will be shown on the home screen.</li>
+    <li>User can also add his/her customize affirmation.</li>
     <li>User can select what type of affirmation will be shown via category.</li>
     <li>User can subscribe to open more features that is exclusive for subscribe user only.</li>
     <li>Has user metric.</li>
